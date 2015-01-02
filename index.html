@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Luke Anderson</title>
+  <style>
+    body
+    { 
+      background: url(images/bg.jpg) no-repeat right center fixed;
+      background-size: cover;
+      font-family: helvetica, arial, sans-serif;
+      color: #333333;
+      overflow: hidden;
+    }
+    h4
+    {
+      margin-top: 5%;
+      margin-left: 4%;
+      font-size: 2.6em;
+      line-height: 0.9em;
+    }
+    a
+    {
+      background: rgba(200, 200, 200, 0.6);
+      text-decoration: none;
+      margin-left: 4%;
+      font-size: 2.2em;
+      line-height: 1.2em;
+    }
+    a:link {color: #333333;}
+    a:visited {color: #333333;}
+    #collabMenu
+    {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h4>Luke<br />Anderson</h4>
+  <div id="mainMenu">
+    <a href="http://lukeandersonetc.tumblr.com/">projects</a> <br />
+    <a href="http://github.com/0la0">code</a> <br />
+    <a href="http://www.linkedin.com/pub/luke-anderson/ab/400/348/">work</a> <br />
+    <a href="#" id="collab">collaborations</a>
+  </div>
+  <div id="collabMenu">
+    <a href="#">*</a> <br />
+    <a href="#">*</a> <br />
+    <a href="#">*</a> <br />
+    <a href="#">*</a> <br />
+    <a href="#" id="back">&#60 back</a>
+  </div>
+  <script>
+    document.getElementById('collab').addEventListener('click', function (e) {
+      document.getElementById('mainMenu').style.display = 'none';
+      document.getElementById('collabMenu').style.display = 'block';
+    }, false);
+    document.getElementById('back').addEventListener('click', function (e) {
+      document.getElementById('mainMenu').style.display = 'block';
+      document.getElementById('collabMenu').style.display = 'none';
+    }, false);
+  </script>
+</body>
+</html>
