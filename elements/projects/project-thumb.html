@@ -1,0 +1,48 @@
+<html><head></head><body><dom-module id="project-thumb">
+
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+        color: grey;
+
+        border: 1px solid black;
+        border-radius: 3px;
+
+        --dark-grey: #444;
+        --light-grey: #ccc;
+
+        max-width: 200px;
+        min-width: 150px;
+        margin: 5px;
+        cursor: pointer;
+      }
+      :host(:hover) {
+        background-color: --dark-grey;
+      }
+
+      .project-thumb__display-name {
+        font-weight: 400;
+        margin: 0;
+        padding: 2px 5px;
+        background: var(--dark-grey);
+        color: var(--light-grey);
+      }
+
+      .project-thumb__description {
+        padding: 2px 10px;
+        color: var(--dark-grey);
+      }
+    </style>
+
+    <!-- local DOM for your element -->
+    <a data-route="projects" href="/projects/{{ele.id}}">
+      <h1 class="project-thumb__display-name">{{ele.displayName}}</h1>
+      <p class="project-thumb__description">{{ele.description}}</p>
+    </a>
+
+
+  </template>
+
+  </dom-module>
+<script src="project-thumb.js"></script></body></html>

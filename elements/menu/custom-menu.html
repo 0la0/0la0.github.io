@@ -1,0 +1,20 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+
+</head><body><dom-module id="custom-menu">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <paper-menu attr-for-selected="data-route" selected="[[route]]">
+      <a data-route="home" href="/">Home</a>
+      <a data-route="projects" href="/projects">Projects</a>
+      <a data-route="about" href="/about">About</a>
+    </paper-menu>
+
+  </template>
+
+  </dom-module>
+<script src="custom-menu.js"></script></body></html>

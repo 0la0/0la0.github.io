@@ -1,0 +1,32 @@
+<!--
+TODO: rename file to project-list.html
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+--><html><head></head><body><dom-module id="project-list">
+  <template>
+    <style>
+      :host {
+        display: block;
+        margin: 0 auto;
+        min-width: 200px;
+        max-width: 1100px;
+      }
+      .project-thumb {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+      }
+    </style>
+
+    <div class="project-thumb">
+      <template is="dom-repeat" items="{{objList}}" as="project" id="list-template">
+        <project-thumb ele="{{project}}"></project-thumb>
+      </template>
+    </div>
+
+
+  </template>
+
+  </dom-module>
+<script src="project-list.js"></script></body></html>
