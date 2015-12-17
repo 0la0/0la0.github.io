@@ -6,12 +6,20 @@
       :host {
         display: block;
       }
+
+      a {
+        margin: 0 10px;
+      }
     </style>
 
     <paper-menu attr-for-selected="data-route" selected="[[route]]">
-      <a data-route="home" href="/">Home</a>
-      <a data-route="projects" href="/projects">Projects</a>
-      <a data-route="about" href="/about">About</a>
+      <p>
+        <a data-route="home" href="/">Home</a>
+        <span> - </span>
+        <a data-route="projects" href="/projects">Projects</a>
+        <span> - </span>
+        <a data-route="about" href="/about">About</a>
+      </p>
     </paper-menu>
 
   </template>
