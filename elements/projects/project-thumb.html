@@ -22,7 +22,7 @@
       }
 
       .project-thumb__display-name {
-        font-weight: 400;
+        font-weight: 100;
         margin: 0;
         padding: 2px 5px;
         background: var(--dark-grey);
@@ -35,9 +35,8 @@
       }
     </style>
 
-    <!-- local DOM for your element -->
     <a data-route="projects" href="/projects/{{ele.id}}">
-      <h1 class="project-thumb__display-name">{{ele.displayName}}</h1>
+      <h2 class="project-thumb__display-name">{{ele.displayName}}</h2>
       <p class="project-thumb__description">{{ele.description}}</p>
     </a>
 

@@ -8,33 +8,6 @@ var hello = 'world';
 (function () {
   'use strict';
 
-  // class Test {
-  //   constructor(){console.log('Test!');}
-  // }
-  // new Test();
-
-  // Http.get('api/dataTest.json')
-  //   .then((response) => {
-  //     console.log('promise data!', response);
-  //   });
-
-  //console.log('app?', app);
-  //console.log('http?', window.Http);
-
-  // function getData () {
-  //   var xhr = new XMLHttpRequest();
-  //   xhr.addEventListener('readystatechange', function() {
-  //     if (xhr.readyState === 4 && xhr.status === 200) {
-  //       console.log('got data:', xhr.responseText);
-  //     }
-  //   }, true);
-  //
-  //   xhr.open('GET', '/api/dataTest.json');
-  //   xhr.send();
-  // }
-
-  var MyBehavior = {};
-
   var ProjectList = (function () {
     function ProjectList() {
       _classCallCheck(this, ProjectList);
@@ -42,13 +15,9 @@ var hello = 'world';
 
     _createClass(ProjectList, [{
       key: 'beforeRegister',
-
-      // Element setup goes in beforeRegister instead of createdCallback.
       value: function beforeRegister() {
-        //console.log('before register?', Http);
         this.is = 'project-list';
 
-        // Define the properties object in beforeRegister.
         this.properties = {
           objList: {
             type: Array,
@@ -57,15 +26,10 @@ var hello = 'world';
           }
         };
       }
-
-      // Define other lifecycle methods as you need.
-
     }, {
       key: 'ready',
       value: function ready() {
-        // this.objList = projectList2;
         this.objList = app.projectList;
-        //this._shuffleList();
       }
     }, {
       key: 'attached',
@@ -103,19 +67,10 @@ var hello = 'world';
         this.objList = newVal;
         this.getElementsByTagName('template')[0].render();
       }
-    }, {
-      key: 'behaviors',
-
-      // Define behaviors with a getter.
-      get: function get() {
-        return [MyBehavior];
-      }
     }]);
 
     return ProjectList;
   })();
-
-  // Register the element using Polymer's constructor.
 
   Polymer(ProjectList);
 })();

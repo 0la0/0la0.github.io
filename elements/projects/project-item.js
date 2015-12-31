@@ -6,7 +6,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 (function () {
 
-  //let ProjectBehavior = {};
   var articleMap = new Map();
 
   var ProjectItem = (function () {
@@ -16,16 +15,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     _createClass(ProjectItem, [{
       key: 'beforeRegister',
-
-      // Define behaviors with a getter.
-      // get behaviors() {
-      //   return [ProjectBehavior];
-      // }
-
       value: function beforeRegister() {
         this.is = 'project-item';
 
-        //clearly, change id to something else
         this.properties = {
           projectId: {
             type: String,
