@@ -166,13 +166,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         if (proposedDistance <= this.currentDistance) {
           this._setNewPosition(proposedPosition, proposedDistance);
         } else {
-          var exponentValue = (this.currentDistance - proposedDistance) / this.temperature;
+          var normalizedDistance = (this.currentDistance - proposedDistance) / 10;
+          var exponentValue = normalizedDistance / this.temperature;
           var probabilityOfAcceptance = Math.exp(exponentValue);
           if (Math.random() < probabilityOfAcceptance) {
             this._setNewPosition(proposedPosition, proposedDistance);
           }
         }
-        this.temperature *= 0.95;
+        this.temperature *= 0.93;
       }
     }, {
       key: '_setNewPosition',
