@@ -23,7 +23,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       value: function ready() {}
     }, {
       key: 'attached',
-      value: function attached() {}
+      value: function attached() {
+        var _this = this;
+
+        this.aboutToggle = this.$$('#about-animation');
+        this.aboutInfo = this.$$('#about-info');
+        this.aboutToggle.addEventListener('click', function (event) {
+          Polymer.dom(_this.aboutInfo).classList.toggle('about-info__show');
+        }, false);
+      }
     }, {
       key: 'detached',
       value: function detached() {}

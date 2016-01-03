@@ -2,8 +2,6 @@
 
 window.addEventListener('WebComponentsReady', function () {
 
-  // We use Page.js for routing. This is a Micro
-  // client-side router inspired by the Express router
   // More info: https://visionmedia.github.io/page.js/
 
   // Removes end / from app.baseUrl which page.base requires for production
@@ -28,12 +26,14 @@ window.addEventListener('WebComponentsReady', function () {
     next();
   });
 
-  page('/', function () {
-    app.route = 'home';
-  });
-
   page(app.baseUrl, function () {
     app.route = 'home';
+    document.querySelector('simulated-annealing').start();
+  });
+
+  page.exit(app.baseUrl, function (context, next) {
+    document.querySelector('simulated-annealing').stop();
+    next();
   });
 
   page('/projects', function (data) {
