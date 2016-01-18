@@ -81,6 +81,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         this.visibleContext.drawImage(this.hiddenCanvasElement, 0, 0);
 
+        if (isRunningInitialBatch && searchSpaceList.length < terminalLength) {
+          isRunningInitialBatch = false;
+          terminalLength = Number.MAX_VALUE;
+          var searchSize = this.goalState.length / 4;
+          searchSpaceList = createSearchSpace(searchSize);
+        }
+
         this.candidates.forEach(function (candidate) {
           var isSettled = candidate.runAnnealingInteration(_this2.goalState);
           var x = candidate.position % _this2.width;
@@ -88,6 +95,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           if (isSettled) {
             //permament paint:
+            if (isRunningInitialBatch) {
+              searchSpaceList.splice(candidate.position, 1);
+            }
             _this2.hiddenContext.fillStyle = candidate.fillString;
             _this2.hiddenContext.fillRect(x, y, 1, 1);
             candidate.regenerate(_this2.goalState);
@@ -105,7 +115,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     }, {
       key: '_initAnnealing',
       value: function _initAnnealing() {
-        var NUM_CANDIDATES = 300;
+        var NUM_CANDIDATES = 500;
+
+        var searchSize = this.goalState.length / 4;
+        searchSpaceList = createSearchSpace(searchSize);
+        terminalLength = searchSpaceList.length / 2;
+
         this.candidates = [];
         for (var i = 0; i < NUM_CANDIDATES; i++) {
           this.candidates.push(new AnnealingSolution(this.goalState));
@@ -128,12 +143,23 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
   Polymer(SimulatedAnnealing);
 
+  var terminalLength = undefined;
+  var searchSpaceList = [];
+  var isRunningInitialBatch = true;
+
+  function createSearchSpace(length) {
+    var tempList = [];
+    for (var i = 0; i < length; i++) {
+      tempList.push(i);
+    }
+    return tempList;
+  }
+
   var AnnealingSolution = (function () {
     function AnnealingSolution(pixelMap) {
       _classCallCheck(this, AnnealingSolution);
 
       this.ACCEPTANCE_THRESHOLD = 10;
-      this.searchSpaceSize = pixelMap.length / 4;
       this.regenerate(pixelMap);
     }
 
@@ -193,7 +219,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     }, {
       key: '_generateRandomPosition',
       value: function _generateRandomPosition() {
-        return Math.floor(this.searchSpaceSize * Math.random());
+        var index = Math.floor(searchSpaceList.length * Math.random());
+        return searchSpaceList[index];
       }
     }]);
 
