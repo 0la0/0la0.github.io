@@ -33,13 +33,12 @@ var hello = 'world';
       }
     }, {
       key: 'attached',
-      value: function attached() {}
+      value: function attached() {
+        //this._shuffleList();
+      }
     }, {
       key: 'detached',
       value: function detached() {}
-
-      //turn off and on the timer here
-
     }, {
       key: 'attributeChanged',
       value: function attributeChanged() {}
@@ -65,7 +64,7 @@ var hello = 'world';
       key: '_listChange',
       value: function _listChange(newVal) {
         this.objList = newVal;
-        this.getElementsByTagName('template')[0].render();
+        this.$.list.render();
       }
     }]);
 

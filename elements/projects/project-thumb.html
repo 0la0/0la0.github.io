@@ -3,42 +3,42 @@
   <template>
     <style>
       :host {
-        display: inline-block;
-        color: grey;
-
-        border: 1px solid black;
-        border-radius: 3px;
-
-        --dark-grey: #444;
-        --light-grey: #ccc;
-
-        max-width: 200px;
-        min-width: 150px;
-        margin: 5px;
+        display: block;
+        position: relative;
         cursor: pointer;
+        margin: 10px;
       }
-      :host(:hover) {
-        background-color: --dark-grey;
-      }
+      .project-thumb__container {
+        width: 230px;
+        height: 230px;
+        border: 1px solid #666;
+        border-radius: 3px;
+        background-size: 100% 100%;
 
+        display: flex;
+        flex-flow: column;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+      }
       .project-thumb__display-name {
-        font-weight: 100;
         margin: 0;
-        padding: 2px 5px;
-        background: var(--dark-grey);
-        color: var(--light-grey);
+        padding: 8px;
+        background-color: rgba(255, 255, 255, 0.6);
+      }
+      .project-thumb__description {
+        margin: 0;
+        padding: 8px;
+        min-height: 25%;
+        background-color: rgba(32, 32, 32, 0.5);
+        color: white;
       }
 
-      .project-thumb__description {
-        padding: 2px 10px;
-        color: var(--dark-grey);
-      }
     </style>
 
-    <a data-route="projects" href="/projects/{{ele.id}}">
-      <h2 class="project-thumb__display-name">{{ele.displayName}}</h2>
-      <p class="project-thumb__description">{{ele.description}}</p>
-    </a>
+    <div class="project-thumb__container" id="container">
+      <h2 class="project-thumb__display-name">{{project.displayName}}</h2>
+      <p class="project-thumb__description">{{project.description}}</p>
+    </div>
 
 
   </template>

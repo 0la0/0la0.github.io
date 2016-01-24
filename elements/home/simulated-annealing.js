@@ -36,7 +36,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         var _this = this;
 
         var goalImage = new Image();
-        goalImage.src = 'images/sketchSrc/trees3.jpg';
+        goalImage.src = 'images/sketchSrc/trees.jpg';
 
         goalImage.onload = function (event) {
           _this.width = goalImage.width;

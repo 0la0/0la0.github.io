@@ -16,9 +16,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         this.is = 'project-thumb';
 
         this.properties = {
-          ele: {
-            type: String
+          project: {
+            object: Object
           }
+        };
+
+        this.listeners = {
+          tap: '_onTap'
         };
       }
     }, {
@@ -26,13 +30,21 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       value: function ready() {}
     }, {
       key: 'attached',
-      value: function attached() {}
+      value: function attached() {
+        var backgroundImage = 'url(images/projects/thumbs/' + this.project.thumbnail + ')';
+        this.$.container.style.setProperty('background-image', backgroundImage);
+      }
     }, {
       key: 'detached',
       value: function detached() {}
     }, {
       key: 'attributeChanged',
       value: function attributeChanged() {}
+    }, {
+      key: '_onTap',
+      value: function _onTap(event) {
+        page('/projects/' + this.project.id);
+      }
     }, {
       key: 'behaviors',
       get: function get() {
