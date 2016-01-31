@@ -12,17 +12,11 @@ window.addEventListener('WebComponentsReady', function () {
 
   // Middleware
   function scrollToTop(ctx, next) {
-    //app.scrollPageToTop();
+    document.body.scrollTop = 0;
     next();
   }
 
-  function closeDrawer(ctx, next) {
-    //app.closeDrawer();
-    next();
-  }
-
-  // Routes
-  page('*', scrollToTop, closeDrawer, function (ctx, next) {
+  page('*', scrollToTop, function (ctx, next) {
     next();
   });
 
