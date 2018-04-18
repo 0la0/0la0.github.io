@@ -1,0 +1,30 @@
+@import '~styles/index';
+
+.bar {
+  display: block;
+  position: absolute;
+  top: 14px;
+  height: 2px;
+  width: 30px;
+  background: $color-secondary;
+  border-radius: 10px;
+  transition: transform $menu-time ease-in-out;
+}
+
+.barLeft {
+  transform: rotate(-45deg);
+  left: 0;
+}
+
+.barRight {
+  transform: rotate(45deg);
+  left: 20px;
+}
+
+.barLeftActive {
+  transform: rotate(45deg);
+}
+
+.barRightActive {
+  transform: rotate(-45deg);
+}

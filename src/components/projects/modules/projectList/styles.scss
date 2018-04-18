@@ -1,0 +1,52 @@
+@import '~styles/index';
+
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.header {
+  padding: 10px 0 20px 0;
+}
+
+.headerTitle {
+  margin: 0 0 10px 0;
+}
+
+.headerSubTitle {
+  text-align: center;
+}
+
+$project-thumb-size: 220px;
+
+.projectThumbnail {
+  border: 2px solid black;
+  width: $project-thumb-size;
+  height: $project-thumb-size;
+  margin: 20px;
+  cursor: pointer;
+  color: $color-grey-000;
+
+  display: flex;
+  flex-flow: column;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+.projectLabel {
+  background-color: rgba(255, 255, 255, 0.6);
+  color: $color-grey-100;
+  font-size: 1.4em;
+  font-weight: bold;
+  margin: 0;
+  padding: 8px;
+}
+
+.projectDescription {
+  background-color: rgba(32, 32, 32, 0.5);
+  margin: 0;
+  padding: 8px;
+  color: $color-grey-000;
+}

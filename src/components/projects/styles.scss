@@ -1,0 +1,36 @@
+@import '~styles/index';
+
+$animation-params: 0.2s ease-out;
+// TODO: MOVE TO COMMON
+$top-buffer: 60px;
+$left-buffer: 30px;
+
+.container {
+  position: absolute;
+  left: $left-buffer;
+  top: $top-buffer;
+  width: calc(100% - #{$left-buffer * 2});
+  height: calc(100% - #{$top-buffer + $left-buffer});
+
+  background-color: $color-grey-020;
+  border-radius: 2px;
+  color: $color-primary;
+  overflow-y: scroll;
+  opacity: 0;
+
+  transform-origin: top;
+  transform: translateY(20px);
+  transition: transform $animation-params, opacity $animation-params;
+}
+
+.containerActive {
+  transform: translateY(0px);
+  opacity: 1;
+}
+
+.contentContainer {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 10px;
+  // border: 1px solid green;
+}

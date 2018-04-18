@@ -1,0 +1,52 @@
+@import '~styles/index';
+
+// TODO: put in common
+$animation-params: 0.2s ease-out;
+$icon-buffer: 10px;
+
+.buttonContainer {
+  position: absolute;
+  bottom: 0;
+  padding: 0 0 5px 8px;
+}
+
+.button {
+  color: $color-grey-020;
+}
+
+.shuffleButton {
+  position: absolute;
+  bottom: 0;
+  left: $icon-buffer;
+  color: $color-grey-020;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+}
+
+.aboutButton {
+  position: absolute;
+  bottom: $icon-buffer + 3;
+  right: $icon-buffer;
+  cursor: pointer;
+  width: 50px;
+  height: 30px;
+}
+
+.about {
+  position: absolute;
+  right: 20px;
+  bottom: 60px;
+  padding: 20px;
+  border-radius: 2px;
+  background-color: $color-grey-020;
+  opacity: 0;
+  transform: translateY(10px);
+  color: $color-primary;
+  transition: transform $animation-params, opacity $animation-params;
+}
+
+.aboutActive {
+  opacity: 1;
+  transform: translateY(0px);
+}

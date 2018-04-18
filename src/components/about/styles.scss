@@ -1,0 +1,51 @@
+@import '~styles/index';
+
+// TODO: put in common
+$animation-params: 0.2s ease-out;
+
+$top-buffer: 60px;
+$left-buffer: 30px;
+
+.container {
+  position: absolute;
+  right: $left-buffer;
+  top: $top-buffer;
+  width: calc(100% - #{$left-buffer * 2});
+  max-height: calc(100% - #{$top-buffer + $left-buffer});
+  max-width: 560px;
+  background-color: $color-grey-020;
+  border-radius: 2px;
+  color: $color-primary;
+  overflow-y: scroll;
+  opacity: 0;
+
+  transform-origin: top;
+  transform: translateY(-10px);
+  transition: transform $animation-params, opacity $animation-params;
+}
+
+.containerActive {
+  transform: translateY(0px);
+  opacity: 1;
+}
+
+.contentContainer {
+  padding: 10px 20px 20px 20px;
+}
+
+.header {
+
+}
+
+.headerTitle {
+  margin: 0 0 -4px 0;
+  text-align: left;
+}
+
+.headerSubTitle {
+  font-size: 0.95em;
+}
+
+.aboutText {
+  margin: 8px 0;
+}

@@ -1,0 +1,62 @@
+@import '~styles/index';
+
+$button-size: 30px;
+$arrow-width: 30px;
+$arrow-size: 20px;
+
+.back {
+  display: block;
+  width: 0;
+  height: 0;
+  cursor: pointer;
+}
+
+.backActive {
+  width: $arrow-size + 6px;
+  height: $arrow-size + 10px;
+}
+
+.arrow {
+  width: $arrow-width;
+  height: 2px;
+  display: inline-block;
+  background-color: $color-secondary;
+  border-radius: 4px;
+  position: absolute;
+  left: 0;
+  top: 18px;
+  opacity: 0;
+  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+
+.arrowTop {
+  width: $arrow-size;
+  left: 1px;
+  transform-origin: left;
+  transform: rotate(0deg);
+}
+
+.arrowTopActive {
+  transform: rotate(-45deg);
+  opacity: 1;
+}
+
+.arrowBottom {
+  width: $arrow-size;
+  left: 1px;
+  transform-origin: left;
+  transform: rotate(0deg);
+}
+
+.arrowBottomActive {
+  transform: rotate(45deg);
+  opacity: 1;
+}
+
+.arrowCenter {
+  opacity: 0;
+}
+
+.arrowCenterActive {
+  opacity: 1;
+}

@@ -1,0 +1,25 @@
+@import '~styles/index';
+
+// TODO: put in common
+$icon-buffer: 10px;
+
+.menuButton {
+  position: absolute;
+  left: $icon-buffer;
+  top: $icon-buffer;
+}
+
+.backButton {
+  position: absolute;
+  left: 60px;
+  top: $icon-buffer;
+}
+
+.aboutButton {
+  position: absolute;
+  right: $icon-buffer;
+  top: $icon-buffer + 3;
+  cursor: pointer;
+  width: 50px;
+  height: 30px;
+}

@@ -1,0 +1,35 @@
+@import '~styles/index';
+
+$width: 40px;
+$height: 2px;
+$margin: 8px;
+
+$transition-timing: ease-in-out;
+$translate: $height + $margin;
+$rotate: 45deg;
+
+.hamburger {
+  cursor: pointer;
+}
+
+.line {
+  width: $width;
+  height: $height;
+  border-radius: 5px;
+  background-color: $color-secondary;
+  display: block;
+  margin: $margin auto;
+  transition: opacity $menu-time $transition-timing, transform $menu-time $transition-timing;
+}
+
+.lineOneActive {
+  transform: translateY($translate) rotate($rotate);
+}
+
+.lineTwoActive {
+  opacity: 0;
+}
+
+.lineThreeActive {
+  transform: translateY(-$translate) rotate(-$rotate);
+}
