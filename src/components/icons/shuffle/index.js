@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Vector2 } from 'three';
-import PropTypes from 'prop-types';
 import styles from './styles.scss';
 
 const SVG = {
@@ -171,9 +170,5 @@ class ShuffleIcon extends Component {
     );
   }
 }
-
-ShuffleIcon.propTypes = {
-  handleClick: PropTypes.func.isRequired
-};
 
 export default ShuffleIcon;

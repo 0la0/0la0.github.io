@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styles from './styles.scss';
 
 const Back = props => (
@@ -11,10 +10,5 @@ const Back = props => (
     <span className={`${styles.arrow} ${styles.arrowCenter} ${props.isActive ? styles.arrowCenterActive : ''}`} />
   </div>
 );
-
-Back.propTypes = {
-  isActive: PropTypes.bool.isRequired,
-  handleClick: PropTypes.func.isRequired,
-};
 
 export default Back;

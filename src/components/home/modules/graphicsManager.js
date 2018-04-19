@@ -1,4 +1,6 @@
+import 'three/OrbitControls';
 import { WebGLRenderer, PerspectiveCamera } from 'three';
+import { OrbitControls } from 'three';
 import TestScene from './TestScene';
 import TestScene2 from './TestScene2';
 import AnnealingPhotos from './AnnealingPhotos';
@@ -16,12 +18,15 @@ class GraphicsManager {
   	this.renderer.setClearColor(0x282c34, 1); // TODO: background color
     this.camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 200);
   	this.camera.position.z = 1;
+    this.orbitControls = new OrbitControls(this.camera, canvas);
+    this.orbitControls.enabled = false;
     this.scenes = [
       new TestScene(canvas),
       new TestScene2(canvas),
       new AnnealingPhotos(canvas),
     ];
-    this.activeScene = this.scenes[ Math.floor(this.scenes.length * Math.random()) ];
+    // this.activeScene = this.scenes[ Math.floor(this.scenes.length * Math.random()) ];
+    this.activeScene = this.scenes[2];
     this.onResize();
     return this;
   }
@@ -33,15 +38,19 @@ class GraphicsManager {
   startAnimation() {
     if (this.isInRenderLoop) { return; }
     this.isInRenderLoop = true;
+    this.orbitControls.enabled = true;
     this.animate();
   }
 
   stopAnimation() {
     this.isInRenderLoop = false;
+    this.orbitControls.enabled = false;
+    console.log(this.orbitControls.enabled)
     cancelAnimationFrame(this.animationRequest);
   }
 
   animate() {
+    this.orbitControls.update();
     this.activeScene.render(this.renderer, this.camera);
     if (this.isInRenderLoop) {
       this.animationRequest = requestAnimationFrame(this.animate.bind(this));

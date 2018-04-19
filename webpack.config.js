@@ -22,7 +22,10 @@ const webpackConfig = {
       template: 'index.html',
       filename: 'index.html',
       inject: 'body'
-    })
+    }),
+    new webpack.ProvidePlugin({
+      'THREE': 'three'
+    }),
   ],
   module: {
     rules: [
@@ -70,6 +73,7 @@ const defaultConfig = {
       components: path.resolve(__dirname, 'src/components/'),
       // services: path.resolve(__dirname, 'src/services/'),
       styles: path.resolve(__dirname, 'src/styles/'),
+      'three/OrbitControls': path.join(__dirname, 'node_modules/three/examples/js/controls/OrbitControls.js'),
     }
   },
 
