@@ -14,9 +14,10 @@ const webpackConfig = {
     path: path.resolve(__dirname, './dist'),
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      name: ['main', 'vendor']
-    }),
+    // TODO: USE DYNAMIC IMPORTS INSTEAD??
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: ['main', 'vendor']
+    // }),
     new HtmlWebpackPlugin({
       template: 'index.html',
       filename: 'index.html',

@@ -5,34 +5,34 @@
   "scripts": {
     "build": "rm -rf dist; webpack",
     "clean": "rm -rf dist",
-    "start": "webpack-dev-server --inline --colors --progress --content-base src"
+    "start": "webpack-dev-server --mode=development --inline --colors --progress --content-base src"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.40",
-    "@babel/preset-env": "^7.0.0-beta.40",
-    "@babel/preset-react": "^7.0.0-beta.40",
-    "@babel/preset-stage-3": "^7.0.0-beta.40",
+    "@babel/core": "^7.0.0-beta.44",
+    "@babel/preset-env": "^7.0.0-beta.44",
+    "@babel/preset-react": "^7.0.0-beta.44",
+    "@babel/preset-stage-3": "^7.0.0-beta.44",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^22.2.2",
-    "babel-loader": "^8.0.0-beta.0",
-    "babel-plugin-module-resolver": "^3.0.0",
+    "babel-loader": "^8.0.0-beta.2",
+    "babel-plugin-module-resolver": "^3.1.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "css-loader": "^0.28.7",
     "git-directory-deploy": "^1.5.1",
-    "html-webpack-plugin": "^2.30.1",
+    "html-webpack-plugin": "^3.2.0",
     "node-sass": "^4.6.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.0",
-    "webpack": "^3.8.1",
-    "webpack-dev-server": "^2.9.4",
-    "webpack-merge": "^4.1.1"
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.0.14",
+    "webpack-dev-server": "^3.1.3",
+    "webpack-merge": "^4.1.2"
   },
   "dependencies": {
-    "prop-types": "^15.6.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "prop-types": "^15.6.1",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
     "react-router-dom": "^4.2.2",
-    "three": "^0.91.0"
+    "three": "^0.92.0"
   },
   "license": "ISC",
   "author": ""
