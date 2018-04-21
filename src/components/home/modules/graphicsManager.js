@@ -20,6 +20,8 @@ class GraphicsManager {
   	this.camera.position.z = 1;
     this.orbitControls = new OrbitControls(this.camera, canvas);
     this.orbitControls.enabled = false;
+    this.orbitControls.minDistance = 0.25;
+    this.orbitControls.maxDistance = 3;
     this.scenes = [
       new TestScene(canvas),
       new TestScene2(canvas),
