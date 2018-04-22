@@ -3,7 +3,8 @@ import { WebGLRenderer, PerspectiveCamera } from 'three';
 import { OrbitControls } from 'three';
 import TestScene from './TestScene';
 import TestScene2 from './TestScene2';
-import AnnealingPhotos from './AnnealingPhotos';
+import Annealing from './annealing';
+import Pso from './pso';
 
 class GraphicsManager {
   constructor() {
@@ -24,8 +25,9 @@ class GraphicsManager {
     this.orbitControls.maxDistance = 3;
     this.scenes = [
       new TestScene(canvas),
-      new TestScene2(canvas),
-      new AnnealingPhotos(canvas),
+      // new TestScene2(canvas),
+      new Annealing(canvas),
+      new Pso(canvas),
     ];
     // this.activeScene = this.scenes[ Math.floor(this.scenes.length * Math.random()) ];
     this.activeScene = this.scenes[2];

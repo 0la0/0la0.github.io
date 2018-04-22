@@ -21,7 +21,7 @@ const halfHeight = imgHeight / 2;
 const precision = 100;
 
 function getRandomMesh(greyscaleValue) {
-  const scale = 0.009;
+  const scale = 0.01;
   const geometry = new PlaneGeometry(scale, scale);
   const material = new MeshBasicMaterial({ color: new Color(greyscaleValue, greyscaleValue, greyscaleValue)});
   const mesh = new Mesh(geometry, material);
@@ -139,7 +139,7 @@ export default class AnnealingPhotos {
 
     this.width;
     this.height;
-    loadImage('assets/images/sketches/trees.jpg')
+    loadImage('assets/images/sketches/gradient.jpg')
       .then(imageSrc => {
         this.width = imageSrc.width;
         this.height = imageSrc.height;
