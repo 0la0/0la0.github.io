@@ -1,10 +1,9 @@
 import 'three/OrbitControls';
 import { WebGLRenderer, PerspectiveCamera } from 'three';
 import { OrbitControls } from 'three';
-import TestScene from './TestScene';
-import TestScene2 from './TestScene2';
 import Annealing from './annealing';
 import Pso from './pso';
+import Gravity from './gravity';
 
 class GraphicsManager {
   constructor() {
@@ -24,10 +23,9 @@ class GraphicsManager {
     this.orbitControls.minDistance = 0.25;
     this.orbitControls.maxDistance = 3;
     this.scenes = [
-      new TestScene(canvas),
-      // new TestScene2(canvas),
       new Annealing(canvas),
       new Pso(canvas),
+      new Gravity(canvas)
     ];
     // this.activeScene = this.scenes[ Math.floor(this.scenes.length * Math.random()) ];
     this.activeScene = this.scenes[2];
@@ -68,6 +66,8 @@ class GraphicsManager {
       nextScene = this.scenes[index];
     }
     this.activeScene = nextScene;
+    this.activeScene.start();
+    this.orbitControls.reset();
   }
 
   onResize() {

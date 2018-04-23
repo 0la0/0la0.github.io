@@ -168,4 +168,6 @@ export default class AnnealingPhotos {
   getAboutAnimationText() {
     return 'TODO: about simulated annealing';
   }
+
+  start() {}
 }
