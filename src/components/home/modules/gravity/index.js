@@ -24,9 +24,17 @@ class Particle {
   }
 
   update(elapsedTime) {
-    this.mesh.position.add(
-      this.directionToCenter.clone().multiplyScalar(elapsedTime)
-    );
+    // this.mesh.position.add(
+    //   this.directionToCenter.clone().multiplyScalar(elapsedTime)
+    // );
+
+    const gravity =
+      this.mesh.position.clone()
+        .normalize()
+        .multiplyScalar(-1 / Math.max(40, this.mesh.position.lengthSq()));
+
+    // vec3 gravity = -1.0 * vec3(normalize(currPosition)) / max(20.0, distanceSq(currPosition));
+    this.mesh.position.add(gravity)
   }
 
   getMesh() {

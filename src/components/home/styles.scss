@@ -3,6 +3,8 @@
 // TODO: put in common
 $animation-params: 0.2s ease-out;
 $icon-buffer: 10px;
+$top-buffer: 60px;
+$left-buffer: 30px;
 
 .buttonContainer {
   position: absolute;
@@ -35,10 +37,12 @@ $icon-buffer: 10px;
 
 .about {
   position: absolute;
-  right: 20px;
-  bottom: 60px;
-  padding: 20px;
+  right: $left-buffer;
+  bottom: $top-buffer;
+  // padding: 20px;
   border-radius: 2px;
+  width: calc(100% - #{$left-buffer * 2});
+  max-width: 360px;
   background-color: $color-grey-020;
   opacity: 0;
   transform: translateY(10px);

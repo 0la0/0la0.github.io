@@ -4,6 +4,7 @@ import {
   PlaneGeometry,
   MeshBasicMaterial,
   Mesh,
+  DoubleSide,
 } from 'three';
 import { getPosNeg } from 'components/home/modules/mathUtil';
 import { loadImage, getImageData, getGreyScaleArray } from 'components/home/modules/imageUtil';
@@ -23,7 +24,10 @@ const precision = 100;
 function getRandomMesh(greyscaleValue) {
   const scale = 0.01;
   const geometry = new PlaneGeometry(scale, scale);
-  const material = new MeshBasicMaterial({ color: new Color(greyscaleValue, greyscaleValue, greyscaleValue)});
+  const material = new MeshBasicMaterial({
+    color: new Color(greyscaleValue, greyscaleValue, greyscaleValue),
+    side: DoubleSide
+  });
   const mesh = new Mesh(geometry, material);
   return mesh;
 }

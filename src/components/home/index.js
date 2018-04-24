@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import createHistory from 'history/createBrowserHistory';
 import ShuffleIcon from 'components/icons/shuffle';
 import CarretVertical from 'components/icons/carretVertical';
 import graphicsManager from 'components/home/modules/graphicsManager';
 import styles from './styles.scss';
 
-const pauseRoutes = new Set(['#/projects']);
+const pauseRoutes = ['#/projects', '#/about'];
 const history = createHistory();
 
 function getStateFromLocation(path) {
@@ -25,17 +26,20 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    graphicsManager.init(this.canvasElement).startAnimation();
+    graphicsManager.init(this.canvasElement);
     window.addEventListener('resize', this.onResize);
     this.remoteRouteChangeListener = history.listen((location, action) => {
-      if (pauseRoutes.has(location.hash)) {
-        graphicsManager.stopAnimation();
-      } else {
-        graphicsManager.startAnimation();
-      }
+      const shouldPause = pauseRoutes.some(route => location.hash.indexOf(route) > -1);
+      shouldPause ? graphicsManager.stopAnimation(): graphicsManager.startAnimation();
       this.setState(getStateFromLocation(location.hash));
     });
-    this.setState(getStateFromLocation(history.location.hash));
+
+    const locationHash = history.location.hash;
+    const shouldStart = !pauseRoutes.some(route => locationHash.indexOf(route) > -1);
+    this.setState(getStateFromLocation(locationHash));
+    if (shouldStart) {
+      graphicsManager.startAnimation();
+    }
   }
 
   componentWillUnmount() {

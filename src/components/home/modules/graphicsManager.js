@@ -1,9 +1,19 @@
 import 'three/OrbitControls';
 import { WebGLRenderer, PerspectiveCamera } from 'three';
+import Stats from 'stats.js';
 import { OrbitControls } from 'three';
 import Annealing from './annealing';
 import Pso from './pso';
 import Gravity from './gravity';
+
+const STATS_ENABLED = false;
+
+let stats;
+if (STATS_ENABLED) {
+  stats = new Stats();
+  stats.showPanel(0);
+  document.body.appendChild( stats.dom );
+}
 
 class GraphicsManager {
   constructor() {
@@ -41,19 +51,21 @@ class GraphicsManager {
     if (this.isInRenderLoop) { return; }
     this.isInRenderLoop = true;
     this.orbitControls.enabled = true;
+    this.activeScene.start();
     this.animate();
   }
 
   stopAnimation() {
     this.isInRenderLoop = false;
     this.orbitControls.enabled = false;
-    console.log(this.orbitControls.enabled)
     cancelAnimationFrame(this.animationRequest);
   }
 
   animate() {
+    stats && stats.begin();
     this.orbitControls.update();
     this.activeScene.render(this.renderer, this.camera);
+    stats && stats.end();
     if (this.isInRenderLoop) {
       this.animationRequest = requestAnimationFrame(this.animate.bind(this));
     }
