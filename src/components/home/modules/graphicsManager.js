@@ -4,7 +4,7 @@ import Stats from 'stats.js';
 import { OrbitControls } from 'three';
 import Annealing from './annealing';
 import Pso from './pso';
-import Gravity from './gravity';
+import ConnectedGraph from './connectedGraph';
 
 const STATS_ENABLED = false;
 
@@ -25,8 +25,8 @@ class GraphicsManager {
 
   init(canvas) {
     this.renderer = new WebGLRenderer({canvas,  antialias: true});
-  	this.renderer.setClearColor(0x282c34, 1); // TODO: background color
-    this.camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 200);
+  	this.renderer.setClearColor(0x282c34, 1);
+    this.camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.05, 7);
   	this.camera.position.z = 1;
     this.orbitControls = new OrbitControls(this.camera, canvas);
     this.orbitControls.enabled = false;
@@ -35,7 +35,7 @@ class GraphicsManager {
     this.scenes = [
       new Annealing(canvas),
       new Pso(canvas),
-      new Gravity(canvas)
+      new ConnectedGraph(canvas),
     ];
     // this.activeScene = this.scenes[ Math.floor(this.scenes.length * Math.random()) ];
     this.activeScene = this.scenes[2];
