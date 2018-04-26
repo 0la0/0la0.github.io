@@ -6,6 +6,7 @@ import {
   Mesh,
   DoubleSide,
 } from 'three';
+import React from 'react';
 import { getPosNeg } from 'components/home/modules/mathUtil';
 import { loadImage, getImageData, getGreyScaleArray } from 'components/home/modules/imageUtil';
 
@@ -170,7 +171,19 @@ export default class AnnealingPhotos {
   }
 
   getAboutAnimationText() {
-    return 'TODO: about simulated annealing';
+    return (
+      <p>
+        <span>
+          This animation is an approximation of an image using
+        </span>
+        <a href="https://en.wikipedia.org/wiki/Simulated_annealing">
+          simulated annealing.
+        </a>
+        <span>
+          The image is treated as a complete graph where each pixel is a vertex. There are 500 search candidates, each represented as a pixel with an arbitrary value. When a candidate finds a solution, it is permanently painted to the image and a new candidate is generated. As the algorithm runs, the image becomes more realistic.
+        </span>
+      </p>
+    );
   }
 
   start() {}

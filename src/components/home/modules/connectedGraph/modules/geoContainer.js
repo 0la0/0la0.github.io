@@ -25,7 +25,7 @@ export default class GeoContainer {
   update(elapsedTime, totalTime) {
     const x = this.frequency * totalTime;
     this.vertices.forEach(vertex => vertex.update(elapsedTime, x));
-    this.edges.forEach(edge => edge.update(elapsedTime));
+    this.edges.forEach(edge => edge.update(elapsedTime, x));
   }
 
   reset() {
