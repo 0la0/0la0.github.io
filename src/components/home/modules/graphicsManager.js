@@ -37,8 +37,8 @@ class GraphicsManager {
       new Pso(canvas),
       new ConnectedGraph(canvas),
     ];
-    // this.activeScene = this.scenes[ Math.floor(this.scenes.length * Math.random()) ];
-    this.activeScene = this.scenes[2];
+    this.activeIndex = 0;
+    this.activeScene = this.scenes[this.activeIndex];
     this.onResize();
     return this;
   }
@@ -72,12 +72,8 @@ class GraphicsManager {
   }
 
   shuffleAnimations() {
-    let nextScene = this.activeScene;
-    while (nextScene === this.activeScene) {
-      const index = Math.floor(this.scenes.length * Math.random());
-      nextScene = this.scenes[index];
-    }
-    this.activeScene = nextScene;
+    this.activeIndex = (this.activeIndex + 1) % this.scenes.length;
+    this.activeScene = this.scenes[this.activeIndex];
     this.activeScene.start();
     this.orbitControls.reset();
   }

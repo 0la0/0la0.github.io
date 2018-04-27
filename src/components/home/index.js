@@ -56,25 +56,29 @@ class Home extends Component {
     this.setState({ aboutIsShowing: !this.state.aboutIsShowing });
   };
 
+  renderIcons() {
+    return (
+      <div>
+        <ShuffleIcon
+          title="Shuffle Animation"
+          handleClick={graphicsManager.shuffleAnimations.bind(graphicsManager)}
+          className={styles.shuffleButton} />
+        <CarretVertical
+          isActive={this.state.aboutIsShowing}
+          handleClick={this.onAboutToggle}
+          title="About Animation"
+          className={styles.aboutButton} />
+      </div>
+    );
+  }
+
   render() {
     return (
       <div
         onClick={() => this.setState({ aboutIsShowing: false })}
         className={this.props.className}>
         <canvas ref={ele => this.canvasElement = ele} />
-        { this.state.iconsAreVisible ?
-          <ShuffleIcon
-            title="Shuffle Animation"
-            handleClick={graphicsManager.shuffleAnimations.bind(graphicsManager)}
-            className={styles.shuffleButton}/> : null
-        }
-        { this.state.iconsAreVisible ?
-          <CarretVertical
-            isActive={this.state.aboutIsShowing}
-            handleClick={this.onAboutToggle}
-            title="About Animation"
-            className={styles.aboutButton} /> : null
-        }
+        { this.state.iconsAreVisible ? this.renderIcons() : null }
         <div className={`${styles.about} ${this.state.aboutIsShowing ? styles.aboutActive : ''}`}>
           { graphicsManager.getAboutAnimationText() }
         </div>

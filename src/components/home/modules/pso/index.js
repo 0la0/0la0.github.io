@@ -1,4 +1,5 @@
 import { Scene } from 'three';
+import React from 'react';
 import Population from './Population';
 
 export default class Pso {
@@ -23,7 +24,11 @@ export default class Pso {
   }
 
   getAboutAnimationText() {
-    return 'This is an animation about PSO';
+    return (
+      <div>
+        This is an animation about PSO
+      </div>
+    );
   }
 
   start() {

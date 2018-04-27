@@ -1,5 +1,6 @@
 import { Scene } from 'three';
 import GeoContainer from './modules/geoContainer';
+import React from 'react';
 
 const NUM_VERTEX = 50;
 
@@ -41,7 +42,11 @@ export default class ConnectedGraph {
   }
 
   getAboutAnimationText() {
-    return 'This is about connected graphs';
+    return(
+      <div>
+        This is about connected graphs
+      </div>
+    );
   }
 
 }
