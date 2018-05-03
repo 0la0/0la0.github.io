@@ -20,13 +20,11 @@ function getImageData(imageElement) {
 
 function getGreyScaleArray(imageData) {
   const { width, height } = imageData;
-  console.log('getGreyScaleArray', width, height, imageData.data.length)
   const greyscaleList = [];
   for (let i = 0; i < imageData.data.length; i += 4) {
     const averageRGB = (imageData.data[i] + imageData.data[i + 1] + imageData.data[i + 2]) / 3;
     greyscaleList.push(averageRGB / 255);
   }
-  console.log('greyScaleList', greyscaleList.length)
   return greyscaleList;
 }
 

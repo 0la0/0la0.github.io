@@ -34,12 +34,17 @@ $left-buffer: 30px;
 }
 
 .header {
-
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+  flex-wrap: wrap;
 }
 
 .headerTitle {
   margin: 0 0 -4px 0;
   text-align: left;
+  margin-right: 10px;
 }
 
 .headerSubTitle {

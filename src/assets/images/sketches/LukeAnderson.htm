@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<!-- saved from url=(0024)http://localhost:3000/#/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>LukeAnderson</title>
+    <style>#root { height: 100%; }</style>
+  <style type="text/css">.styles__svg___3x5LQ {
+  width: 100%;
+  height: 100%;
+  cursor: pointer; }
+</style><style type="text/css">.styles__bar___NkWZz {
+  display: block;
+  position: absolute;
+  top: 14px;
+  height: 2px;
+  width: 30px;
+  background: #abb2bf;
+  border-radius: 10px;
+  transition: transform 0.15s ease-in-out; }
+
+.styles__barLeft___29XRY {
+  transform: rotate(-45deg);
+  left: 0; }
+
+.styles__barRight___3wQAp {
+  transform: rotate(45deg);
+  left: 20px; }
+
+.styles__barLeftActive___1JC_K {
+  transform: rotate(45deg); }
+
+.styles__barRightActive___1EOSN {
+  transform: rotate(-45deg); }
+</style><style type="text/css">.styles__buttonContainer___3xFAr {
+  position: absolute;
+  bottom: 0;
+  padding: 0 0 5px 8px; }
+
+.styles__button___Tu_7P {
+  color: #D8D8D8; }
+
+.styles__shuffleButton___bd0vU {
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  color: #D8D8D8;
+  width: 60px;
+  height: 60px;
+  cursor: pointer; }
+
+.styles__aboutButton___3e6e8 {
+  position: absolute;
+  bottom: 13px;
+  right: 10px;
+  cursor: pointer;
+  width: 50px;
+  height: 30px; }
+
+.styles__about___2YBpf {
+  position: absolute;
+  right: 30px;
+  bottom: 60px;
+  border-radius: 2px;
+  width: calc(100% - 60px);
+  max-width: 360px;
+  background-color: #D8D8D8;
+  opacity: 0;
+  transform: translateY(10px);
+  color: #282c34;
+  transition: transform 0.2s ease-out, opacity 0.2s ease-out; }
+
+.styles__aboutActive___3VxtV {
+  opacity: 1;
+  transform: translateY(0px); }
+</style><style type="text/css">.styles__hamburger___1w9st {
+  cursor: pointer; }
+
+.styles__line___j0lQH {
+  width: 40px;
+  height: 2px;
+  border-radius: 5px;
+  background-color: #abb2bf;
+  display: block;
+  margin: 8px auto;
+  transition: opacity 0.15s ease-in-out, transform 0.15s ease-in-out; }
+
+.styles__lineOneActive___3BM_9 {
+  transform: translateY(10px) rotate(45deg); }
+
+.styles__lineTwoActive___2UrWX {
+  opacity: 0; }
+
+.styles__lineThreeActive___1m5Wu {
+  transform: translateY(-10px) rotate(-45deg); }
+</style><style type="text/css">.styles__back___1TFKL {
+  display: block;
+  width: 0;
+  height: 0;
+  cursor: pointer; }
+
+.styles__backActive___3R6TN {
+  width: 26px;
+  height: 30px; }
+
+.styles__arrow___1kpCd {
+  width: 30px;
+  height: 2px;
+  display: inline-block;
+  background-color: #abb2bf;
+  border-radius: 4px;
+  position: absolute;
+  left: 0;
+  top: 18px;
+  opacity: 0;
+  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out; }
+
+.styles__arrowTop___e6FQh {
+  width: 20px;
+  left: 1px;
+  transform-origin: left;
+  transform: rotate(0deg); }
+
+.styles__arrowTopActive___G0duB {
+  transform: rotate(-45deg);
+  opacity: 1; }
+
+.styles__arrowBottom___E4FYX {
+  width: 20px;
+  left: 1px;
+  transform-origin: left;
+  transform: rotate(0deg); }
+
+.styles__arrowBottomActive___3Fvdf {
+  transform: rotate(45deg);
+  opacity: 1; }
+
+.styles__arrowCenter___37zlr {
+  opacity: 0; }
+
+.styles__arrowCenterActive___KbiXg {
+  opacity: 1; }
+</style><style type="text/css">.styles__menuButton___3lczn {
+  position: absolute;
+  left: 10px;
+  top: 10px; }
+
+.styles__backButton___7UJJw {
+  position: absolute;
+  left: 60px;
+  top: 10px; }
+
+.styles__aboutButton___52gZu {
+  position: absolute;
+  right: 10px;
+  top: 13px;
+  cursor: pointer;
+  width: 50px;
+  height: 30px; }
+</style><style type="text/css">.styles__videoContainer___1Lzhv {
+  max-width: 640px;
+  height: auto;
+  margin: 0 auto 30px auto; }
+
+.styles__projectImage___J_jiW {
+  width: 100%;
+  height: auto; }
+
+.styles__subtext___2rZPJ {
+  font-size: 0.8em;
+  margin: 0 0 40px 0;
+  font-style: italic;
+  text-indent: 20px; }
+
+.styles__subtextDescription___5Ue_P {
+  font-size: 0.8em;
+  margin: 0 0 10px 0;
+  font-style: italic;
+  text-indent: 20px; }
+
+.styles__textBlock___1FFE7 {
+  font-size: 0.9em;
+  margin: 14px 0; }
+
+.styles__textBlockCaption___2qCcR {
+  margin: 5px 0 30px 0; }
+
+.styles__italic___2fEW_ {
+  font-style: italic; }
+
+ul {
+  margin: 0;
+  padding-left: 20px; }
+
+a {
+  text-decoration: underline; }
+</style><style type="text/css">.styles__container___Q8_m7 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around; }
+
+.styles__header___2VROl {
+  padding: 10px 0 20px 0; }
+
+.styles__headerTitle___29W7N {
+  margin: 0 0 10px 0; }
+
+.styles__headerSubTitle___1CLoy {
+  text-align: center; }
+
+.styles__projectThumbnail___1hTkM {
+  border: 2px solid black;
+  width: 220px;
+  height: 220px;
+  margin: 20px;
+  cursor: pointer;
+  color: #FAFAFA;
+  display: flex;
+  flex-flow: column;
+  flex-wrap: nowrap;
+  justify-content: space-between; }
+
+.styles__projectLabel___D-7_C {
+  background-color: rgba(255, 255, 255, 0.6);
+  color: #000;
+  font-size: 1.4em;
+  font-weight: bold;
+  margin: 0;
+  padding: 8px; }
+
+.styles__projectDescription___3oRuh {
+  background-color: rgba(32, 32, 32, 0.5);
+  margin: 0;
+  padding: 8px;
+  color: #FAFAFA; }
+</style><style type="text/css">.styles__container___GsCoo {
+  position: absolute;
+  left: 30px;
+  top: 60px;
+  width: calc(100% - 60px);
+  height: calc(100% - 90px);
+  background-color: #D8D8D8;
+  border-radius: 2px;
+  color: #282c34;
+  overflow-y: scroll;
+  opacity: 0;
+  transform-origin: top;
+  transform: translateY(20px);
+  transition: transform 0.2s ease-out, opacity 0.2s ease-out; }
+
+.styles__containerActive___2qGve {
+  transform: translateY(0px);
+  opacity: 1; }
+
+.styles__contentContainer___3Tb2R {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 10px; }
+</style><style type="text/css">.styles__container___1l0SO {
+  position: absolute;
+  right: 30px;
+  top: 60px;
+  width: calc(100% - 60px);
+  max-height: calc(100% - 90px);
+  max-width: 560px;
+  background-color: #D8D8D8;
+  border-radius: 2px;
+  color: #282c34;
+  overflow-y: scroll;
+  opacity: 0;
+  transform-origin: top;
+  transform: translateY(-10px);
+  transition: transform 0.2s ease-out, opacity 0.2s ease-out; }
+
+.styles__containerActive___1dUVR {
+  transform: translateY(0px);
+  opacity: 1; }
+
+.styles__contentContainer___1ubgH {
+  padding: 10px 20px 20px 20px; }
+
+.styles__header___1-i53 {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+  flex-wrap: wrap; }
+
+.styles__headerTitle___Srlqu {
+  margin: 0 0 -4px 0;
+  text-align: left;
+  margin-right: 10px; }
+
+.styles__headerSubTitle___1Mu0E {
+  font-size: 0.95em; }
+
+.styles__aboutText___3rLT7 {
+  margin: 8px 0; }
+</style><style type="text/css">.styles__container___1_pn_ {
+  height: inherit; }
+
+.styles__home___3viHg {
+  width: 100%;
+  height: 100%; }
+
+.styles__content___1IZei {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100% - 40px); }
+</style><style type="text/css">html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Nunito", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  background-color: #282c34;
+  color: #abb2bf;
+  overflow: hidden; }
+
+h1 {
+  margin: 18px 0;
+  padding: 0;
+  text-align: center;
+  font-size: 1.3em;
+  font-weight: 400;
+  font-style: italic; }
+
+p {
+  margin: 0;
+  padding: 0; }
+
+button {
+  border: none;
+  outline: none;
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  cursor: pointer; }
+
+a:link {
+  color: inherit; }
+
+a:active {
+  color: inherit; }
+
+a:visited {
+  color: inherit; }
+
+a:hover {
+  color: inherit; }
+
+iframe {
+  width: 100%;
+  margin: 0 auto; }
+</style></head>
+  <body>
+    <div id="root"><div class="styles__container___1_pn_"><div class="styles__home___3viHg"><canvas width="963" height="909" style="width: 963px; height: 909px;"></canvas><div><div title="Shuffle Animation" class="styles__shuffleButton___bd0vU"><svg class="styles__svg___3x5LQ" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" version="1.1"><path d="M10 30 Q 50 30, 50 50 T 90 70" stroke-width="3" stroke="#abb2bf" stroke-linecap="round" fill="transparent"></path><circle cx="90" cy="70" r="6" stroke="#abb2bf" fill="#abb2bf"></circle><path d="M10 70 Q 50 70, 50 50 T 90 30" stroke="#282c34" stroke-width="14" stroke-linecap="round" fill="transparent"></path><path d="M10 70 Q 50 70, 50 50 T 90 30" stroke-width="3" stroke="#EEE" stroke-linecap="round" fill="transparent"></path><circle cx="90" cy="30" r="6" stroke-width="2" stroke="#EEE" fill="#282c34"></circle></svg></div><div class="styles__aboutButton___3e6e8" title="About Animation"><span class="styles__bar___NkWZz styles__barLeft___29XRY "></span><span class="styles__bar___NkWZz styles__barRight___3wQAp "></span></div></div><div class="styles__about___2YBpf "><p><span>This animation is an approximation of an image using</span><a href="http://localhost:3000/">simulated annealing.</a><span></span></p></div></div><div><div class="undefined undefined"><div class="styles__menuButton___3lczn styles__hamburger___1w9st"><span class="styles__line___j0lQH "></span><span class="styles__line___j0lQH "></span><span class="styles__line___j0lQH "></span></div><div class="styles__backButton___7UJJw styles__back___1TFKL "><span class="styles__arrow___1kpCd styles__arrowTop___e6FQh "></span><span class="styles__arrow___1kpCd styles__arrowBottom___E4FYX "></span><span class="styles__arrow___1kpCd styles__arrowCenter___37zlr "></span></div><div class="styles__aboutButton___52gZu" title="About"><span class="styles__bar___NkWZz styles__barLeft___29XRY styles__barLeftActive___1JC_K"></span><span class="styles__bar___NkWZz styles__barRight___3wQAp styles__barRightActive___1EOSN"></span></div></div></div></div></div>
+  <script type="text/javascript" src="./LukeAnderson_files/vendor.bundle.js"></script><script type="text/javascript" src="./LukeAnderson_files/main.bundle.js"></script>
+
+</body></html>

@@ -16,7 +16,7 @@ function getStateFromLocation(path) {
   return {
     menuIsOpen: path.indexOf('/projects') > -1,
     aboutIsClosed: path.indexOf('/about') < 0,
-    backButtonIsShowing: path.indexOf('/projects/') > -1
+    backButtonIsShowing: /\/projects\/(.+)/.test(path)
   };
 }
 
@@ -52,8 +52,14 @@ class Menu extends Component {
   };
 
   handleProjectBackClick = () => {
-    const path = this.state.aboutIsClosed ? '/about' : '/';
-    this.props.history.goBack(path);
+    if (this.props.history.length < 3) {
+      console.log('go to projects');
+      this.props.history.push('/projects');
+    }
+    else {
+      console.log('pop');
+      this.props.history.goBack();
+    }
   };
 
   render() {
@@ -67,7 +73,7 @@ class Menu extends Component {
         />
         <Back
           isActive={this.state.backButtonIsShowing}
-          handleClick={() => this.props.history.goBack()}
+          handleClick={this.handleProjectBackClick}
           className={styles.backButton} />
         <CarretVertical
           isActive={this.state.aboutIsClosed}

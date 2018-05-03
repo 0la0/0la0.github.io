@@ -51,6 +51,11 @@ export default class AnnealingSolution {
     this.height = height;
     this.greyScaleValue = Math.random();
     this.mesh = getRandomMesh(this.greyScaleValue);
+    this.mesh.position.z = this.greyScaleValue * 0.05
+    this.reset(searchSpace);
+  }
+
+  reset(searchSpace) {
     this.mesh.visible = false;
     this.temperature = 10;
     this.currentDistance = 99999;
