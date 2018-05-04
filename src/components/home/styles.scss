@@ -39,10 +39,11 @@ $left-buffer: 30px;
   position: absolute;
   right: $left-buffer;
   bottom: $top-buffer;
-  // padding: 20px;
   border-radius: 2px;
   width: calc(100% - #{$left-buffer * 2});
+  max-height: calc(100% - #{$top-buffer + $left-buffer});
   max-width: 360px;
+  overflow-y: scroll;
   background-color: $color-grey-020;
   opacity: 0;
   transform: translateY(10px);
@@ -53,4 +54,8 @@ $left-buffer: 30px;
 .aboutActive {
   opacity: 1;
   transform: translateY(0px);
+}
+
+.aboutContent {
+  padding: 10px 20px;
 }

@@ -1,30 +1,36 @@
+function copyToArray(copyTo, copyFrom, startIndex, numElements) {
+  const min = Math.min(startIndex + numElements, copyFrom.length)
+  for (let i = startIndex; i < min; i++) {
+    copyFrom[i].setVisibility(true);
+    copyTo.push(copyFrom[i]);
+  }
+}
+
 export default class SimulatedAnnealing {
   constructor(searchSpace, candidateQueue, numActiveCandidates, width, height) {
     this.searchSpace = searchSpace;
     this.candidateQueue = candidateQueue;
     this.searchSize = this.candidateQueue.length;
-    // console.log('initialSize', this.searchSize);
     this.numSettledCandidates = 0;
     this.width = width;
     this.height = height;
-    this.candidates = this.candidateQueue.splice(0, numActiveCandidates);
-    this.candidates.forEach(candidate => candidate.setVisibility(true));
+    this.candidates = [];
+    copyToArray(this.candidates, this.candidateQueue, this.numSettledCandidates, numActiveCandidates);
   }
 
   iterate() {
-    // TODO: make more memory efficient
-    const settledCandidates = this.candidates.filter(candidate => candidate.isSettled);
-    this.candidates = this.candidates.filter(candidate => !candidate.isSettled);
-    this.candidates.forEach((candidate) => candidate.iterate(this.searchSpace));
-    const newCandidates = this.candidateQueue.splice(0, settledCandidates.length);
-    newCandidates.forEach(candidate => {
-      candidate.setVisibility(true)
-      this.candidates.push(candidate);
-    });
-    this.numSettledCandidates += settledCandidates.length;
-    return this.numSettledCandidates === this.searchSize;
-  }
+    let numSettled = 0;
+    for (let i = this.candidates.length - 1; i >= 0; i--) {
+      if (this.candidates[i].isSettled) {
+        numSettled++;
+        this.candidates.splice(i, 1);
+      } else {
+        this.candidates[i].iterate(this.searchSpace);
+      }
+    }
 
-  // reset() {
-  // }
+    copyToArray(this.candidates, this.candidateQueue, this.numSettledCandidates, numSettled);
+    this.numSettledCandidates += numSettled;
+    return this.numSettledCandidates >= this.searchSize;
+  }
 }

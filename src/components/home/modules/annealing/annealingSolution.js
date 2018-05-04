@@ -47,18 +47,18 @@ function getPositionFromSearchSpace(searchSpace, index, width, height) {
 
 export default class AnnealingSolution {
   constructor(width, height, searchSpace) {
-    this.width = width;
-    this.height = height;
     this.greyScaleValue = Math.random();
     this.mesh = getRandomMesh(this.greyScaleValue);
     this.mesh.position.z = this.greyScaleValue * 0.05
-    this.reset(searchSpace);
   }
 
-  reset(searchSpace) {
+  reset(searchSpace, width, height) {
+    this.width = width;
+    this.height = height;
     this.mesh.visible = false;
     this.temperature = 10;
     this.currentDistance = 99999;
+    this.isSettled = false;
     this.currentSolution = generateNewSolution(searchSpace);
     searchSpace[this.currentSolution].isOccupied = true;
   }

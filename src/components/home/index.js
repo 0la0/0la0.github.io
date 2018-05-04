@@ -80,7 +80,9 @@ class Home extends Component {
         <canvas ref={ele => this.canvasElement = ele} />
         { this.state.iconsAreVisible ? this.renderIcons() : null }
         <div className={`${styles.about} ${this.state.aboutIsShowing ? styles.aboutActive : ''}`}>
-          { graphicsManager.getAboutAnimationText() }
+          <div className={styles.aboutContent}>
+            { graphicsManager.getAboutAnimationText() }
+          </div>
         </div>
       </div>
     );

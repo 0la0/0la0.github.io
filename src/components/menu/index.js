@@ -53,11 +53,9 @@ class Menu extends Component {
 
   handleProjectBackClick = () => {
     if (this.props.history.length < 3) {
-      console.log('go to projects');
       this.props.history.push('/projects');
     }
     else {
-      console.log('pop');
       this.props.history.goBack();
     }
   };
