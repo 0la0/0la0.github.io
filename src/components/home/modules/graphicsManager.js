@@ -37,7 +37,7 @@ class GraphicsManager {
       new Pso(canvas),
       new ConnectedGraph(canvas),
     ];
-    this.activeIndex = 0;
+    this.activeIndex = this.getRandomSceneIndex();
     this.activeScene = this.scenes[this.activeIndex];
     this.onResize();
     return this;

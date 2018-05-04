@@ -34,11 +34,12 @@ $left-buffer: 30px;
 }
 
 .header {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: baseline;
-  flex-wrap: wrap;
+  // display: flex;
+  // flex-direction: row;
+  // justify-content: flex-start;
+  // align-items: baseline;
+  // flex-wrap: wrap;
+  margin-bottom: 15px;
 }
 
 .headerTitle {

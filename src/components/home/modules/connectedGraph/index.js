@@ -43,9 +43,12 @@ export default class ConnectedGraph {
 
   getAboutAnimationText() {
     return(
-      <div>
-        This is about connected graphs
-      </div>
+      <p>
+        An animation of a pulsating &nbsp;
+        <a href="https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)">
+          Graph
+        </a>.
+      </p>
     );
   }
 

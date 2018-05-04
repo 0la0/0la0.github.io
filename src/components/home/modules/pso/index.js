@@ -25,9 +25,19 @@ export default class Pso {
 
   getAboutAnimationText() {
     return (
-      <div>
-        This is an animation about PSO
-      </div>
+      <p>
+        This animation is a visualization of the&nbsp;
+        <a href="https://en.wikipedia.org/wiki/Particle_swarm_optimization">
+          Particle Swarm Optimization
+        </a> algorithm.
+        The visualization is in 12 dimensions:
+        location (x, y, z), rotation (x, y, z), scale (x, y, z), and color (r, g, b).
+        There are three swams each with independent goal states.
+        It is a web based version of a &nbsp;
+        <a href="#/projects/psoViz">
+          previous project I worked on.
+        </a>
+      </p>
     );
   }
 
