@@ -7,6 +7,7 @@
     "build:webpack": "webpack --mode=production --colors --progress --display-error-details",
     "build": "npm run clean; npm run build:copy; npm run build:webpack",
     "clean": "rm -rf dist; mkdir dist",
+    "deploy": "npm run build && git-directory-deploy --directory dist --branch master",
     "start": "webpack-dev-server --mode=development --inline --colors --progress --content-base src"
   },
   "devDependencies": {
