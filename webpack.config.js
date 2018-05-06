@@ -6,7 +6,6 @@ const webpackMerge = require('webpack-merge');
 const webpackConfig = {
   context: path.resolve(__dirname, 'src'),
   entry: {
-    // vendor: './_entrypoints/vendor.js',
     main: './_entrypoints/main.js'
   },
   output: {
