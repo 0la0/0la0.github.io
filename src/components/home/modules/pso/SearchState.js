@@ -47,7 +47,6 @@ export default class SearchState {
     const clonedVector = this.vector.map(ele => ele);
     const instance = new SearchState();
     instance.vector = clonedVector;
-    // console.log('instance.vector?', instance.vector)
     return instance;
   }
 

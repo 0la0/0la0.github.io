@@ -1,5 +1,5 @@
 import { Scene } from 'three';
-import GeoContainer from './modules/geoContainer';
+import GeoContainer from './geoContainer';
 import React from 'react';
 
 const NUM_VERTEX = 50;
@@ -47,7 +47,10 @@ export default class ConnectedGraph {
         An animation of a pulsating &nbsp;
         <a href="https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)">
           Graph
-        </a>.
+        </a>.&nbsp;
+        <a href="https://github.com/0la0/0la0.github.io/tree/develop/src/components/home/modules/connectedGraph">
+          View Source
+        </a>
       </p>
     );
   }

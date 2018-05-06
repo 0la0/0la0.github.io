@@ -92,7 +92,6 @@ export default class Particle {
   update(elapsedTime) {
     if (this.isResetting) {
       this.searchState.add(this.velocity.clone().multiplyScalar(elapsedTime * ELAPSED_TIME_FACTOR));
-      // this.velocity.clamp(-SPEED_LIMIT, SPEED_LIMIT);
       updateTriangle(this.triangle, this.searchState);
       this.resetTime -= elapsedTime;
       if (this.resetTime <= 0) {

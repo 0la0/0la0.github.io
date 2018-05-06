@@ -34,7 +34,5 @@ export default class PulseBall {
     this.mesh.position.copy(
       this.v1.getPosition().lerp(this.v2.getPosition(), percent)
     );
-
-    // this.mesh.position.copy(this.v1.getPosition());
   }
 }

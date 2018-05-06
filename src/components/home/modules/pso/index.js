@@ -37,6 +37,10 @@ export default class Pso {
         <a href="#/projects/psoViz">
           previous project I worked on.
         </a>
+        &nbsp;
+        <a href="https://github.com/0la0/0la0.github.io/tree/develop/src/components/home/modules/pso">
+          View Source
+        </a>
       </p>
     );
   }
