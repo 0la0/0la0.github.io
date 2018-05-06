@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "scripts": {
-    "build:copy": "cp src/CNAME dist/CNAME; cp -r src/assets dist/assets",
+    "build:copy": "cp CNAME dist/CNAME; cp favicon.ico dist/favicon.ico; cp -r src/assets dist/assets",
     "build:webpack": "webpack --mode=production --colors --progress --display-error-details",
     "build": "npm run clean; npm run build:copy; npm run build:webpack",
     "clean": "rm -rf dist; mkdir dist",
