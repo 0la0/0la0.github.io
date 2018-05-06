@@ -11,7 +11,8 @@ const history = createHistory();
 
 function getStateFromLocation(path) {
   return {
-    aboutIsShowing: false,
+    aboutIsInDom: false,
+    aboutIsVisible: false,
     iconsAreVisible: path.length <= 3
   };
 }
@@ -53,7 +54,15 @@ class Home extends Component {
   onAboutToggle = event => {
     event.preventDefault();
     event.stopPropagation();
-    this.setState({ aboutIsShowing: !this.state.aboutIsShowing });
+    const aboutIsInDom = !this.state.aboutIsInDom;
+    if (aboutIsInDom) {
+      this.setState({ aboutIsInDom });
+      setTimeout(() => this.setState({ aboutIsVisible: aboutIsInDom }));
+    }
+    else {
+      this.setState({ aboutIsVisible: aboutIsInDom, });
+      setTimeout(() => this.setState({ aboutIsInDom }), 250);
+    }
   };
 
   renderIcons() {
@@ -64,7 +73,7 @@ class Home extends Component {
           handleClick={graphicsManager.shuffleAnimations.bind(graphicsManager)}
           className={styles.shuffleButton} />
         <CarretVertical
-          isActive={this.state.aboutIsShowing}
+          isActive={this.state.aboutIsVisible}
           handleClick={this.onAboutToggle}
           title="About Animation"
           className={styles.aboutButton} />
@@ -79,11 +88,13 @@ class Home extends Component {
         className={this.props.className}>
         <canvas ref={ele => this.canvasElement = ele} />
         { this.state.iconsAreVisible ? this.renderIcons() : null }
-        <div className={`${styles.about} ${this.state.aboutIsShowing ? styles.aboutActive : ''}`}>
-          <div className={styles.aboutContent}>
-            { graphicsManager.getAboutAnimationText() }
-          </div>
-        </div>
+        { this.state.aboutIsInDom ?
+          <div className={`${styles.about} ${this.state.aboutIsVisible ? styles.aboutActive : ''}`}>
+            <div className={styles.aboutContent}>
+              { graphicsManager.getAboutAnimationText() }
+            </div>
+          </div> : null
+        }
       </div>
     );
   }
