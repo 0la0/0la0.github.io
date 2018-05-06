@@ -1,11 +1,5 @@
 @import '~styles/index';
 
-// TODO: put in common
-$animation-params: 0.2s ease-out;
-$icon-buffer: 10px;
-$top-buffer: 60px;
-$left-buffer: 30px;
-
 .buttonContainer {
   position: absolute;
   bottom: 0;
@@ -37,18 +31,18 @@ $left-buffer: 30px;
 
 .about {
   position: absolute;
-  right: $left-buffer;
-  bottom: $top-buffer;
+  right: $pane-left-buffer;
+  bottom: $pane-top-buffer;
   border-radius: 2px;
-  width: calc(100% - #{$left-buffer * 2});
-  max-height: calc(100% - #{$top-buffer + $left-buffer});
+  width: calc(100% - #{$pane-left-buffer * 2});
+  max-height: calc(100% - #{$pane-top-buffer + $pane-left-buffer});
   max-width: 360px;
   overflow-y: scroll;
   background-color: $color-grey-020;
   opacity: 0;
   transform: translateY(10px);
   color: $color-primary;
-  transition: transform $animation-params, opacity $animation-params;
+  transition: transform $pane-animation, opacity $pane-animation;
 }
 
 .aboutActive {

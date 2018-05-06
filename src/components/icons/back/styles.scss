@@ -26,7 +26,7 @@ $arrow-size: 20px;
   left: 0;
   top: 18px;
   opacity: 0;
-  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  transition: transform $icon-animation, opacity $icon-animation;
 }
 
 .arrowTop {
