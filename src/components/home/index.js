@@ -51,18 +51,21 @@ class Home extends Component {
 
   onResize() { graphicsManager.onResize(); }
 
+  showAbout = () => {
+    this.setState({ aboutIsInDom: true });
+    setTimeout(() => this.setState({ aboutIsVisible: true }));
+  };
+
+  hideAbout = () => {
+    this.setState({ aboutIsVisible: false, });
+    setTimeout(() => this.setState({ aboutIsInDom: false }), 250);
+  };
+
   onAboutToggle = event => {
     event.preventDefault();
     event.stopPropagation();
     const aboutIsInDom = !this.state.aboutIsInDom;
-    if (aboutIsInDom) {
-      this.setState({ aboutIsInDom });
-      setTimeout(() => this.setState({ aboutIsVisible: aboutIsInDom }));
-    }
-    else {
-      this.setState({ aboutIsVisible: aboutIsInDom, });
-      setTimeout(() => this.setState({ aboutIsInDom }), 250);
-    }
+    aboutIsInDom ? this.showAbout() : this.hideAbout();
   };
 
   renderIcons() {
@@ -84,7 +87,7 @@ class Home extends Component {
   render() {
     return (
       <div
-        onClick={() => this.setState({ aboutIsShowing: false })}
+        onClick={this.hideAbout}
         className={this.props.className}>
         <canvas ref={ele => this.canvasElement = ele} />
         { this.state.iconsAreVisible ? this.renderIcons() : null }
