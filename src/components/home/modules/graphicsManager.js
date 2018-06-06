@@ -24,7 +24,7 @@ class GraphicsManager {
   }
 
   init(canvas) {
-    this.renderer = new WebGLRenderer({canvas,  antialias: false});
+    this.renderer = new WebGLRenderer({canvas,  antialias: false, alpha: true});
   	this.renderer.setClearColor(0x282c34, 1);
     this.camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.05, 7);
   	this.camera.position.z = 1;
@@ -64,7 +64,7 @@ class GraphicsManager {
   animate() {
     stats && stats.begin();
     this.orbitControls.update();
-    this.activeScene.render(this.renderer, this.camera);
+    this.activeScene.render(this.renderer, this.camera, performance.now());
     stats && stats.end();
     if (this.isInRenderLoop) {
       this.animationRequest = requestAnimationFrame(this.animate.bind(this));

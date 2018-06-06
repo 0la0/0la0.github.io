@@ -1,0 +1,16 @@
+const DIMENSIONS = {
+  POSITION_X: 0,
+  POSITION_Y: 1,
+  POSITION_Z: 2,
+  ROTATE_X: 3,
+  ROTATE_Y: 4,
+  ROTATE_Z: 5,
+  SCALE_X: 6,
+  SCALE_Y: 7,
+  SCALE_Z: 8,
+  COLOR_R: 9,
+  COLOR_G: 10,
+  COLOR_B: 11
+};
+
+export default DIMENSIONS;

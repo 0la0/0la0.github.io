@@ -5,7 +5,7 @@ export default class GoalState {
   }
 
   update(searchState) {
-    const distance = searchState.distanceToSquared(this.searchState);
+    const distance = searchState.distanceToSquared(this.searchState.vector);
     if (distance < this.bestDistance) {
       this.bestPosition = searchState;
       this.bestDistance = distance;

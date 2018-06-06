@@ -14,6 +14,8 @@ const HALF_SEARCH_SPACE_SIZE = SEARCH_SPACE_SIZE / 2;
 function generateRandomPosition() {
   return new Vector3(
     getPosNeg() * 2 * Math.random(),
+    getPosNeg() * 2 * Math.random(),
+    getPosNeg() * 2 * Math.random()
   );
 }
 
@@ -36,7 +38,7 @@ export default class Population {
     this.ttl = 2000 + TTL * Math.random();
     this.goalState.reset(new SearchState(HALF_SEARCH_SPACE_SIZE));
     this.particles.forEach(particle => {
-      particle.reset(new SearchState(HALF_SEARCH_SPACE_SIZE));
+      particle.reset(new SearchState(HALF_SEARCH_SPACE_SIZE), this.goalState.getVector().vector);
     });
   }
 

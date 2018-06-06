@@ -29,9 +29,9 @@ export default class ConnectedGraph {
     }
   }
 
-  render(renderer, camera) {
-    const elapsedTime = performance.now() - this.lastRenderTime;
-    this.lastRenderTime = performance.now();
+  render(renderer, camera, now) {
+    const elapsedTime = Math.min(now - this.lastRenderTime, 100);
+    this.lastRenderTime = now;
     this.update(elapsedTime);
     renderer.render(this.scene, camera);
   }

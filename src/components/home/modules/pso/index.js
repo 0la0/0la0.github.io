@@ -16,9 +16,9 @@ export default class Pso {
     this.lastRenderTime = performance.now();
   }
 
-  render(renderer, camera) {
-    const elapsedTime = performance.now() - this.lastRenderTime;
-    this.lastRenderTime = performance.now();
+  render(renderer, camera, now) {
+    const elapsedTime = Math.min(now - this.lastRenderTime, 100);
+    this.lastRenderTime = now;
     this.populations.forEach(population => population.update(elapsedTime));
     renderer.render(this.scene, camera);
   }
