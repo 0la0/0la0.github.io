@@ -25,47 +25,12 @@
         color: #CCC;
         font-family: Helvetica, Arial, sans-serif;
       }
-      .bouncingBall {
-        position: relative;
-        display: inline-block;
-        height: 37px;
-        width: 15px;
-      }
-      .bouncingBall:before {
-        position: absolute;
-        content: '';
-        display: block;
-        top: 0;
-        width: 15px;
-        height: 15px;
-        border-radius: 50%;
-        background-color: #CCC;
-        transform-origin: 50%;
-        animation: bounce 500ms alternate infinite ease;
-      }
-      @keyframes bounce {
-        0% {
-          top: 20px;
-          height: 5px;
-          border-radius: 40px 40px 20px 20px;
-          transform: scaleX(2);
-        }
-        35% {
-          height: 20px;
-          border-radius: 50%;
-          transform: scaleX(1);
-        }
-        100% {
-          top: 0;
-        }
-      }
     </style>
   </head>
   <body>
     <div id="root">
       <div class="loading-container">
-        <div class="bouncingBall"></div>
-        <p>Loading Web Page...</p>
+        <p>...</p>
       </div>
     </div>
   </body>

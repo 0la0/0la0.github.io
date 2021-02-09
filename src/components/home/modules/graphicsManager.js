@@ -1,7 +1,6 @@
-import 'three/OrbitControls';
 import { WebGLRenderer, PerspectiveCamera } from 'three';
 import Stats from 'stats.js';
-import { OrbitControls } from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import Annealing from './annealing';
 import Pso from './pso';
 import ConnectedGraph from './connectedGraph';
