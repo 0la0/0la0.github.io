@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
-import {
-  BrowserRouter as Router,
-  Link
-} from 'react-router-dom';
 import { withRouter } from 'react-router';
-import createHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
 import MenuButton from 'components/icons/menu';
 import Back from 'components/icons/back';
 import CarretVertical from 'components/icons/carretVertical';
 import styles from './styles.scss';
 
-const history = createHistory();
+const history = createBrowserHistory();
 
 function getStateFromLocation(path) {
   return {

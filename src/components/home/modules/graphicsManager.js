@@ -1,9 +1,9 @@
 import { WebGLRenderer, PerspectiveCamera } from 'three';
 import Stats from 'stats.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import Annealing from './annealing';
-import Pso from './pso';
-import ConnectedGraph from './connectedGraph';
+// import Annealing from './annealing';
+// import Pso from './pso';
+// import ConnectedGraph from './connectedGraph';
 
 const STATS_ENABLED = false;
 
@@ -32,9 +32,9 @@ class GraphicsManager {
     this.orbitControls.minDistance = 0.25;
     this.orbitControls.maxDistance = 3;
     this.scenes = [
-      new Annealing(canvas),
-      new Pso(canvas),
-      new ConnectedGraph(canvas),
+      // new Annealing(canvas),
+      // new Pso(canvas),
+      // new ConnectedGraph(canvas),
     ];
     this.activeIndex = this.getRandomSceneIndex();
     this.activeScene = this.scenes[this.activeIndex];
@@ -48,6 +48,7 @@ class GraphicsManager {
 
   startAnimation() {
     if (this.isInRenderLoop) { return; }
+    if (!this.activeScene) { return; }
     this.isInRenderLoop = true;
     this.orbitControls.enabled = true;
     this.activeScene.start();
@@ -73,6 +74,9 @@ class GraphicsManager {
   shuffleAnimations() {
     this.activeIndex = (this.activeIndex + 1) % this.scenes.length;
     this.activeScene = this.scenes[this.activeIndex];
+    if (!this.activeScene) {
+      return;
+    }
     this.activeScene.start();
     this.orbitControls.reset();
   }
@@ -83,7 +87,7 @@ class GraphicsManager {
     this.camera.aspect = width / height;
 		this.camera.updateProjectionMatrix();
 		this.renderer.setSize(width, height);
-    if (!this.isInRenderLoop) {
+    if (!this.isInRenderLoop && this.activeScene) {
       this.animate();
     }
   }

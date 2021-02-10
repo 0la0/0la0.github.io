@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router';
-import createHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
 import ShuffleIcon from 'components/icons/shuffle';
 import CarretVertical from 'components/icons/carretVertical';
 import graphicsManager from 'components/home/modules/graphicsManager';
 import styles from './styles.scss';
 
 const pauseRoutes = ['#/projects', '#/about'];
-const history = createHistory();
+const history = createBrowserHistory();
 
 function getStateFromLocation(path) {
   return {
