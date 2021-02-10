@@ -1,23 +1,24 @@
-import {
-  Vector3,
-  Color,
-} from 'three';
+// import {
+//   Vector3,
+//   Color,
+// } from 'three';
 import Particle from './Particle';
 import GoalState from './GoalState';
 import SearchState from './SearchState';
-import { getPosNeg, getRandomVector } from 'components/home/modules/mathUtil';
+// import { getPosNeg, getRandomVector } from 'components/home/modules/mathUtil';
+// import PsoRenderer from './PsoRenderer';
 
 const TTL = 7000;
 const SEARCH_SPACE_SIZE = 1;
 const HALF_SEARCH_SPACE_SIZE = SEARCH_SPACE_SIZE / 2;
 
-function generateRandomPosition() {
-  return new Vector3(
-    getPosNeg() * 2 * Math.random(),
-    getPosNeg() * 2 * Math.random(),
-    getPosNeg() * 2 * Math.random()
-  );
-}
+// function generateRandomPosition() {
+//   return new Vector3(
+//     getPosNeg() * 2 * Math.random(),
+//     getPosNeg() * 2 * Math.random(),
+//     getPosNeg() * 2 * Math.random()
+//   );
+// }
 
 export default class Population {
   constructor(size) {
@@ -27,11 +28,17 @@ export default class Population {
       const searchState = new SearchState(HALF_SEARCH_SPACE_SIZE);
       return new Particle(searchState, this.goalState);
     });
+    // this.psoRenderer = new PsoRenderer(this.particles);
     this.reset();
   }
 
+  getParticles() {
+    return this.particles;
+  }
+
   getMesh() {
-    return this.particles.map(particle => particle.getMesh());
+    // return this.particles.map(particle => particle.getMesh());
+    return [];
   }
 
   reset() {

@@ -1,6 +1,7 @@
 import { Scene } from 'three';
 import React from 'react';
 import Population from './Population';
+import PsoRenderer from './PsoRenderer';
 
 export default class Pso {
   constructor() {
@@ -11,8 +12,11 @@ export default class Pso {
       new Population(10)
     ];
 
-    this.populations.forEach(population =>
-      population.getMesh().forEach(mesh => this.scene.add(mesh)));
+    // this.populations.forEach(population =>
+    //   population.getMesh().forEach(mesh => this.scene.add(mesh)));
+    const allParticles = this.populations.flatMap(population => population.getParticles());
+    this.psoRenderer = new PsoRenderer(allParticles);
+    this.scene.add(this.psoRenderer.getMesh());
     this.lastRenderTime = performance.now();
   }
 
@@ -20,6 +24,8 @@ export default class Pso {
     const elapsedTime = Math.min(now - this.lastRenderTime, 100);
     this.lastRenderTime = now;
     this.populations.forEach(population => population.update(elapsedTime));
+    const allParticles = this.populations.flatMap(population => population.getParticles());
+    this.psoRenderer.update(allParticles);
     renderer.render(this.scene, camera);
   }
 

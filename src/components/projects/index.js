@@ -19,7 +19,7 @@ class Projects extends Component {
     this.remoteRouteChangeListener();
   }
 
-  render() {
+  render() {  
     const styleString = `${styles.container} ${this.props.isActive ? styles.containerActive : ''}`;
     return (
       <div

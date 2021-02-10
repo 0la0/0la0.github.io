@@ -2,7 +2,7 @@ import { WebGLRenderer, PerspectiveCamera } from 'three';
 import Stats from 'stats.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 // import Annealing from './annealing';
-// import Pso from './pso';
+import Pso from './pso';
 // import ConnectedGraph from './connectedGraph';
 
 const STATS_ENABLED = false;
@@ -33,7 +33,7 @@ class GraphicsManager {
     this.orbitControls.maxDistance = 3;
     this.scenes = [
       // new Annealing(canvas),
-      // new Pso(canvas),
+      new Pso(canvas) ,
       // new ConnectedGraph(canvas),
     ];
     this.activeIndex = this.getRandomSceneIndex();
