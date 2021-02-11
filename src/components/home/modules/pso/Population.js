@@ -1,24 +1,12 @@
-// import {
-//   Vector3,
-//   Color,
-// } from 'three';
 import Particle from './Particle';
 import GoalState from './GoalState';
 import SearchState from './SearchState';
-// import { getPosNeg, getRandomVector } from 'components/home/modules/mathUtil';
-// import PsoRenderer from './PsoRenderer';
+import { getRandomNumberInRange, } from '../mathUtil';
 
-const TTL = 7000;
+const BASE_TTL = 2000;
+const TTL_RANGE = 9000;
 const SEARCH_SPACE_SIZE = 1;
 const HALF_SEARCH_SPACE_SIZE = SEARCH_SPACE_SIZE / 2;
-
-// function generateRandomPosition() {
-//   return new Vector3(
-//     getPosNeg() * 2 * Math.random(),
-//     getPosNeg() * 2 * Math.random(),
-//     getPosNeg() * 2 * Math.random()
-//   );
-// }
 
 export default class Population {
   constructor(size) {
@@ -28,7 +16,6 @@ export default class Population {
       const searchState = new SearchState(HALF_SEARCH_SPACE_SIZE);
       return new Particle(searchState, this.goalState);
     });
-    // this.psoRenderer = new PsoRenderer(this.particles);
     this.reset();
   }
 
@@ -36,13 +23,8 @@ export default class Population {
     return this.particles;
   }
 
-  getMesh() {
-    // return this.particles.map(particle => particle.getMesh());
-    return [];
-  }
-
   reset() {
-    this.ttl = 2000 + TTL * Math.random();
+    this.ttl = BASE_TTL + getRandomNumberInRange(TTL_RANGE);
     this.goalState.reset(new SearchState(HALF_SEARCH_SPACE_SIZE));
     this.particles.forEach(particle => {
       particle.reset(new SearchState(HALF_SEARCH_SPACE_SIZE), this.goalState.getVector().vector);

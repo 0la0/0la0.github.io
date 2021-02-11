@@ -2,19 +2,18 @@ import { Scene } from 'three';
 import React from 'react';
 import Population from './Population';
 import PsoRenderer from './PsoRenderer';
+import { getRandomNumberInRange, } from '../mathUtil';
 
 export default class Pso {
   constructor() {
     this.scene = new Scene();
     this.populations = [
-      new Population(40),
-      new Population(20),
-      new Population(10)
+      new Population(60 + getRandomNumberInRange(25)),
+      new Population(50 + getRandomNumberInRange(25)),
+      new Population(40 + getRandomNumberInRange(25))
     ];
-
-    // this.populations.forEach(population =>
-    //   population.getMesh().forEach(mesh => this.scene.add(mesh)));
     const allParticles = this.populations.flatMap(population => population.getParticles());
+    this.allParticles = allParticles;
     this.psoRenderer = new PsoRenderer(allParticles);
     this.scene.add(this.psoRenderer.getMesh());
     this.lastRenderTime = performance.now();
@@ -24,8 +23,7 @@ export default class Pso {
     const elapsedTime = Math.min(now - this.lastRenderTime, 100);
     this.lastRenderTime = now;
     this.populations.forEach(population => population.update(elapsedTime));
-    const allParticles = this.populations.flatMap(population => population.getParticles());
-    this.psoRenderer.update(allParticles);
+    this.psoRenderer.update(this.allParticles);
     renderer.render(this.scene, camera);
   }
 

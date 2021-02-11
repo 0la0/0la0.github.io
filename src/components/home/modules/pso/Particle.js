@@ -1,8 +1,8 @@
 import SearchState from './SearchState';
 import PersonalBest from './PersonalBest';
 
-const PERSONAL_COEFFICIENT = 0.75;
-const GLOBAL_COEFFICIENT = 1;
+const PERSONAL_COEFFICIENT = 0.95;
+const GLOBAL_COEFFICIENT = 1.2;
 const SPEED_LIMIT = 0.05;
 const ELAPSED_TIME_FACTOR = 0.001;
 
@@ -11,7 +11,7 @@ export default class Particle {
     this.searchState = searchState;
     this.goalState = goalState;
     this.personalBest = new PersonalBest(searchState, this.goalState.getVector());
-    this.velocity = new SearchState(1); // TODO: half search size??
+    this.velocity = new SearchState(1);
   }
 
   getState() {

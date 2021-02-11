@@ -2,6 +2,8 @@ import {
   Vector3,
 } from 'three';
 
+const TWO_PI = 2 * Math.PI;
+
 function getPosNeg() {
   return Math.random() < 0.5 ? -1 : 1;
 }
@@ -18,7 +20,14 @@ function getRandomVector(magnitude) {
   );
 }
 
+function getRandomNumberInRange(range = 0) {
+  return Math.floor(range * Math.random());
+}
+
 export {
+  clamp,
+  getRandomNumberInRange,
+  getRandomVector,
   getPosNeg,
-  getRandomVector
+  TWO_PI,
 };

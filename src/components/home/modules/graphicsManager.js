@@ -23,7 +23,7 @@ class GraphicsManager {
   }
 
   init(canvas) {
-    this.renderer = new WebGLRenderer({canvas,  antialias: false, alpha: true});
+    this.renderer = new WebGLRenderer({canvas,  antialias: true , alpha: true});
   	this.renderer.setClearColor(0x282c34, 1);
     this.camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.05, 7);
   	this.camera.position.z = 1;

@@ -49,5 +49,4 @@ export default class SearchState {
     instance.vector = clonedVector;
     return instance;
   }
-
 }
