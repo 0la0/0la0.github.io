@@ -1,39 +1,27 @@
-import {
-  Vector3,
-  SphereGeometry,
-  LineBasicMaterial,
-  Mesh
-} from 'three';
-import { getPosNeg } from 'components/home/modules/mathUtil';
+import { Vector3, } from 'three';
+import { getRandomVector } from 'components/home/modules/mathUtil';
 
 const ELAPSED_TIME_FACTOR = 0.02;
 const CENTROID_FACTOR = 0.5;
 
 export default class Vertex {
-
   constructor() {
-    const geometry = new SphereGeometry(0.003, 6, 6);
-    const material = new LineBasicMaterial({color: 0xABB2Bf});
-    this.mesh = new Mesh(geometry, material);
+    this.position = new Vector3();
     this.amplitude = 0.01 * Math.random();
     this.reset();
   }
 
   reset() {
-    this.centroid = this.goal = new Vector3(
-      CENTROID_FACTOR * getPosNeg() * Math.random(),
-      CENTROID_FACTOR * getPosNeg() * Math.random(),
-      CENTROID_FACTOR * getPosNeg() * Math.random()
-    );
+    this.centroid = getRandomVector(CENTROID_FACTOR);
     this.goal = this.centroid.clone();
   }
 
   getPosition() {
-    return this.mesh.position.clone();
+    return this.position;
   }
 
   update(elapsedTime, totalTime) {
-    this.mesh.position.add(
+    this.position.add(
       this.goal.clone()
         .sub(this.getPosition())
         .multiplyScalar(ELAPSED_TIME_FACTOR * Math.random() * elapsedTime)

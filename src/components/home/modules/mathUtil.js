@@ -24,6 +24,10 @@ function getRandomNumberInRange(range = 0) {
   return Math.floor(range * Math.random());
 }
 
+// function getRandomNumberInPosNegRange(range = 0) {
+//   return Math.floor(range * Math.random());
+// }
+
 export {
   clamp,
   getRandomNumberInRange,

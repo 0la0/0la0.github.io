@@ -1,6 +1,6 @@
 import { Scene } from 'three';
-import GeoContainer from './geoContainer';
 import React from 'react';
+import GeoContainer from './geoContainer';
 
 const NUM_VERTEX = 50;
 
