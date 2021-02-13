@@ -1,8 +1,7 @@
 import { Scene } from 'three';
 import React from 'react';
 import GeoContainer from './geoContainer';
-
-const NUM_VERTEX = 50;
+import { NUM_VERTEX, } from './ConnectedGraphConstants';
 
 export default class ConnectedGraph {
 
@@ -12,21 +11,11 @@ export default class ConnectedGraph {
     this.geoContainer.getMeshList().forEach(mesh => this.scene.add(mesh));
     this.lastRenderTime = performance.now();
     this.totalTime = 0;
-    this.reset();
-  }
-
-  reset() {
-    // this.geoContainer.reset();
-    this.timeToReset = 2000 + 9000 * Math.random();
   }
 
   update(elapsedTime) {
     this.totalTime += elapsedTime;
-    // this.timeToReset -= elapsedTime;
     this.geoContainer.update(elapsedTime, this.totalTime);
-    // if (this.timeToReset <= 0) {
-    //   this.reset();
-    // }
   }
 
   render(renderer, camera, now) {

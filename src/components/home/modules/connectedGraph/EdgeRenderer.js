@@ -9,14 +9,14 @@ import {
   Quaternion,
   Vector3,
 } from 'three';
+import { EDGE_RADIUS, } from './ConnectedGraphConstants';
 
-const RADIUS = 0.001;
 const HEIGHT = 1;
 const axis = new Vector3(0, 1, 0);
 
 export default class EdgeRenderer {
   constructor(edges) {
-    const cylinderGeometry = new CylinderBufferGeometry(RADIUS, RADIUS, HEIGHT, 3);
+    const cylinderGeometry = new CylinderBufferGeometry(EDGE_RADIUS, EDGE_RADIUS, HEIGHT, 3);
     const cylinderMaterial = new MeshBasicMaterial({ side: FrontSide, });
     cylinderGeometry.translate(0, HEIGHT / 2, 0);
     cylinderMaterial.transparent = true;
@@ -30,13 +30,14 @@ export default class EdgeRenderer {
     return this.cylinderMesh;
   }
 
-  update(edges) {
+  update(edges, elapsedTime, rotation) {
     const objectProxy = new Object3D();
     const quaternion = new Quaternion();
+    const updatedRotation = this.cylinderMesh.rotation.toVector3().add(rotation);
     edges.forEach((edge, index) => {
       const colorIndex = index * 3;
       const distance = edge.p1.distanceTo(edge.p2);
-      const direction = edge.p2.clone().sub(edge.p1.clone());
+      const direction = edge.p2.clone().sub(edge.p1);
       const scale = new Vector3(1, distance, 1);
       quaternion.setFromUnitVectors(axis, direction.clone().normalize());
       objectProxy.setRotationFromQuaternion(quaternion);
@@ -50,5 +51,6 @@ export default class EdgeRenderer {
     });
     this.cylinderMesh.geometry.setAttribute('color', new InstancedBufferAttribute(this.colorBuffer, 3));
     this.cylinderMesh.instanceMatrix.needsUpdate = true;
+    this.cylinderMesh.rotation.setFromVector3(updatedRotation);
   }
 }
