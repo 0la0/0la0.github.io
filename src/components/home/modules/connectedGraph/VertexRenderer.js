@@ -7,12 +7,12 @@ import {
   Color,
 } from 'three';
 
-const RADIUS = 0.01;
+const RADIUS = 0.005;
 
 export default class VertexRenderer {
   constructor(vertices) {
     const sphereGeometry = new SphereBufferGeometry(RADIUS, 6, 6)
-    const sphereMaterial = new MeshBasicMaterial({ side: FrontSide, color: new Color(0.7, 0.75, 0.8), });
+    const sphereMaterial = new MeshBasicMaterial({ side: FrontSide, color: new Color(0.75, 0.8, 0.95), });
     this.colorBuffer = new Float32Array(vertices.length * 3);
     this.sphereMesh = new InstancedMesh(sphereGeometry, sphereMaterial, vertices.length);
   }

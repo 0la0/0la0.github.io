@@ -2,15 +2,15 @@ import { Scene } from 'three';
 import React from 'react';
 import Population from './Population';
 import PsoRenderer from './PsoRenderer';
-import { getRandomNumberInRange, } from '../mathUtil';
+import { getRandomIntegerInRange, } from '../mathUtil';
 
 export default class Pso {
   constructor() {
     this.scene = new Scene();
     this.populations = [
-      new Population(60 + getRandomNumberInRange(25)),
-      new Population(50 + getRandomNumberInRange(25)),
-      new Population(40 + getRandomNumberInRange(25))
+      new Population(60 + getRandomIntegerInRange(25)),
+      new Population(50 + getRandomIntegerInRange(25)),
+      new Population(40 + getRandomIntegerInRange(25))
     ];
     const allParticles = this.populations.flatMap(population => population.getParticles());
     this.allParticles = allParticles;

@@ -16,17 +16,17 @@ export default class ConnectedGraph {
   }
 
   reset() {
-    this.geoContainer.reset();
+    // this.geoContainer.reset();
     this.timeToReset = 2000 + 9000 * Math.random();
   }
 
   update(elapsedTime) {
     this.totalTime += elapsedTime;
-    this.timeToReset -= elapsedTime;
+    // this.timeToReset -= elapsedTime;
     this.geoContainer.update(elapsedTime, this.totalTime);
-    if (this.timeToReset <= 0) {
-      this.reset();
-    }
+    // if (this.timeToReset <= 0) {
+    //   this.reset();
+    // }
   }
 
   render(renderer, camera, now) {

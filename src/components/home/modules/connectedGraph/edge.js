@@ -20,15 +20,14 @@ export default class Edge {
   }
 
   update(elapsedTime, totalTime) {
+    const COLOR_FACTOR = 0.5 + this.amplitude * Math.sin(totalTime) + 0.5;
     const p1 = this.v1.getPosition();
     const p2 = this.v2.getPosition();
     this.p1.set(p1.x, p1.y, p1.z);
     this.p2.set(p2.x, p2.y, p2.z);
-    
-    const COLOR_FACTOR = 0.5 + this.amplitude * Math.sin(totalTime) + 0.5;
-    // this.line.material.color.r = 1 - COLOR_FACTOR * this.r;
-    // this.line.material.color.g = 1 - COLOR_FACTOR * this.g;
-    // this.line.material.color.b = 1 - COLOR_FACTOR * this.b;
+    this.color.r = 1 - COLOR_FACTOR * this.r;
+    this.color.g = 1 - COLOR_FACTOR * this.g;
+    this.color.b = 1 - COLOR_FACTOR * this.b;
   }
 
 }
