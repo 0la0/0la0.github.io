@@ -1,10 +1,11 @@
-import { Scene } from 'three';
+import { Raycaster, Scene, Vector2 } from 'three';
 import React from 'react';
 import { getRandomIntegerInRange } from 'components/home/modules/mathUtil';
 import { loadImage, getImageData, getGreyScaleArray } from 'components/home/modules/imageUtil';
 import AnnealingSolution from './annealingSolution';
 import SimulatedAnnealing from './simulatedAnnealing';
 import AnnealingRenderer from './AnnealingRenderer';
+import ImagePreview from './ImagePreview';
 import { NUM_CANDIDATES, NUM_ACTIVE_CANDIDATES, } from './AnnealingConstants';
 
 // TODO: replace images
@@ -22,7 +23,7 @@ function loadImageTexture(imagePath) {
       Promise.resolve(imgDims),
       getGreyScaleArray(imageData)
     ]))
-    .then(([imgDims, greyScaleArray]) => Promise.resolve({ imgDims, greyScaleArray }));
+    .then(([imgDims, greyScaleArray]) => Promise.resolve({ imgDims, greyScaleArray, imagePath, }));
 }
 
 
@@ -39,22 +40,31 @@ export default class AnnealingPhotos {
     Promise.all(loadImages)
       .then(imageData => {
         this.imageData = imageData;
-        console.log('imageData', imageData);
-        this.startNewImage();
+        this.startNewImage(imageData);
       });
     this.frameCount = 0;
+    this.isActive = false;
+    this.raycaster = new Raycaster();
+    this.lastRenderTime = performance.now();
   }
 
   startNewImage() {
-    const { imgDims, greyScaleArray } = this.imageData[this.activeIndex];
+    const { imgDims, greyScaleArray, imagePath } = this.imageData[this.activeIndex];
     const searchSpace = greyScaleArray.map((value, index) => ({ value, index, isOccupied: false }));
     this.candidateQueue.forEach(candidate => candidate.reset(searchSpace, imgDims.width, imgDims.height));
     this.simulatedAnnealing = new SimulatedAnnealing(searchSpace, this.candidateQueue, NUM_ACTIVE_CANDIDATES, imgDims.width, imgDims.height);
     this.annealingRenderer = new AnnealingRenderer(this.candidateQueue);
     this.scene.add(this.annealingRenderer.getMesh());
+
+    const imgWidth = 0.75;
+    const imgHeight = 0.5;
+    this.imagePreview = new ImagePreview(imgWidth, imgHeight, imagePath);
+    this.imagePreview.getMesh().forEach(mesh => this.scene.add(mesh));
   }
 
-  update() {
+  update(now) {
+    const elapsedTime = Math.min(now - this.lastRenderTime, 100);
+    this.lastRenderTime = now;
     if (!this.simulatedAnnealing) { return; }
     this.simulatedAnnealing.iterate();
     // if (this.simulatedAnnealing.iterate()) {
@@ -64,10 +74,11 @@ export default class AnnealingPhotos {
     if (this.annealingRenderer && (this.frameCount++ % 3 === 0)) {
       this.annealingRenderer.update();
     }
+    this.imagePreview.update(elapsedTime);
   }
 
-  render(renderer, camera) {
-    this.update();
+  render(renderer, camera, now) {
+    this.update(now);
     renderer.render(this.scene, camera);
   }
 
@@ -88,4 +99,8 @@ export default class AnnealingPhotos {
   }
 
   start() {}
+
+  onClick(event, camera) {
+    this.imagePreview?.onClick(event, camera);
+  }
 }

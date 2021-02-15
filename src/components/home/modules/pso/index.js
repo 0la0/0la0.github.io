@@ -52,4 +52,6 @@ export default class Pso {
   start() {
     this.lastRenderTime = performance.now();
   }
+
+  onClick() {}
 }

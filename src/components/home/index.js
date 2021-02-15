@@ -55,7 +55,8 @@ class Home extends Component {
     setTimeout(() => this.setState({ aboutIsVisible: true }));
   };
 
-  hideAbout = () => {
+  handleClick = (event) => {
+    graphicsManager.onClick(event);
     this.setState({ aboutIsVisible: false, });
     setTimeout(() => this.setState({ aboutIsInDom: false }), 250);
   };
@@ -86,7 +87,7 @@ class Home extends Component {
   render() {
     return (
       <div
-        onClick={this.hideAbout}
+        onClick={this.handleClick}
         className={this.props.className}>
         <canvas ref={ele => this.canvasElement = ele} />
         { this.state.iconsAreVisible ? this.renderIcons() : null }

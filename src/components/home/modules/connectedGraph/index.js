@@ -4,7 +4,6 @@ import GeoContainer from './geoContainer';
 import { NUM_VERTEX, } from './ConnectedGraphConstants';
 
 export default class ConnectedGraph {
-
   constructor() {
     this.scene = new Scene();
     this.geoContainer = new GeoContainer(NUM_VERTEX);
@@ -42,4 +41,5 @@ export default class ConnectedGraph {
     );
   }
 
+  onClick() {}
 }

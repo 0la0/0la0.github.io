@@ -53,6 +53,7 @@ class GraphicsManager {
     this.orbitControls.enabled = true;
     this.activeScene.start();
     this.animate();
+    this.afterStart();
   }
 
   stopAnimation() {
@@ -79,6 +80,17 @@ class GraphicsManager {
     }
     this.activeScene.start();
     this.orbitControls.reset();
+    this.afterStart();
+  }
+
+  afterStart() {
+    if (this.activeScene instanceof Annealing) {
+      this.orbitControls.enablePan = false;
+      this.orbitControls.enableRotate = false;
+    } else {
+      this.orbitControls.enablePan = true;
+      this.orbitControls.enableRotate = true;
+    }
   }
 
   onResize() {
@@ -94,6 +106,12 @@ class GraphicsManager {
 
   getAboutAnimationText() {
     return this.activeScene && this.activeScene.getAboutAnimationText();
+  }
+
+  onClick(event) {
+    if (this.activeScene) {
+      this.activeScene.onClick(event, this.camera);
+    }
   }
 }
 
