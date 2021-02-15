@@ -9,12 +9,11 @@ import {
 import { VERTEX_RADIUS, } from './ConnectedGraphConstants';
 
 export default class VertexRenderer {
-  constructor(vertices, rotation) {
+  constructor(vertices) {
     const sphereGeometry = new SphereBufferGeometry(VERTEX_RADIUS, 6, 6)
     const sphereMaterial = new MeshBasicMaterial({ side: FrontSide, color: new Color(0.75, 0.8, 0.95), });
     this.colorBuffer = new Float32Array(vertices.length * 3);
     this.sphereMesh = new InstancedMesh(sphereGeometry, sphereMaterial, vertices.length);
-    this.rotation = rotation;
   }
 
   getMesh() {

@@ -33,10 +33,8 @@ export default class ConnectedGraph {
   getAboutAnimationText() {
     return(
       <p>
-        An animation of a pulsating &nbsp;
-        <a href="https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)">
-          Graph
-        </a>.&nbsp;
+        Animation fun with a graph.
+        <br />
         <a href="https://github.com/0la0/0la0.github.io/tree/develop/src/components/home/modules/connectedGraph">
           View Source
         </a>

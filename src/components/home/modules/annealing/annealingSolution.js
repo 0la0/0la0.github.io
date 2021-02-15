@@ -1,30 +1,15 @@
+import { Vector3 } from 'three';
 import {
-  Color,
-  PlaneGeometry,
-  MeshBasicMaterial,
-  Mesh,
-  DoubleSide,
-} from 'three';
+  ACCEPTANCE_THRESHOLD,
+  TEMPERATURE_THRESHOLD,
+  TEMPERATURE_DECREASE_FACTOR,
+  RENDER_PRECISION,
+} from './AnnealingConstants';
 
-const ACCEPTANCE_THRESHOLD = 0.01;
-const TEMPERATURE_THRESHOLD = 0.1;
-const TEMPERATURE_DECREASE_FACTOR = 0.93;
 const imgWidth = 0.75;
 const imgHeight = 0.5;
 const halfWidth = imgWidth / 2;
 const halfHeight = imgHeight / 2;
-const precision = 100;
-
-function getRandomMesh(greyscaleValue) {
-  const scale = 0.01;
-  const geometry = new PlaneGeometry(scale, scale);
-  const material = new MeshBasicMaterial({
-    color: new Color(greyscaleValue, greyscaleValue, greyscaleValue),
-    side: DoubleSide
-  });
-  const mesh = new Mesh(geometry, material);
-  return mesh;
-}
 
 function generateNewSolution(searchSpace) {
   let proposedSolution = Math.floor(searchSpace.length * Math.random());
@@ -40,22 +25,22 @@ function getPositionFromSearchSpace(searchSpace, index, width, height) {
   const xPos = (x * imgWidth) - halfWidth;
   const yPos = (-y * imgHeight) + halfHeight;
   return {
-    x: Math.round(xPos * precision) / precision,
-    y: Math.round(yPos * precision) / precision
+    x: Math.round(xPos * RENDER_PRECISION) / RENDER_PRECISION,
+    y: Math.round(yPos * RENDER_PRECISION) / RENDER_PRECISION
   };
 }
 
 export default class AnnealingSolution {
   constructor(width, height, searchSpace) {
     this.greyScaleValue = Math.random();
-    this.mesh = getRandomMesh(this.greyScaleValue);
-    this.mesh.position.z = this.greyScaleValue * 0.05
+    this.isVisible = false;
+    this.position = new Vector3(0, 0, this.greyScaleValue * -0.0125);
   }
 
   reset(searchSpace, width, height) {
     this.width = width;
     this.height = height;
-    this.mesh.visible = false;
+    this.isVisible = false;
     this.temperature = 10;
     this.currentDistance = 99999;
     this.isSettled = false;
@@ -64,7 +49,7 @@ export default class AnnealingSolution {
   }
 
   setVisibility(isVisible) {
-    this.mesh.visible = isVisible;
+    this.isVisible = isVisible;
   }
 
   // annealing schedule
@@ -99,12 +84,12 @@ export default class AnnealingSolution {
     this.currentSolution = proposedSolution;
     this.currentDistance = proposedDistance;
     const position = getPositionFromSearchSpace(searchSpace, searchSpace[this.currentSolution].index, this.width, this.height);
-    this.mesh.position.x = position.x;
-    this.mesh.position.y = position.y;
+    this.position.x = position.x;
+    this.position.y = position.y;
   }
 
-  getMesh() {
-    return this.mesh;
+  getPosition() {
+    return this.position;
   }
 
   getCurrentSolution() {

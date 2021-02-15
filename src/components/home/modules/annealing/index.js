@@ -1,16 +1,15 @@
 import { Scene } from 'three';
 import React from 'react';
-import { getPosNeg } from 'components/home/modules/mathUtil';
+import { getRandomIntegerInRange } from 'components/home/modules/mathUtil';
 import { loadImage, getImageData, getGreyScaleArray } from 'components/home/modules/imageUtil';
 import AnnealingSolution from './annealingSolution';
 import SimulatedAnnealing from './simulatedAnnealing';
+import AnnealingRenderer from './AnnealingRenderer';
+import { NUM_CANDIDATES, NUM_ACTIVE_CANDIDATES, } from './AnnealingConstants';
 
-const NUM_CANDIDATES = 3000;
-const NUM_ACTIVE_CANDIDATES = 100;
-
+// TODO: replace images
 const imagePaths = [
-  'assets/images/sketches/gradient.jpg',
-  'assets/images/sketches/trees.jpg'
+  'assets/images/sketches/bike.jpg',
 ];
 
 function loadImageTexture(imagePath) {
@@ -26,19 +25,24 @@ function loadImageTexture(imagePath) {
     .then(([imgDims, greyScaleArray]) => Promise.resolve({ imgDims, greyScaleArray }));
 }
 
+
+// TODO
+//   - add progress bar or preview
+//   - disable orbit controls panning
+
 export default class AnnealingPhotos {
   constructor() {
     this.scene = new Scene();
-    this.activeIndex = Math.floor(imagePaths.length * Math.random());
+    this.activeIndex = getRandomIntegerInRange(imagePaths.length);
     this.candidateQueue = new Array(NUM_CANDIDATES).fill(null).map(() => new AnnealingSolution(0, 0, []));
-    this.candidateQueue.forEach(candidate => this.scene.add(candidate.getMesh()));
-
     const loadImages = imagePaths.map(imagePath => loadImageTexture(imagePath));
     Promise.all(loadImages)
       .then(imageData => {
         this.imageData = imageData;
+        console.log('imageData', imageData);
         this.startNewImage();
       });
+    this.frameCount = 0;
   }
 
   startNewImage() {
@@ -46,13 +50,19 @@ export default class AnnealingPhotos {
     const searchSpace = greyScaleArray.map((value, index) => ({ value, index, isOccupied: false }));
     this.candidateQueue.forEach(candidate => candidate.reset(searchSpace, imgDims.width, imgDims.height));
     this.simulatedAnnealing = new SimulatedAnnealing(searchSpace, this.candidateQueue, NUM_ACTIVE_CANDIDATES, imgDims.width, imgDims.height);
+    this.annealingRenderer = new AnnealingRenderer(this.candidateQueue);
+    this.scene.add(this.annealingRenderer.getMesh());
   }
 
   update() {
     if (!this.simulatedAnnealing) { return; }
-    if (this.simulatedAnnealing.iterate()) {
-      this.activeIndex = (this.activeIndex + 1) % this.imageData.length;
-      this.startNewImage();
+    this.simulatedAnnealing.iterate();
+    // if (this.simulatedAnnealing.iterate()) {
+    //   this.activeIndex = (this.activeIndex + 1) % this.imageData.length;
+    //   this.startNewImage();
+    // }
+    if (this.annealingRenderer && (this.frameCount++ % 3 === 0)) {
+      this.annealingRenderer.update();
     }
   }
 
