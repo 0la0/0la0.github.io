@@ -8,9 +8,9 @@ import AnnealingRenderer from './AnnealingRenderer';
 import ImagePreview from './ImagePreview';
 import { NUM_CANDIDATES, NUM_ACTIVE_CANDIDATES, } from './AnnealingConstants';
 
-// TODO: replace images
 const imagePaths = [
-  'assets/images/sketches/bike.jpg',
+  // 'assets/images/sketches/bike01.jpg',
+  'assets/images/sketches/bike02.jpg',
 ];
 
 function loadImageTexture(imagePath) {
@@ -26,16 +26,11 @@ function loadImageTexture(imagePath) {
     .then(([imgDims, greyScaleArray]) => Promise.resolve({ imgDims, greyScaleArray, imagePath, }));
 }
 
-
-// TODO
-//   - add progress bar or preview
-//   - disable orbit controls panning
-
 export default class AnnealingPhotos {
   constructor() {
     this.scene = new Scene();
     this.activeIndex = getRandomIntegerInRange(imagePaths.length);
-    this.candidateQueue = new Array(NUM_CANDIDATES).fill(null).map(() => new AnnealingSolution(0, 0, []));
+    this.candidateQueue = new Array(NUM_CANDIDATES).fill(null).map(() => new AnnealingSolution());
     const loadImages = imagePaths.map(imagePath => loadImageTexture(imagePath));
     Promise.all(loadImages)
       .then(imageData => {
@@ -50,16 +45,17 @@ export default class AnnealingPhotos {
 
   startNewImage() {
     const { imgDims, greyScaleArray, imagePath } = this.imageData[this.activeIndex];
+    const displayDims = {
+      width: 1,
+      height: imgDims.height / imgDims.width,
+    };
     const searchSpace = greyScaleArray.map((value, index) => ({ value, index, isOccupied: false }));
-    this.candidateQueue.forEach(candidate => candidate.reset(searchSpace, imgDims.width, imgDims.height));
-    this.simulatedAnnealing = new SimulatedAnnealing(searchSpace, this.candidateQueue, NUM_ACTIVE_CANDIDATES, imgDims.width, imgDims.height);
+    this.candidateQueue.forEach(candidate => candidate.reset(searchSpace, imgDims, displayDims));
+    this.simulatedAnnealing = new SimulatedAnnealing(searchSpace, this.candidateQueue, NUM_ACTIVE_CANDIDATES);
     this.annealingRenderer = new AnnealingRenderer(this.candidateQueue);
     this.scene.add(this.annealingRenderer.getMesh());
-
-    const imgWidth = 0.75;
-    const imgHeight = 0.5;
-    this.imagePreview = new ImagePreview(imgWidth, imgHeight, imagePath);
-    this.imagePreview.getMesh().forEach(mesh => this.scene.add(mesh));
+    this.imagePreview = new ImagePreview(displayDims, imagePath);
+    this.scene.add(this.imagePreview.getMesh());
   }
 
   update(now) {

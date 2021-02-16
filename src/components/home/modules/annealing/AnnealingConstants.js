@@ -1,6 +1,6 @@
 
-export const NUM_CANDIDATES = 120000;
-export const NUM_ACTIVE_CANDIDATES = 2000;
+export const NUM_CANDIDATES = 200000;
+export const NUM_ACTIVE_CANDIDATES = 3000;
 
 export const RENDER_PRECISION = 400;
 export const PARTICLE_SIZE = (1 / RENDER_PRECISION) + 0.0001;

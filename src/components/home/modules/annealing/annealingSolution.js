@@ -6,10 +6,7 @@ import {
   RENDER_PRECISION,
 } from './AnnealingConstants';
 
-const imgWidth = 0.75;
-const imgHeight = 0.5;
-const halfWidth = imgWidth / 2;
-const halfHeight = imgHeight / 2;
+const zPositionScale = -0.00125;
 
 function generateNewSolution(searchSpace) {
   let proposedSolution = Math.floor(searchSpace.length * Math.random());
@@ -19,11 +16,11 @@ function generateNewSolution(searchSpace) {
   return proposedSolution;
 }
 
-function getPositionFromSearchSpace(searchSpace, index, width, height) {
-  const x = ((index) % width) / width;
-  const y = (Math.floor(index / width)) / height;
-  const xPos = (x * imgWidth) - halfWidth;
-  const yPos = (-y * imgHeight) + halfHeight;
+function getPositionFromSearchSpace(index, imgDims, displayDims) {
+  const x = (index % imgDims.width) / imgDims.width;
+  const y = (Math.floor(index / imgDims.width)) / imgDims.height;
+  const xPos = (x * displayDims.width) - (displayDims.width / 2);
+  const yPos = (-y * displayDims.height) + (displayDims.height / 2);
   return {
     x: Math.round(xPos * RENDER_PRECISION) / RENDER_PRECISION,
     y: Math.round(yPos * RENDER_PRECISION) / RENDER_PRECISION
@@ -31,15 +28,15 @@ function getPositionFromSearchSpace(searchSpace, index, width, height) {
 }
 
 export default class AnnealingSolution {
-  constructor(width, height, searchSpace) {
+  constructor() {
     this.greyScaleValue = Math.random();
     this.isVisible = false;
-    this.position = new Vector3(0, 0, this.greyScaleValue * -0.0125);
+    this.position = new Vector3(0, 0, this.greyScaleValue * zPositionScale);
   }
 
-  reset(searchSpace, width, height) {
-    this.width = width;
-    this.height = height;
+  reset(searchSpace, imgDims, displayDims) {
+    this.imgDims = imgDims;
+    this.displayDims = displayDims;
     this.isVisible = false;
     this.temperature = 10;
     this.currentDistance = 99999;
@@ -83,7 +80,7 @@ export default class AnnealingSolution {
     searchSpace[proposedSolution].isOccupied = true;
     this.currentSolution = proposedSolution;
     this.currentDistance = proposedDistance;
-    const position = getPositionFromSearchSpace(searchSpace, searchSpace[this.currentSolution].index, this.width, this.height);
+    const position = getPositionFromSearchSpace(searchSpace[this.currentSolution].index, this.imgDims, this.displayDims);
     this.position.x = position.x;
     this.position.y = position.y;
   }

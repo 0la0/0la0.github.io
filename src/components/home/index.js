@@ -55,10 +55,14 @@ class Home extends Component {
     setTimeout(() => this.setState({ aboutIsVisible: true }));
   };
 
-  handleClick = (event) => {
-    graphicsManager.onClick(event);
+  hideAbout = () => {
     this.setState({ aboutIsVisible: false, });
     setTimeout(() => this.setState({ aboutIsInDom: false }), 250);
+  };
+
+  handleClick = (event) => {
+    graphicsManager.onClick(event);
+    this.hideAbout();
   };
 
   onAboutToggle = event => {

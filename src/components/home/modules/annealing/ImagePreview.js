@@ -6,36 +6,25 @@ import {
   Raycaster,
   TextureLoader,
   Vector2,
-  Vector3,
 } from 'three';
 
-const buttonSize = 0.1;
-const previewZPosition = 0.0005;
+const previewZPosition = 0;
 const previewDuration = 2500;
-const buttonPositionBuffer = (buttonSize / 2) + 0.02;
 
 export default class ImagePreview {
-  constructor(width, height, imagePath) {
+  constructor(dims, imagePath) {
     const previewImageTexture = new TextureLoader().load(imagePath);
-    const previewIconTexture = new TextureLoader().load('assets/images/sketches/material_preview_icon.png');
-    const imagePreviewGeometry = new PlaneGeometry(width, height);
+    const imagePreviewGeometry = new PlaneGeometry(dims.width, dims.height);
     const imagePreviewMaterial = new MeshBasicMaterial({ map: previewImageTexture, side: FrontSide, transparent: true, });
-    const clickGeometry = new PlaneGeometry(buttonSize, buttonSize);
-    const clickMaterial = new MeshBasicMaterial({ map: previewIconTexture, side: FrontSide, });
     this.previewMesh = new Mesh(imagePreviewGeometry, imagePreviewMaterial);
     this.previewMesh.position.z = previewZPosition;
     this.previewMesh.visible = false;
-    this.clickMesh = new Mesh(clickGeometry, clickMaterial);
-    this.clickMesh.position.copy(new Vector3((width / 2) + buttonPositionBuffer, -(height / 2) - buttonPositionBuffer, previewZPosition));
     this.raycaster = new Raycaster();
     this.previewTTL = 0;
   }
 
   getMesh() {
-    return [
-      this.previewMesh,
-      this.clickMesh,
-    ];
+    return this.previewMesh;
   }
 
   onClick(event, camera) {
@@ -44,7 +33,7 @@ export default class ImagePreview {
       -(event.clientY / window.innerHeight) * 2 + 1
     );
     this.raycaster.setFromCamera(clickPosition, camera);
-    const clickIntersections = this.raycaster.intersectObjects([ this.clickMesh, ]);
+    const clickIntersections = this.raycaster.intersectObjects([ this.previewMesh, ]);
     if (!clickIntersections.length) {
       return;
     }

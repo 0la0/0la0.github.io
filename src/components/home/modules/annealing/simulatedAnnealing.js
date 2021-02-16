@@ -7,13 +7,11 @@ function copyToArray(copyTo, copyFrom, startIndex, numElements) {
 }
 
 export default class SimulatedAnnealing {
-  constructor(searchSpace, candidateQueue, numActiveCandidates, width, height) {
+  constructor(searchSpace, candidateQueue, numActiveCandidates) {
     this.searchSpace = searchSpace;
     this.candidateQueue = candidateQueue;
     this.searchSize = this.candidateQueue.length;
     this.numSettledCandidates = 0;
-    this.width = width;
-    this.height = height;
     this.candidates = [];
     copyToArray(this.candidates, this.candidateQueue, this.numSettledCandidates, numActiveCandidates);
   }
