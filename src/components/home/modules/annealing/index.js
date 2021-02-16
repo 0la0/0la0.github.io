@@ -1,76 +1,109 @@
 import { Raycaster, Scene, Vector2 } from 'three';
 import React from 'react';
 import { getRandomIntegerInRange } from 'components/home/modules/mathUtil';
-import { loadImage, getImageData, getGreyScaleArray } from 'components/home/modules/imageUtil';
 import AnnealingSolution from './annealingSolution';
 import SimulatedAnnealing from './simulatedAnnealing';
 import AnnealingRenderer from './AnnealingRenderer';
 import ImagePreview from './ImagePreview';
-import { NUM_CANDIDATES, NUM_ACTIVE_CANDIDATES, } from './AnnealingConstants';
+import { imagePaths, loadAllTextures, } from './ImageUtil';
+import {
+  NUM_CANDIDATES, NUM_ACTIVE_CANDIDATES,
+  RENDER_WIDTH, PAUSE_TIME, DISSENTEGRATE_TIME,
+} from './AnnealingConstants';
 
-const imagePaths = [
-  // 'assets/images/sketches/bike01.jpg',
-  'assets/images/sketches/bike02.jpg',
-];
-
-function loadImageTexture(imagePath) {
-  return loadImage(imagePath)
-    .then((imgSrc) => Promise.all([
-      Promise.resolve({ width: imgSrc.width, height: imgSrc.height }),
-      getImageData(imgSrc)
-    ]))
-    .then(([ imgDims, imageData ]) => Promise.all([
-      Promise.resolve(imgDims),
-      getGreyScaleArray(imageData)
-    ]))
-    .then(([imgDims, greyScaleArray]) => Promise.resolve({ imgDims, greyScaleArray, imagePath, }));
-}
+const RENDER_STATE = {
+  ANNEALING: 'ANNEALING',
+  PAUSED: 'PAUSED',
+  DISSENTEGRATING: 'DISSENTEGRATING',
+};
 
 export default class AnnealingPhotos {
   constructor() {
     this.scene = new Scene();
     this.activeIndex = getRandomIntegerInRange(imagePaths.length);
     this.candidateQueue = new Array(NUM_CANDIDATES).fill(null).map(() => new AnnealingSolution());
-    const loadImages = imagePaths.map(imagePath => loadImageTexture(imagePath));
-    Promise.all(loadImages)
-      .then(imageData => {
-        this.imageData = imageData;
-        this.startNewImage(imageData);
-      });
     this.frameCount = 0;
     this.isActive = false;
     this.raycaster = new Raycaster();
     this.lastRenderTime = performance.now();
+    this.simulatedAnnealing = new SimulatedAnnealing(this.candidateQueue, NUM_ACTIVE_CANDIDATES);
+    this.annealingRenderer = new AnnealingRenderer(this.candidateQueue);
+    this.imagePreview = new ImagePreview();
+    this.scene.add(this.annealingRenderer.getMesh());
+    this.scene.add(this.imagePreview.getMesh());
+    this.renderState = RENDER_STATE.ANNEALING;
+    this.pausedTimer = PAUSE_TIME;
+    this.dissentegrateTimer = 0;
+    
+    this.renderStrategy = {
+      [RENDER_STATE.ANNEALING]: this._updateAnnealing.bind(this),
+      [RENDER_STATE.PAUSED]: this._updatePaused.bind(this),
+      [RENDER_STATE.DISSENTEGRATING]: this._updateDissentegrating.bind(this),
+    };
+
+    loadAllTextures()
+      .then(imageData => {
+        this.imageData = imageData;
+        this.startNewImage();
+      })
+      .catch(console.log);
   }
 
   startNewImage() {
     const { imgDims, greyScaleArray, imagePath } = this.imageData[this.activeIndex];
     const displayDims = {
-      width: 1,
-      height: imgDims.height / imgDims.width,
+      width: RENDER_WIDTH,
+      height: imgDims.height / imgDims.width * RENDER_WIDTH,
     };
     const searchSpace = greyScaleArray.map((value, index) => ({ value, index, isOccupied: false }));
     this.candidateQueue.forEach(candidate => candidate.reset(searchSpace, imgDims, displayDims));
-    this.simulatedAnnealing = new SimulatedAnnealing(searchSpace, this.candidateQueue, NUM_ACTIVE_CANDIDATES);
-    this.annealingRenderer = new AnnealingRenderer(this.candidateQueue);
-    this.scene.add(this.annealingRenderer.getMesh());
-    this.imagePreview = new ImagePreview(displayDims, imagePath);
-    this.scene.add(this.imagePreview.getMesh());
+    this.simulatedAnnealing.reset(searchSpace);
+    this.imagePreview.reset(displayDims, imagePath);
   }
 
   update(now) {
     const elapsedTime = Math.min(now - this.lastRenderTime, 100);
     this.lastRenderTime = now;
-    if (!this.simulatedAnnealing) { return; }
-    this.simulatedAnnealing.iterate();
-    // if (this.simulatedAnnealing.iterate()) {
-    //   this.activeIndex = (this.activeIndex + 1) % this.imageData.length;
-    //   this.startNewImage();
-    // }
-    if (this.annealingRenderer && (this.frameCount++ % 3 === 0)) {
+    this.renderStrategy[this.renderState](elapsedTime);
+  }
+
+  _updateAnnealing(elapsedTime) {
+    if (!this.simulatedAnnealing.searchSpace) {
+      return;
+    }
+    const isFinished = this.simulatedAnnealing.iterate();
+    if (isFinished) {
+      this.annealingRenderer.update();
+      this.imagePreview.update(elapsedTime);
+      this.pausedTimer = PAUSE_TIME;
+      this.renderState = RENDER_STATE.PAUSED;
+      return;
+    }
+    if (this.frameCount++ % 3 === 0) {
       this.annealingRenderer.update();
     }
     this.imagePreview.update(elapsedTime);
+  }
+
+  _updatePaused(elapsedTime) {
+    this.pausedTimer -= elapsedTime;
+    this.imagePreview.update(elapsedTime);
+    if (this.pausedTimer <= 0) {
+      this.renderState = RENDER_STATE.DISSENTEGRATING;
+      this.imagePreview.disable();
+    }
+  }
+
+  _updateDissentegrating(elapsedTime) {
+    this.candidateQueue.forEach(candidate => candidate.dissentegrate(elapsedTime, this.dissentegrateTimer));
+    this.annealingRenderer.update();
+    this.dissentegrateTimer += elapsedTime;
+    if (this.dissentegrateTimer >= DISSENTEGRATE_TIME) {
+      this.dissentegrateTimer = 0;
+      this.renderState = RENDER_STATE.ANNEALING;
+      this.activeIndex = (this.activeIndex + 1) % this.imageData.length;
+      this.startNewImage();
+    }
   }
 
   render(renderer, camera, now) {

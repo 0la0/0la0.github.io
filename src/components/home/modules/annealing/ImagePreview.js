@@ -7,17 +7,13 @@ import {
   TextureLoader,
   Vector2,
 } from 'three';
-
-const previewZPosition = 0;
-const previewDuration = 2500;
+import { PREVIEW_DURATION, } from './AnnealingConstants';
 
 export default class ImagePreview {
-  constructor(dims, imagePath) {
-    const previewImageTexture = new TextureLoader().load(imagePath);
-    const imagePreviewGeometry = new PlaneGeometry(dims.width, dims.height);
-    const imagePreviewMaterial = new MeshBasicMaterial({ map: previewImageTexture, side: FrontSide, transparent: true, });
+  constructor() {
+    const imagePreviewGeometry = new PlaneGeometry();
+    const imagePreviewMaterial = new MeshBasicMaterial({ side: FrontSide, transparent: true, });
     this.previewMesh = new Mesh(imagePreviewGeometry, imagePreviewMaterial);
-    this.previewMesh.position.z = previewZPosition;
     this.previewMesh.visible = false;
     this.raycaster = new Raycaster();
     this.previewTTL = 0;
@@ -25,6 +21,15 @@ export default class ImagePreview {
 
   getMesh() {
     return this.previewMesh;
+  }
+
+  reset(displayDims, imagePath) {
+    const previewImageTexture = new TextureLoader().load(imagePath);
+    this.previewMesh.visible = false;
+    this.previewMesh.scale.x = displayDims.width;
+    this.previewMesh.scale.y = displayDims.height;
+    this.previewMesh.material.map = previewImageTexture;
+    this.previewTTL = 0;  
   }
 
   onClick(event, camera) {
@@ -37,15 +42,20 @@ export default class ImagePreview {
     if (!clickIntersections.length) {
       return;
     }
-    this.previewTTL = previewDuration;
+    this.previewTTL = PREVIEW_DURATION;
     this.previewMesh.visible = true;
+  }
+
+  disable() {
+    this.previewTTL = 0;
+    this.previewMesh.visible = false;
   }
 
   update(elapsedTime) {
     if (this.previewTTL <= 0) {
       return;
     }
-    this.previewMesh.material.opacity = this.previewTTL / previewDuration;
+    this.previewMesh.material.opacity = this.previewTTL / (PREVIEW_DURATION + 500);
     this.previewTTL -= elapsedTime;
     if (this.previewTTL <= 0) {
       this.previewTTL = 0;

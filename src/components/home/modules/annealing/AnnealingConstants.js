@@ -1,9 +1,14 @@
-
 export const NUM_CANDIDATES = 200000;
 export const NUM_ACTIVE_CANDIDATES = 3000;
-
-export const RENDER_PRECISION = 400;
-export const PARTICLE_SIZE = (1 / RENDER_PRECISION) + 0.0001;
 export const ACCEPTANCE_THRESHOLD = 0.01;
 export const TEMPERATURE_THRESHOLD = 0.1;
 export const TEMPERATURE_DECREASE_FACTOR = 0.93;
+
+export const RENDER_PRECISION = 250;
+export const PARTICLE_SIZE = (1 / RENDER_PRECISION) + 0.0001;
+export const PREVIEW_DURATION = 2200;
+export const RENDER_WIDTH = 1.5;
+export const PAUSE_TIME = 4000;
+export const DISSENTEGRATE_TIME = 2000;
+export const DISSENTEGRATE_VELOCITY = 0.005;
+export const DISSENTEGRATING_GRAVITY = 0.0000001;

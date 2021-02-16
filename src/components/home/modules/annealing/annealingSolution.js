@@ -4,6 +4,8 @@ import {
   TEMPERATURE_THRESHOLD,
   TEMPERATURE_DECREASE_FACTOR,
   RENDER_PRECISION,
+  DISSENTEGRATE_VELOCITY,
+  DISSENTEGRATING_GRAVITY,
 } from './AnnealingConstants';
 
 const zPositionScale = -0.00125;
@@ -32,6 +34,7 @@ export default class AnnealingSolution {
     this.greyScaleValue = Math.random();
     this.isVisible = false;
     this.position = new Vector3(0, 0, this.greyScaleValue * zPositionScale);
+    this.dissentegrateVelocity = DISSENTEGRATE_VELOCITY * (1 - this.greyScaleValue);
   }
 
   reset(searchSpace, imgDims, displayDims) {
@@ -83,6 +86,12 @@ export default class AnnealingSolution {
     const position = getPositionFromSearchSpace(searchSpace[this.currentSolution].index, this.imgDims, this.displayDims);
     this.position.x = position.x;
     this.position.y = position.y;
+  }
+
+  dissentegrate(elapsedTime, totalTime) {
+    const gravity = DISSENTEGRATING_GRAVITY * (totalTime ** 2);
+    const velocity = this.dissentegrateVelocity * elapsedTime;
+    this.position.y -= velocity + gravity;
   }
 
   getPosition() {
