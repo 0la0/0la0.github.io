@@ -1,0 +1,39 @@
+@import '~styles/index';
+
+$button-size: 50px;
+$icon-size: 32px;
+
+.themeButton {
+  background: unset;
+  outline: unset;
+  border: unset;
+  padding: unset;
+  margin: unset;
+
+  background-color: $color-primary;
+  width: $button-size;
+  height: $button-size;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.themeIcon {
+  width: $icon-size;
+  height: $icon-size;
+  border-radius: 50%;
+  background-color: transparent;
+  box-shadow: inset ($icon-size * -1) (-$icon-size / 4) 0px 1px $color-grey-000;
+  position: relative;
+  transition: 0.1s box-shadow ease;
+}
+
+.themeIconLight {
+  // background-color: yellow;
+}
+
+.themeIconDark {
+  box-shadow: inset (-$icon-size / 4) (-$icon-size / 8) 0px 1px $color-grey-000;
+}

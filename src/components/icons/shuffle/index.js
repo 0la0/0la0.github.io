@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Point from './Point';
 import MovablePoint from './MoveablePoint';
-import theme from '../../modules/theme';
+import themeHoc from '../../modules/theme';
 import styles from './styles.scss';
 
 const SVG = {
@@ -108,7 +108,7 @@ class ShuffleIcon extends Component {
   };
 
   render() {
-    const isLight = theme.isLight();
+    const isLight = this.props.theme === 'LIGHT';
     return (
       <div
         onClick={this.onClick}
@@ -131,4 +131,4 @@ class ShuffleIcon extends Component {
   }
 }
 
-export default ShuffleIcon;
+export default themeHoc(ShuffleIcon);

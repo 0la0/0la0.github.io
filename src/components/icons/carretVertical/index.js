@@ -1,9 +1,10 @@
 import React from 'react';
-import theme from '../../modules/theme';
+import themeHoc from '../../modules/theme';
 import styles from './styles.scss';
 
 const CarretVertical = props => {
-  const barStyle = `${styles.bar} ${theme.isLight() ? styles.barLight : ''}`;
+  const isLight = props.theme === 'LIGHT';
+  const barStyle = `${styles.bar} ${isLight ? styles.barLight : ''}`;
   return (
     <div
       className={props.className}
@@ -16,4 +17,4 @@ const CarretVertical = props => {
   );
 }
 
-export default CarretVertical;
+export default themeHoc(CarretVertical);

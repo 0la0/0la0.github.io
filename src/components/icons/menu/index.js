@@ -1,9 +1,10 @@
 import React from 'react';
-import theme from '../../modules/theme';
+import themeHoc from '../../modules/theme';
 import styles from './styles.scss';
 
 const MenuIcon = props => {
-  const lineStyle = `${styles.line} ${theme.isLight() ? styles.lineLight : ''}`;
+  const isLight = props.theme === 'LIGHT';
+  const lineStyle = `${styles.line} ${isLight ? styles.lineLight : ''}`;
   return (
     <div
       className={`${props.className} ${styles.hamburger}`}
@@ -16,4 +17,4 @@ const MenuIcon = props => {
   );
 };
 
-export default MenuIcon;
+export default themeHoc(MenuIcon);

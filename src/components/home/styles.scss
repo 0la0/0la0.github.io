@@ -20,6 +20,12 @@
   cursor: pointer;
 }
 
+.themeButton {
+  position: absolute;
+  bottom: $icon-buffer;
+  left: 50%;
+}
+
 .aboutButton {
   position: absolute;
   bottom: $icon-buffer + 3;

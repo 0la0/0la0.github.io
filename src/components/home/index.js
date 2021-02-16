@@ -4,6 +4,7 @@ import ShuffleIcon from 'components/icons/shuffle';
 import CarretVertical from 'components/icons/carretVertical';
 import graphicsManager from 'components/home/modules/graphicsManager';
 import styles from './styles.scss';
+import ThemeButton from '../icons/themeButton';
 
 const pauseRoutes = ['#/projects', '#/about'];
 const history = createBrowserHistory();
@@ -79,6 +80,10 @@ class Home extends Component {
           title="Shuffle Animation"
           handleClick={graphicsManager.shuffleAnimations.bind(graphicsManager)}
           className={styles.shuffleButton} />
+        <ThemeButton
+          title="Theme"
+          className={styles.themeButton}
+        />
         <CarretVertical
           isActive={this.state.aboutIsVisible}
           handleClick={this.onAboutToggle}

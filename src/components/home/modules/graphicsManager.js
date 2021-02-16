@@ -4,9 +4,18 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import Annealing from './annealing';
 import Pso from './pso';
 import ConnectedGraph from './connectedGraph';
-import theme from '../../modules/theme';
+import { themeStore, } from '../../modules/theme';
 
 const STATS_ENABLED = false;
+const buildScenes = canvas => {
+  const scenes = [
+    new Annealing(canvas),
+    new Pso(canvas),
+    new ConnectedGraph(canvas),
+  ];
+  scenes.sort(() => Math.random() - 0.5);
+  return scenes;
+};
 
 let stats;
 if (STATS_ENABLED) {
@@ -15,16 +24,19 @@ if (STATS_ENABLED) {
   document.body.appendChild( stats.dom );
 }
 
+const getBackgroundColor = () => themeStore.isDark() ? 0x202124 : 0xEFEFEF;
+
 class GraphicsManager {
   constructor() {
     this.isInRenderLoop = false;
     this.animationRequest;
     this.activeScene;
     this.scenes = [];
+    themeStore.subscribe(this);
   }
 
   init(canvas) {
-    const backgroundColor = theme.isDark() ? 0x202124 : 0xEFEFEF;
+    const backgroundColor = getBackgroundColor();
     this.renderer = new WebGLRenderer({canvas,  antialias: true , alpha: true});
   	this.renderer.setClearColor(backgroundColor, 1);
     this.camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.05, 7);
@@ -33,17 +45,18 @@ class GraphicsManager {
     this.orbitControls.enabled = false;
     this.orbitControls.enablePan = false;
     this.orbitControls.enableRotate = false;
-    this.orbitControls.minDistance = 0.25;
-    this.orbitControls.maxDistance = 3;
-    this.scenes = [
-      new Annealing(canvas),
-      new Pso(canvas),
-      new ConnectedGraph(canvas),
-    ];
+    this.orbitControls.minDistance = 0.5;
+    this.orbitControls.maxDistance = 2.5;
+    this.scenes = buildScenes(canvas);
     this.activeIndex = this.getRandomSceneIndex();
     this.activeScene = this.scenes[this.activeIndex];
     this.onResize();
     return this;
+  }
+
+  handleThemeChange() {
+    const backgroundColor = getBackgroundColor();
+    this.renderer.setClearColor(backgroundColor, 1);
   }
 
   getRandomSceneIndex() {

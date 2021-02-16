@@ -1,9 +1,10 @@
 import React from 'react';
-import theme from '../../modules/theme';
+import themeHoc from '../../modules/theme';
 import styles from './styles.scss';
 
 const Back = props => {
-  const arrowStyle = `${styles.arrow} ${theme.isLight() ? styles.arrowLight : ''}`;
+  const isLight = props.theme === 'LIGHT';
+  const arrowStyle = `${styles.arrow} ${isLight ? styles.arrowLight : ''}`;
   return (
     <div
       onClick={props.handleClick}
@@ -15,4 +16,4 @@ const Back = props => {
   );
 };
 
-export default Back;
+export default themeHoc(Back);

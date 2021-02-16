@@ -1,5 +1,5 @@
 import { Color, } from 'three';
-import theme from '../../../modules/theme';
+import { themeStore, } from '../../../modules/theme';
 
 const COLOR_FACTOR = 0.4;
 
@@ -22,7 +22,7 @@ export default class Edge {
     const p2 = this.v2.getPosition();
     this.p1.set(p1.x, p1.y, p1.z);
     this.p2.set(p2.x, p2.y, p2.z);
-    if (theme.isDark()) {
+    if (themeStore.isDark()) {
       this.color.r = 1 - COLOR_FACTOR * this.r;
       this.color.g = 1 - COLOR_FACTOR * this.g;
       this.color.b = 1 - COLOR_FACTOR * this.b;
