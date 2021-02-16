@@ -1,6 +1,60 @@
+@import '~styles/index';
 
 .svg {
   width: 100%;
   height: 100%;
   cursor: pointer;
+}
+
+.backgroundLine {
+  stroke-width: 3px;
+  stroke: $color-grey-020;
+  stroke-linecap: round;
+  fill: transparent;
+}
+.backgroundLineLight {
+  stroke: $color-grey-070;
+}
+
+.backgroundCircle {
+  stroke: $color-grey-020;
+  fill: $color-grey-020;
+}
+.backgroundCircleLight {
+  stroke: $color-grey-070;
+  fill: $color-grey-070;
+}
+
+.foregroundOutline {
+  stroke-width: 14px;
+  stroke: $color-grey-080;
+  stroke-linecap: round;
+  fill: transparent;
+}
+.foregroundOutlineLight {
+  stroke: $color-grey-010;
+}
+
+.foregroundLineHighlight {
+  stroke-width: 3px;
+  stroke: $color-grey-010;
+  stroke-linecap: round;
+  fill: transparent;
+}
+.foregroundLineHighlightLight {
+  stroke-width: 3px;
+  stroke: $color-grey-080;
+  stroke-linecap: round;
+  fill: transparent;
+}
+
+.foregroundCicle {
+  stroke-width: 2px;
+  stroke: $color-grey-010;
+  fill: $color-grey-080;
+}
+.foregroundCicleLight {
+  stroke-width: 3px;
+  stroke: $color-grey-080;
+  fill: $color-grey-010;
 }

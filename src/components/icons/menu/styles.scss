@@ -14,10 +14,14 @@ $rotate: 45deg;
   width: $width;
   height: $height;
   border-radius: 5px;
-  background-color: $color-secondary;
+  background-color: $color-grey-010;
   display: block;
   margin: $margin auto;
   transition: opacity $icon-animation, transform $icon-animation;
+}
+
+.lineLight {
+  background-color: $color-grey-080;
 }
 
 .lineOneActive {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch, } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import pageActivation from 'components/higherOrderComponents/pageActivation';
+import pageActivation from 'components/modules/pageActivationHOC';
 import ProjectList from 'components/projects/modules/projectList';
 import projectRoutes from 'components/projects/modules/projectRouter';
 import styles from './styles.scss';

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import pageActivation from 'components/higherOrderComponents/pageActivation';
+import pageActivation from 'components/modules/pageActivationHOC';
 import styles from './styles.scss';
 
 const About = props => {

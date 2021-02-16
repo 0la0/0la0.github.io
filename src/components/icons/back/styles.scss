@@ -20,13 +20,16 @@ $arrow-size: 20px;
   width: $arrow-width;
   height: 2px;
   display: inline-block;
-  background-color: $color-secondary;
+  background-color: $color-grey-010;
   border-radius: 4px;
   position: absolute;
   left: 0;
   top: 18px;
   opacity: 0;
   transition: transform $icon-animation, opacity $icon-animation;
+}
+.arrowLight {
+  background-color: $color-grey-080;
 }
 
 .arrowTop {

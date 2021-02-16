@@ -7,11 +7,19 @@ import {
   Color,
 } from 'three';
 import { VERTEX_RADIUS, } from './ConnectedGraphConstants';
+import theme from '../../../modules/theme';
+
+const themedColors = {
+  light: new Color(0.05, 0.2, 0.25),
+  dark: new Color(0.75, 0.8, 0.95),
+};
+
+const color = theme.isLight() ? themedColors.light : themedColors.dark;
 
 export default class VertexRenderer {
   constructor(vertices) {
     const sphereGeometry = new SphereBufferGeometry(VERTEX_RADIUS, 6, 6)
-    const sphereMaterial = new MeshBasicMaterial({ side: FrontSide, color: new Color(0.75, 0.8, 0.95), });
+    const sphereMaterial = new MeshBasicMaterial({ side: FrontSide, color, });
     this.colorBuffer = new Float32Array(vertices.length * 3);
     this.sphereMesh = new InstancedMesh(sphereGeometry, sphereMaterial, vertices.length);
   }

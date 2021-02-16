@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Vector2 } from 'three';
+import Point from './Point';
+import MovablePoint from './MoveablePoint';
+import theme from '../../modules/theme';
 import styles from './styles.scss';
 
 const SVG = {
@@ -9,49 +11,6 @@ const SVG = {
 };
 
 const ANIMATION_LENGTH_MS = 120;
-
-class Point {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-  }
-
-  transform() {}
-
-  setState() {}
-
-  finishTransform() {}
-
-  toString() {
-    return `${this.x} ${this.y}`;
-  }
-}
-
-class MovablePoint extends Point {
-  constructor(x, y1, y2, isDefault) {
-    super(x, y1);
-    this.original = new Vector2(x, y1);
-    this.other = new Vector2(x, y2);
-    this.isDefault = isDefault;
-  }
-
-  transform(percent) {
-    const p = this.isDefault ?
-      this.other.clone().lerp(this.original, percent) :
-      this.original.clone().lerp(this.other, percent);
-    this.x = p.x;
-    this.y = p.y;
-  }
-
-  finishTransform() {
-    this.x = this.isDefault ? this.original.x : this.other.x;
-    this.y = this.isDefault ? this.original.y : this.other.y;
-  }
-
-  setState(isDefault) {
-    this.isDefault = isDefault;
-  }
-}
 
 class Line {
   constructor(isDefault) {
@@ -149,6 +108,7 @@ class ShuffleIcon extends Component {
   };
 
   render() {
+    const isLight = theme.isLight();
     return (
       <div
         onClick={this.onClick}
@@ -160,11 +120,11 @@ class ShuffleIcon extends Component {
           xmlns="http://www.w3.org/2000/svg"
           version="1.1"
         >
-          <path d={this.state.lineOneString} strokeWidth="3" stroke="#abb2bf" strokeLinecap="round" fill="transparent" />
-          <circle {...this.state.circleOne} r="6" stroke="#abb2bf" fill="#abb2bf" />
-          <path d={this.state.lineTwoString} stroke="#282c34" strokeWidth="14" strokeLinecap="round" fill="transparent" />
-          <path d={this.state.lineTwoString} strokeWidth="3" stroke="#EEE" strokeLinecap="round" fill="transparent" />
-          <circle {...this.state.circleTwo} r="6" strokeWidth="2" stroke="#EEE" fill="#282c34" />
+          <path d={this.state.lineOneString} className={`${styles.backgroundLine} ${isLight ? styles.backgroundLineLight : ''}`} />
+          <circle {...this.state.circleOne} r="6" className={`${styles.backgroundCircle} ${isLight ? styles.backgroundCircleLight : ''}`} />
+          <path d={this.state.lineTwoString} className={`${styles.foregroundOutline} ${isLight ? styles.foregroundOutlineLight : ''}`} />
+          <path d={this.state.lineTwoString} className={`${styles.foregroundLineHighlight} ${isLight ? styles.foregroundLineHighlightLight : ''}`} />
+          <circle {...this.state.circleTwo} r="6" className={`${styles.foregroundCicle} ${isLight ? styles.foregroundCicleLight : ''}`} />
         </svg>
       </div>
     );

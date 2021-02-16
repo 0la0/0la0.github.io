@@ -4,6 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import Annealing from './annealing';
 import Pso from './pso';
 import ConnectedGraph from './connectedGraph';
+import theme from '../../modules/theme';
 
 const STATS_ENABLED = false;
 
@@ -23,18 +24,21 @@ class GraphicsManager {
   }
 
   init(canvas) {
+    const backgroundColor = theme.isDark() ? 0x202124 : 0xEFEFEF;
     this.renderer = new WebGLRenderer({canvas,  antialias: true , alpha: true});
-  	this.renderer.setClearColor(0x282c34, 1);
+  	this.renderer.setClearColor(backgroundColor, 1);
     this.camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.05, 7);
   	this.camera.position.z = 1;
     this.orbitControls = new OrbitControls(this.camera, canvas);
     this.orbitControls.enabled = false;
+    this.orbitControls.enablePan = false;
+    this.orbitControls.enableRotate = false;
     this.orbitControls.minDistance = 0.25;
     this.orbitControls.maxDistance = 3;
     this.scenes = [
       new Annealing(canvas),
-      // new Pso(canvas) ,
-      // new ConnectedGraph(canvas),
+      new Pso(canvas),
+      new ConnectedGraph(canvas),
     ];
     this.activeIndex = this.getRandomSceneIndex();
     this.activeScene = this.scenes[this.activeIndex];
@@ -84,13 +88,13 @@ class GraphicsManager {
   }
 
   afterStart() {
-    if (this.activeScene instanceof Annealing) {
-      this.orbitControls.enablePan = false;
-      this.orbitControls.enableRotate = false;
-    } else {
-      this.orbitControls.enablePan = true;
-      this.orbitControls.enableRotate = true;
-    }
+    // if (this.activeScene instanceof Annealing) {
+    //   this.orbitControls.enablePan = false;
+    //   this.orbitControls.enableRotate = false;
+    // } else {
+    //   this.orbitControls.enablePan = true;
+    //   this.orbitControls.enableRotate = true;
+    // }
   }
 
   onResize() {

@@ -6,9 +6,12 @@
   top: 14px;
   height: 2px;
   width: 30px;
-  background: $color-secondary;
+  background-color: $color-grey-010;
   border-radius: 10px;
   transition: transform $icon-animation;
+}
+.barLight {
+  background-color: $color-grey-080;
 }
 
 .barLeft {
