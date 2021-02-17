@@ -7,7 +7,7 @@ import {
   Color,
 } from 'three';
 import { VERTEX_RADIUS, } from './ConnectedGraphConstants';
-import { themeStore, } from '../../../modules/theme';
+import themeStore from '../../../modules/ThemeStore';
 
 const themedColors = {
   light: new Color(0.05, 0.2, 0.25),

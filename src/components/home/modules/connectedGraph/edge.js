@@ -1,5 +1,5 @@
 import { Color, } from 'three';
-import { themeStore, } from '../../../modules/theme';
+import themeStore from '../../../modules/ThemeStore';
 
 const COLOR_FACTOR = 0.4;
 

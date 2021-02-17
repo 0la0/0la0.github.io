@@ -1,19 +1,20 @@
 import React from 'react';
-import themeHoc from '../../modules/theme';
+import themeHoc from '../../modules/themeHOC';
 import styles from './styles.scss';
 
 const MenuIcon = props => {
-  const isLight = props.theme === 'LIGHT';
-  const lineStyle = `${styles.line} ${isLight ? styles.lineLight : ''}`;
+  const lineStyle = `${styles.line} ${props.themeIsLight ? styles.lineLight : ''}`;
   return (
-    <div
+    <button
       className={`${props.className} ${styles.hamburger}`}
       onClick={props.handleClick}
+      type="button"
+      title="Menu"
     >
       <span className={`${lineStyle} ${props.isActive ? styles.lineOneActive : ''}`}></span>
       <span className={`${lineStyle} ${props.isActive ? styles.lineTwoActive : ''}`}></span>
       <span className={`${lineStyle} ${props.isActive ? styles.lineThreeActive : ''}`}></span>
-    </div>
+    </button>
   );
 };
 

@@ -27,10 +27,11 @@ p {
 }
 
 button {
-  border: none;
-  outline: none;
-  background-color: Transparent;
-  background-repeat:no-repeat;
+  border: unset;
+  outline: unset;
+  background: unset;
+  padding: unset;
+  margin: unset;
   cursor: pointer;
 }
 

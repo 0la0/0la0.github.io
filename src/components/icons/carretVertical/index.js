@@ -1,19 +1,19 @@
 import React from 'react';
-import themeHoc from '../../modules/theme';
+import themeHoc from '../../modules/themeHOC';
 import styles from './styles.scss';
 
 const CarretVertical = props => {
-  const isLight = props.theme === 'LIGHT';
-  const barStyle = `${styles.bar} ${isLight ? styles.barLight : ''}`;
+  const barStyle = `${styles.bar} ${props.themeIsLight ? styles.barLight : ''}`;
   return (
-    <div
+    <button
       className={props.className}
       title={props.title}
       onClick={props.handleClick}
+      type="button"
     >
       <span className={`${barStyle} ${styles.barLeft} ${props.isActive ? styles.barLeftActive : ''}`} />
       <span className={`${barStyle} ${styles.barRight} ${props.isActive ? styles.barRightActive : ''}`} />
-    </div>
+    </button>
   );
 }
 

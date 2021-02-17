@@ -4,7 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import Annealing from './annealing';
 import Pso from './pso';
 import ConnectedGraph from './connectedGraph';
-import { themeStore, } from '../../modules/theme';
+import themeStore from '../../modules/ThemeStore';
 
 const STATS_ENABLED = false;
 const buildScenes = canvas => {

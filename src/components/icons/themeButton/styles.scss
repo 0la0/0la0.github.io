@@ -4,12 +4,6 @@ $button-size: 50px;
 $icon-size: 32px;
 
 .themeButton {
-  background: unset;
-  outline: unset;
-  border: unset;
-  padding: unset;
-  margin: unset;
-
   background-color: $color-primary;
   width: $button-size;
   height: $button-size;
@@ -30,9 +24,7 @@ $icon-size: 32px;
   transition: 0.1s box-shadow ease;
 }
 
-.themeIconLight {
-  // background-color: yellow;
-}
+.themeIconLight {}
 
 .themeIconDark {
   box-shadow: inset (-$icon-size / 4) (-$icon-size / 8) 0px 1px $color-grey-000;
