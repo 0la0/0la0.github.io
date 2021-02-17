@@ -1,6 +1,7 @@
 import Particle from './Particle';
 import GoalState from './GoalState';
 import SearchState from './SearchState';
+import DIMENSIONS from './Dimensions';
 import { getRandomIntegerInRange, } from '../mathUtil';
 
 const BASE_TTL = 2000;
@@ -26,6 +27,18 @@ export default class Population {
   reset() {
     this.ttl = BASE_TTL + getRandomIntegerInRange(TTL_RANGE);
     this.goalState.reset(new SearchState(HALF_SEARCH_SPACE_SIZE));
+    this.particles.forEach(particle => {
+      particle.reset(new SearchState(HALF_SEARCH_SPACE_SIZE), this.goalState.getVector().vector);
+    });
+  }
+
+  resetToPosition(position) {
+    const goal = new SearchState(HALF_SEARCH_SPACE_SIZE);
+    goal.vector[DIMENSIONS.POSITION_X] = position.x;
+    goal.vector[DIMENSIONS.POSITION_Y] = position.y;
+    goal.vector[DIMENSIONS.POSITION_Z] = position.z;
+    this.ttl = BASE_TTL + getRandomIntegerInRange(TTL_RANGE);
+    this.goalState.reset(goal);
     this.particles.forEach(particle => {
       particle.reset(new SearchState(HALF_SEARCH_SPACE_SIZE), this.goalState.getVector().vector);
     });

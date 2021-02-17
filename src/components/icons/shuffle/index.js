@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
-// import Point from './Point';
-// import MovablePoint from './MoveablePoint';
 import Line from './Line';
 import themeHoc from '../../modules/themeHOC';
 import styles from './styles.scss';
 
-
-
 const ANIMATION_LENGTH_MS = 120;
-
-
 
 class ShuffleIcon extends Component {
   constructor(props) {
@@ -55,7 +49,9 @@ class ShuffleIcon extends Component {
     }
   }
 
-  onClick = () => {
+  onClick = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
     if (this.isAnimating) { return; }
     this.isAnimating = true;
     this.startTime = performance.now();

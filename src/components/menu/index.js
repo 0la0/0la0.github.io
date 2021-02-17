@@ -37,17 +37,23 @@ class Menu extends Component {
     this.remoteRouteChangeListener();
   }
 
-  handleMenuClick = () => {
+  handleMenuClick = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
     const path = this.state.menuIsOpen ? '/' : '/projects';
     this.props.history.push(path);
   };
 
-  handleAboutClick = () => {
+  handleAboutClick = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
     const path = this.state.aboutIsClosed ? '/about' : '/';
     this.props.history.push(path);
   };
 
-  handleProjectBackClick = () => {
+  handleProjectBackClick = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
     if (this.props.history.length < 3) {
       this.props.history.push('/projects');
     }

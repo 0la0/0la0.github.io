@@ -1,8 +1,15 @@
-import { Scene } from 'three';
+import {
+  Mesh,
+  MeshBasicMaterial,
+  PlaneGeometry,
+  Raycaster,
+  Scene,
+  Vector2,
+} from 'three';
 import React from 'react';
 import Population from './Population';
 import PsoRenderer from './PsoRenderer';
-import { getRandomIntegerInRange, } from '../mathUtil';
+import { getRandomIntegerInRange, getRandomFloatInRange, } from '../mathUtil';
 
 export default class Pso {
   constructor() {
@@ -12,11 +19,18 @@ export default class Pso {
       new Population(50 + getRandomIntegerInRange(25)),
       new Population(40 + getRandomIntegerInRange(25))
     ];
+    const clickInterceptGeometry = new PlaneGeometry(5, 5);
+    const clickInterceptMaterial = new MeshBasicMaterial();
+    this.clickIntercept = new Mesh(clickInterceptGeometry, clickInterceptMaterial);
+    this.clickIntercept.visible = false;
     const allParticles = this.populations.flatMap(population => population.getParticles());
     this.allParticles = allParticles;
     this.psoRenderer = new PsoRenderer(allParticles);
     this.scene.add(this.psoRenderer.getMesh());
+    this.scene.add(this.clickIntercept);
     this.lastRenderTime = performance.now();
+    this.resetIndex = 0;
+    this.raycaster = new Raycaster();
   }
 
   render(renderer, camera, now) {
@@ -53,5 +67,19 @@ export default class Pso {
     this.lastRenderTime = performance.now();
   }
 
-  onClick() {}
+  onClick(event, camera) {
+    const clickPosition = new Vector2(
+      (event.clientX / window.innerWidth) * 2 - 1,
+      -(event.clientY / window.innerHeight) * 2 + 1,
+    );
+    this.raycaster.setFromCamera(clickPosition, camera);
+    const clickIntersections = this.raycaster.intersectObjects([ this.clickIntercept, ]);
+    if (!clickIntersections) {
+      return;
+    }
+    const clickPoint = clickIntersections[0].point;
+    clickPoint.z = getRandomFloatInRange(0.25);
+    this.populations[this.resetIndex].resetToPosition(clickPoint);
+    this.resetIndex = (this.resetIndex + 1) % this.populations.length;
+  }
 }
