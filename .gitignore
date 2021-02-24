@@ -2,3 +2,5 @@
 package-lock.json
 node_modules
 dist
+
+src/temp-gps-data.json

@@ -24,6 +24,7 @@ class Home extends Component {
       aboutIsShowing: false,
       iconsAreVisible: true
     };
+    this.resizeIsQueued = false;
   }
 
   componentDidMount() {
@@ -49,7 +50,16 @@ class Home extends Component {
     this.remoteRouteChangeListener();
   }
 
-  onResize() { graphicsManager.onResize(); }
+  onResize() {
+    if (this.resizeIsQueued) {
+      return;
+    }
+    this.resizeIsQueued = true;
+    setTimeout(() => {
+      this.resizeIsQueued = false;
+      graphicsManager.onResize()
+    }, 100);
+  }
 
   showAbout = () => {
     this.setState({ aboutIsInDom: true });

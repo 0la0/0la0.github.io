@@ -4,14 +4,16 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import Annealing from './annealing';
 import Pso from './pso';
 import ConnectedGraph from './connectedGraph';
+import Gps from './Gps';
 import themeStore from '../../modules/ThemeStore';
 
 const STATS_ENABLED = false;
-const buildScenes = canvas => {
+const buildScenes = () => {
   const scenes = [
-    new Annealing(canvas),
-    new Pso(canvas),
-    new ConnectedGraph(canvas),
+    new Annealing(),
+    new Pso(),
+    new ConnectedGraph(),
+    new Gps(),
   ];
   scenes.sort(() => Math.random() - 0.5);
   return scenes;
@@ -46,10 +48,14 @@ class GraphicsManager {
     this.orbitControls.enablePan = false;
     this.orbitControls.enableRotate = false;
     this.orbitControls.minDistance = 0.5;
-    this.orbitControls.maxDistance = 2.5;
-    this.scenes = buildScenes(canvas);
+    this.orbitControls.maxDistance = 2.5; // maybe decrease?
+    this.orbitControls.minPolarAngle = 0;
+    this.orbitControls.maxPolarAngle = Math.PI * 0.5;
+    this.scenes = buildScenes();
     this.activeIndex = this.getRandomSceneIndex();
     this.activeScene = this.scenes[this.activeIndex];
+    this.tanFOV = Math.tan(((Math.PI / 180) * this.camera.fov / 2));
+    this.initialHeight = window.innerHeight;
     this.onResize();
     return this;
   }
@@ -101,19 +107,21 @@ class GraphicsManager {
   }
 
   afterStart() {
-    // if (this.activeScene instanceof Annealing) {
-    //   this.orbitControls.enablePan = false;
-    //   this.orbitControls.enableRotate = false;
-    // } else {
-    //   this.orbitControls.enablePan = true;
-    //   this.orbitControls.enableRotate = true;
-    // }
+    if (this.activeScene instanceof Gps) {
+      this.orbitControls.enableRotate = true;
+      this.camera.position.y = 1;
+      this.camera.position.z = 0;
+    } else {
+      this.orbitControls.enableRotate = false;
+      this.camera.position.z = 1;
+    }
   }
 
   onResize() {
     const width = window.innerWidth;
     const height = window.innerHeight;
     this.camera.aspect = width / height;
+    this.camera.fov = (360 / Math.PI) * Math.atan(this.tanFOV * (height / this.initialHeight));
 		this.camera.updateProjectionMatrix();
 		this.renderer.setSize(width, height);
     if (!this.isInRenderLoop && this.activeScene) {

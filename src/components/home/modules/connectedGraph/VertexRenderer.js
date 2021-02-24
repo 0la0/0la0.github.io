@@ -21,7 +21,7 @@ export default class VertexRenderer {
     const color = getThemedColor();
     const sphereGeometry = new SphereBufferGeometry(VERTEX_RADIUS, 6, 6)
     const sphereMaterial = new MeshBasicMaterial({ side: FrontSide, color, });
-    this.colorBuffer = new Float32Array(vertices.length * 3);
+    // this.colorBuffer = new Float32Array(vertices.length * 3);
     this.sphereMesh = new InstancedMesh(sphereGeometry, sphereMaterial, vertices.length);
     themeStore.subscribe(this);
   }
