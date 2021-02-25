@@ -14,7 +14,7 @@ export default class Population {
     this.size = size;
     this.goalState = new GoalState(new SearchState(0.1));
     this.particles = new Array(size).fill(null).map(() => {
-      const searchState = new SearchState(HALF_SEARCH_SPACE_SIZE);
+      const searchState = new SearchState(0);
       return new Particle(searchState, this.goalState);
     });
     this.reset();

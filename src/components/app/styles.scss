@@ -2,6 +2,10 @@
 
 .container {
   height: inherit;
+  background-color: $color-primary;
+}
+.containerLight {
+  background-color: $color-grey-005;
 }
 
 .home {

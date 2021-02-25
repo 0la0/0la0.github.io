@@ -8,7 +8,7 @@ import {
 } from 'three';
 import { getDisplayPropertiesFromSearchState, } from './SearchStateToDisplayTransform';
 
-const GEO_SIZE = 0.15;
+const GEO_SIZE = 0.1;
 
 export default class PsoRenderer {
   constructor(particles) {

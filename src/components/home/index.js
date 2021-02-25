@@ -8,6 +8,7 @@ import ThemeButton from '../icons/themeButton';
 
 const pauseRoutes = ['#/projects', '#/about'];
 const history = createBrowserHistory();
+const fadeInTime = 1500;
 
 function getStateFromLocation(path) {
   return {
@@ -22,7 +23,8 @@ class Home extends Component {
     super(props);
     this.state = {
       aboutIsShowing: false,
-      iconsAreVisible: true
+      iconsAreVisible: true,
+      canvasIsVisible: false,
     };
     this.resizeIsQueued = false;
   }
@@ -40,7 +42,10 @@ class Home extends Component {
     const shouldStart = !pauseRoutes.some(route => locationHash.indexOf(route) > -1);
     this.setState(getStateFromLocation(locationHash));
     if (shouldStart) {
-      graphicsManager.startAnimation();
+      setTimeout(() => {
+        graphicsManager.startAnimation();
+        this.setState({ canvasIsVisible: true, });
+      }, fadeInTime);
     }
   }
 
@@ -108,7 +113,10 @@ class Home extends Component {
       <div
         onClick={this.handleClick}
         className={this.props.className}>
-        <canvas ref={ele => this.canvasElement = ele} />
+        <canvas
+          ref={ele => this.canvasElement = ele}
+          className={`${styles.canvas} ${this.state.canvasIsVisible ? styles.canvasActive : ''}`}
+        />
         { this.state.iconsAreVisible ? this.renderIcons() : null }
         { this.state.aboutIsInDom ?
           <div className={`${styles.about} ${this.state.aboutIsVisible ? styles.aboutActive : ''}`}>

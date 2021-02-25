@@ -4,16 +4,18 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
-import Home from 'components/home';
-import Menu from 'components/menu';
-import Projects from 'components/projects';
-import About from 'components/about';
-
+import Home from '../home';
+import Menu from '../menu';
+import Projects from '../projects';
+import About from '../about';
+import themeStore from '../modules/ThemeStore';
 import styles from './styles.scss';
 import baseStyles from './baseStyles.scss';
 
+const appShellClasses = `${styles.container} ${themeStore.isLight() ? styles.containerLight : ''}`;
+
 const App = () => (
-  <div className={styles.container} >
+  <div className={appShellClasses} >
     <Home className={styles.home} />
     <Router>
       <div>

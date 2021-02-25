@@ -59,3 +59,12 @@
 .aboutContent {
   padding: 10px 20px;
 }
+
+.canvas {
+  opacity: 0;
+  transition: 0.25s opacity ease;
+}
+
+.canvasActive {
+  opacity: 1;
+}

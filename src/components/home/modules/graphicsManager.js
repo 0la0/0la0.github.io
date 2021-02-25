@@ -10,10 +10,10 @@ import themeStore from '../../modules/ThemeStore';
 const STATS_ENABLED = false;
 const buildScenes = () => {
   const scenes = [
-    // new Annealing(),
+    new Annealing(),
     new Pso(),
-    // new ConnectedGraph(),
-    // new Gps(),
+    new ConnectedGraph(),
+    new Gps(),
   ];
   scenes.sort(() => Math.random() - 0.5);
   return scenes;
@@ -38,10 +38,12 @@ class GraphicsManager {
   }
 
   init(canvas) {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
     const backgroundColor = getBackgroundColor();
-    this.renderer = new WebGLRenderer({canvas,  antialias: true , alpha: true});
+    this.renderer = new WebGLRenderer({ canvas,  antialias: true , alpha: false, });
   	this.renderer.setClearColor(backgroundColor, 1);
-    this.camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.05, 7);
+    this.camera = new PerspectiveCamera(75, width / height, 0.05, 7);
   	this.camera.position.z = 1;
     this.orbitControls = new OrbitControls(this.camera, canvas);
     this.orbitControls.enabled = false;
@@ -55,7 +57,7 @@ class GraphicsManager {
     this.activeIndex = 0;
     this.activeScene = this.scenes[this.activeIndex];
     this.tanFOV = Math.tan(((Math.PI / 180) * this.camera.fov / 2));
-    this.initialHeight = window.innerHeight;
+    this.initialHeight = height;
     this.onResize();
     return this;
   }
