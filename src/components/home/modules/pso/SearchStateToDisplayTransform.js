@@ -4,7 +4,7 @@ import { TWO_PI, } from '../mathUtil';
 
 const PROPERTY_BUFFER = 0.5;
 
-export const getDisplayPropertiesFromSearchState = (searchState) => ({
+export const getDisplayPropertiesFromSearchState = searchState => ({
   position: new Vector3(
     searchState.vector[DIMENSIONS.POSITION_X],
     searchState.vector[DIMENSIONS.POSITION_Y],

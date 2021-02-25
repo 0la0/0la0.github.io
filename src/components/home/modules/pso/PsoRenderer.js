@@ -4,16 +4,19 @@ import {
   InstancedMesh,
   MeshBasicMaterial,
   Object3D,
-  TetrahedronBufferGeometry,
+  BoxBufferGeometry,
 } from 'three';
 import { getDisplayPropertiesFromSearchState, } from './SearchStateToDisplayTransform';
 
+const GEO_SIZE = 0.15;
+
 export default class PsoRenderer {
   constructor(particles) {
-    const triangleGeometry = new TetrahedronBufferGeometry(0.15)
+    const triangleGeometry = new BoxBufferGeometry(GEO_SIZE, GEO_SIZE, GEO_SIZE);
     const triangleMaterial = new MeshBasicMaterial({ side: DoubleSide, });
-    this.colorBuffer = new Float32Array(particles.length * 3);
-    this.triangleMesh = new InstancedMesh(triangleGeometry, triangleMaterial, particles.length);
+    const numParticles = particles.length;
+    this.colorBuffer = new Float32Array(numParticles * 3);
+    this.triangleMesh = new InstancedMesh(triangleGeometry, triangleMaterial, numParticles);
     this.triangleMesh.material.vertexColors = true;
   }
 

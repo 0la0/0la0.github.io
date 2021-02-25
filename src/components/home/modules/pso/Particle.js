@@ -14,6 +14,10 @@ export default class Particle {
     this.velocity = new SearchState(1);
   }
 
+  getPreviousStates() {
+    return this.previousStates.getPreviousStates();
+  }
+
   getState() {
     return this.searchState;
   }

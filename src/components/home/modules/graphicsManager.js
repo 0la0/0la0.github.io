@@ -10,10 +10,10 @@ import themeStore from '../../modules/ThemeStore';
 const STATS_ENABLED = false;
 const buildScenes = () => {
   const scenes = [
-    new Annealing(),
+    // new Annealing(),
     new Pso(),
-    new ConnectedGraph(),
-    new Gps(),
+    // new ConnectedGraph(),
+    // new Gps(),
   ];
   scenes.sort(() => Math.random() - 0.5);
   return scenes;
@@ -52,7 +52,7 @@ class GraphicsManager {
     this.orbitControls.minPolarAngle = 0;
     this.orbitControls.maxPolarAngle = Math.PI * 0.5;
     this.scenes = buildScenes();
-    this.activeIndex = this.getRandomSceneIndex();
+    this.activeIndex = 0;
     this.activeScene = this.scenes[this.activeIndex];
     this.tanFOV = Math.tan(((Math.PI / 180) * this.camera.fov / 2));
     this.initialHeight = window.innerHeight;
@@ -63,10 +63,6 @@ class GraphicsManager {
   handleThemeChange() {
     const backgroundColor = getBackgroundColor();
     this.renderer.setClearColor(backgroundColor, 1);
-  }
-
-  getRandomSceneIndex() {
-    return Math.floor(this.scenes.length * Math.random());
   }
 
   startAnimation() {

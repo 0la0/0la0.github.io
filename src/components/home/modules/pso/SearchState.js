@@ -3,38 +3,29 @@ import { getPosNeg } from 'components/home/modules/mathUtil';
 const SIZE = 12;
 
 export default class SearchState {
-  constructor(bound) {
-    if (!bound) { return; }
-    this.vector = new Array(SIZE).fill(null).map(() => getPosNeg() * bound * Math.random());
+  constructor(bound = 0, vector) {
+    this.vector = vector || new Array(SIZE).fill(null).map(() => getPosNeg() * bound * Math.random());
   }
 
   add(searchState) {
-    for (let i = 0; i < this.vector.length; i++) {
-      this.vector[i] = this.vector[i] + searchState.vector[i];
-    }
+    this.vector = this.vector.map((ele, i) => ele + searchState.vector[i]);
     return this;
   }
 
   sub(searchState) {
-    for (let i = 0; i < this.vector.length; i++) {
-      this.vector[i] = this.vector[i] - searchState.vector[i];
-    }
+    this.vector = this.vector.map((ele, i) => ele - searchState.vector[i]);
     return this;
   }
 
   multiplyScalar(scalar) {
-    for (let i = 0; i < this.vector.length; i++) {
-      this.vector[i] = this.vector[i] * scalar;
-    }
+    this.vector = this.vector.map(ele => ele * scalar);
     return this;
   }
 
   clamp(min, max) {
     const length = Math.sqrt(this.vector.reduce((sum, ele) => sum + ele * ele, 0));
     if (length > max) {
-      for (let i = 0; i < this.vector.length; i++) {
-        this.vector[i] = (this.vector[i] / length) * max;
-      }
+      this.vector = this.vector.map(ele => ele / length * max);
     }
     return this;
   }
@@ -45,8 +36,7 @@ export default class SearchState {
 
   clone() {
     const clonedVector = this.vector.map(ele => ele);
-    const instance = new SearchState();
-    instance.vector = clonedVector;
+    const instance = new SearchState(0, clonedVector);
     return instance;
   }
 }
