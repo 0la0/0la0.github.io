@@ -1,20 +1,31 @@
-import { Scene } from 'three';
+import {
+  Mesh,
+  MeshBasicMaterial,
+  PlaneGeometry,
+  Raycaster,
+  Scene,
+  Vector2
+} from 'three';
 import React from 'react';
-import GeoContainer from './geoContainer';
+import Graph from './Graph';
 import { NUM_VERTEX, } from './ConnectedGraphConstants';
 
 export default class ConnectedGraph {
   constructor() {
     this.scene = new Scene();
-    this.geoContainer = new GeoContainer(NUM_VERTEX);
-    this.geoContainer.getMeshList().forEach(mesh => this.scene.add(mesh));
+    this.graph = new Graph(NUM_VERTEX);
+    this.clickIntercept = new Mesh(new PlaneGeometry(10, 10), new MeshBasicMaterial());
+    this.clickIntercept.visible = false;
+    this.graph.getMeshList().forEach(mesh => this.scene.add(mesh));
+    this.scene.add(this.clickIntercept);
+    this.raycaster = new Raycaster();
     this.lastRenderTime = performance.now();
     this.totalTime = 0;
   }
 
   update(elapsedTime) {
     this.totalTime += elapsedTime;
-    this.geoContainer.update(elapsedTime, this.totalTime);
+    this.graph.update(elapsedTime, this.totalTime);
   }
 
   render(renderer, camera, now) {
@@ -41,5 +52,17 @@ export default class ConnectedGraph {
     );
   }
 
-  onClick() {}
+  onClick(event, camera) {
+    const clickPosition = new Vector2(
+      (event.clientX / window.innerWidth) * 2 - 1,
+      -(event.clientY / window.innerHeight) * 2 + 1,
+    );
+    this.raycaster.setFromCamera(clickPosition, camera);
+    const clickIntersections = this.raycaster.intersectObjects([ this.clickIntercept, ]);
+    if (!clickIntersections) {
+      return;
+    }
+    const clickPoint = clickIntersections[0].point;
+    this.graph.handleClick(clickPoint);
+  }
 }

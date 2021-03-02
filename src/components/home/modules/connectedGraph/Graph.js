@@ -1,14 +1,22 @@
-import { Vector3, } from 'three';
+import {
+  Euler,
+  Matrix4,
+  Quaternion,
+  Vector3,
+} from 'three';
 import Vertex from './vertex';
 import Edge from './Edge';
 import VertexRenderer from './VertexRenderer';
 import EdgeRenderer from './EdgeRenderer';
-import { GRAPHICS_SPACE_BOUNDS, ROTATION_SPEED, } from './ConnectedGraphConstants';
+import {
+  CLICK_ATTRACTOR_CHANGE,
+  GRAPHICS_SPACE_BOUNDS,
+  ROTATION_SPEED,
+} from './ConnectedGraphConstants';
 import {
   getRandomFloatInRange,
   getRandomIntegerInRange,
   getRandomVector,
-  getPosNeg,
 } from '../mathUtil';
 
 function traverse(vertex) {
@@ -21,11 +29,8 @@ function traverse(vertex) {
 
 export default class GeoContainer {
   constructor(numVertex) {
-    this.rotation = new Vector3(
-      getPosNeg() * getRandomFloatInRange(ROTATION_SPEED),
-      getPosNeg() * getRandomFloatInRange(ROTATION_SPEED),
-      getPosNeg() * getRandomFloatInRange(ROTATION_SPEED)
-    );
+    this.rotationVelocity = getRandomVector(ROTATION_SPEED);
+    this.rotation = new Vector3();
     this.seedPositions = new Array(numVertex / 2).fill(null).map(() => getRandomVector(GRAPHICS_SPACE_BOUNDS));
     this.vertices = new Array(numVertex).fill(null).map(() => new Vertex());
     this.vertices.forEach(vertex => {
@@ -69,11 +74,22 @@ export default class GeoContainer {
   }
 
   update(elapsedTime, totalTime) {
-    const rotation = this.rotation.clone().multiplyScalar(elapsedTime);
+    const rotationDiff = this.rotationVelocity.clone().multiplyScalar(elapsedTime);
+    this.rotation.add(rotationDiff);
     const x = this.frequency * totalTime;
     this.vertices.forEach(vertex => vertex.update(elapsedTime, x));
     this.edges.forEach(edge => edge.update(elapsedTime, x));
-    this.vertexRenderer.update(this.vertices, elapsedTime, rotation);
-    this.edgeRenderer.update(this.edges, elapsedTime, rotation);
+    this.vertexRenderer.update(this.vertices, elapsedTime, this.rotation);
+    this.edgeRenderer.update(this.edges, elapsedTime, this.rotation);
+  }
+
+  handleClick(clickPoint) {
+    const graphRotation = new Euler().setFromVector3(this.rotation);
+    const inverseRotation = new Quaternion().setFromEuler(graphRotation).invert();
+    const rotationTransform = new Matrix4().makeRotationFromQuaternion(inverseRotation);
+    const rotatedClickPoint = clickPoint.applyMatrix4(rotationTransform);
+    this.vertices
+      .filter(() => Math.random() < CLICK_ATTRACTOR_CHANGE)
+      .forEach(vertex => vertex.handleClick(rotatedClickPoint));
   }
 }

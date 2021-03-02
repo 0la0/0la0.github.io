@@ -23,7 +23,7 @@ let stats;
 if (STATS_ENABLED) {
   stats = new Stats();
   stats.showPanel(0);
-  document.body.appendChild( stats.dom );
+  document.body.appendChild(stats.dom);
 }
 
 const getBackgroundColor = () => themeStore.isDark() ? 0x202124 : 0xEFEFEF;

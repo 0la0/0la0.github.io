@@ -3,6 +3,7 @@ import { getRandomIntegerInRange, getRandomVector } from 'components/home/module
 import { GRAPHICS_SPACE_BOUNDS, } from './ConnectedGraphConstants';
 
 const ELAPSED_TIME_FACTOR = 0.02;
+const getResetTime = () => 2000 + getRandomIntegerInRange(20000);
 
 export default class Vertex {
   constructor() {
@@ -25,8 +26,16 @@ export default class Vertex {
       this.centroid = getRandomVector(GRAPHICS_SPACE_BOUNDS);
     }
     this.goal = this.centroid.clone();
-    this.timeToReset = 2000 + getRandomIntegerInRange(20000);
+    this.timeToReset = getResetTime();
+    if (Math.random() < 0.34) {
+      this.position.copy(this.goal);
+    }
+  }
 
+  handleClick(point) {
+    this.centroid = point.clone();
+    this.goal = point.clone();
+    this.timeToReset = getResetTime();
     if (Math.random() < 0.34) {
       this.position.copy(this.goal);
     }

@@ -38,7 +38,6 @@ export default class VertexRenderer {
 
   update(vertices, elapsedTime, rotation) {
     const objectProxy = new Object3D();
-    const updatedRotation = this.sphereMesh.rotation.toVector3().add(rotation);
     vertices.forEach((vertex, index) => {
       const position = vertex.getPosition();
       objectProxy.position.copy(position);
@@ -46,6 +45,6 @@ export default class VertexRenderer {
       this.sphereMesh.setMatrixAt(index, objectProxy.matrix);  
     });
     this.sphereMesh.instanceMatrix.needsUpdate = true;
-    this.sphereMesh.rotation.setFromVector3(updatedRotation);
+    this.sphereMesh.rotation.setFromVector3(rotation);
   }
 }

@@ -33,7 +33,6 @@ export default class EdgeRenderer {
   update(edges, elapsedTime, rotation) {
     const objectProxy = new Object3D();
     const quaternion = new Quaternion();
-    const updatedRotation = this.cylinderMesh.rotation.toVector3().add(rotation);
     edges.forEach((edge, index) => {
       const colorIndex = index * 3;
       const distance = edge.p1.distanceTo(edge.p2);
@@ -51,6 +50,6 @@ export default class EdgeRenderer {
     });
     this.cylinderMesh.geometry.setAttribute('color', new InstancedBufferAttribute(this.colorBuffer, 3));
     this.cylinderMesh.instanceMatrix.needsUpdate = true;
-    this.cylinderMesh.rotation.setFromVector3(updatedRotation);
+    this.cylinderMesh.rotation.setFromVector3(rotation);
   }
 }
