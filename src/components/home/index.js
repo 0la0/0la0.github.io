@@ -31,15 +31,15 @@ class Home extends Component {
 
   componentDidMount() {
     graphicsManager.init(this.canvasElement);
-    window.addEventListener('resize', this.onResize);
+    window.addEventListener('resize', this.handleResize);
+    window.addEventListener('keydown', this.handleKeyPress);
     this.remoteRouteChangeListener = history.listen((location, action) => {
-      const shouldPause = pauseRoutes.some(route => location.hash.indexOf(route) > -1);
+      const shouldPause = pauseRoutes.some(route => location.hash.includes(route));
       shouldPause ? graphicsManager.stopAnimation(): graphicsManager.startAnimation();
       this.setState(getStateFromLocation(location.hash));
     });
-
     const locationHash = history.location.hash;
-    const shouldStart = !pauseRoutes.some(route => locationHash.indexOf(route) > -1);
+    const shouldStart = !pauseRoutes.some(route => locationHash.includes(route));
     this.setState(getStateFromLocation(locationHash));
     if (shouldStart) {
       setTimeout(() => {
@@ -51,11 +51,12 @@ class Home extends Component {
 
   componentWillUnmount() {
     graphicsManager.stopAnimation();
-    window.removeEventListener('resize', this.onResize);
+    window.removeEventListener('resize', this.handleResize);
+    window.addEventListener('keydown', this.handleKeyPress);
     this.remoteRouteChangeListener();
   }
 
-  onResize() {
+  handleResize = () => {
     if (this.resizeIsQueued) {
       return;
     }
@@ -64,7 +65,13 @@ class Home extends Component {
       this.resizeIsQueued = false;
       graphicsManager.onResize()
     }, 100);
-  }
+  };
+
+  handleKeyPress = (event) => {
+    if (event.key === 'Escape') {
+      console.log('TODO: close popups');
+    }
+  };
 
   showAbout = () => {
     this.setState({ aboutIsInDom: true });

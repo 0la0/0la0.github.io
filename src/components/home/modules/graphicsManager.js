@@ -34,6 +34,7 @@ class GraphicsManager {
     this.animationRequest;
     this.activeScene;
     this.scenes = [];
+    this.hasStarted = false;
     themeStore.subscribe(this);
   }
 
@@ -74,7 +75,10 @@ class GraphicsManager {
     this.orbitControls.enabled = true;
     this.activeScene.start();
     this.animate();
-    this.afterStart();
+    if (!this.hasStarted) {
+      this.afterStart();
+    }
+    this.hasStarted = true;
   }
 
   stopAnimation() {
