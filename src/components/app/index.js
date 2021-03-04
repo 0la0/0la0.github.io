@@ -15,18 +15,14 @@ import baseStyles from './baseStyles.scss';
 const appShellClasses = `${styles.container} ${themeStore.isLight() ? styles.containerLight : ''}`;
 
 const App = () => (
-  <div className={appShellClasses} >
+  <Router className={appShellClasses}>
     <Home className={styles.home} />
-    <Router>
-      <div>
-        <Menu className={styles.menu} />
-        <Switch>
-          <Route path='/projects' component={Projects}/>
-          <Route path='/about' component={About}/>
-        </Switch>
-      </div>
-    </Router>
-  </div>
+    <Menu className={styles.menu} />
+    <Switch>
+      <Route path='/projects' component={Projects}/>
+      <Route path='/about' component={About}/>
+    </Switch>
+  </Router>
 );
 
 export default App;

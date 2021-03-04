@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter, } from 'react-router';
 import { createBrowserHistory } from 'history';
 import ShuffleIcon from 'components/icons/shuffle';
 import CarretVertical from 'components/icons/carretVertical';
@@ -9,20 +10,19 @@ import ThemeButton from '../icons/themeButton';
 const pauseRoutes = ['#/projects', '#/about'];
 const history = createBrowserHistory();
 const fadeInTime = 1500;
-
-function getStateFromLocation(path) {
-  return {
-    aboutIsInDom: false,
-    aboutIsVisible: false,
-    iconsAreVisible: path.length <= 3
-  };
-}
+const isInPauseRoute = locationHash => pauseRoutes.some(route => locationHash.includes(route));
+const getStateForLocationHash = locationHash => ({
+  aboutIsInDom: false,
+  aboutIsVisible: false,
+  iconsAreVisible: locationHash.length <= 3,
+});
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      aboutIsShowing: false,
+      aboutIsInDom: false,
+      aboutIsVisible: false,
       iconsAreVisible: true,
       canvasIsVisible: false,
     };
@@ -34,13 +34,13 @@ class Home extends Component {
     window.addEventListener('resize', this.handleResize);
     window.addEventListener('keydown', this.handleKeyPress);
     this.remoteRouteChangeListener = history.listen((location, action) => {
-      const shouldPause = pauseRoutes.some(route => location.hash.includes(route));
+      const shouldPause = isInPauseRoute(location.hash);
       shouldPause ? graphicsManager.stopAnimation(): graphicsManager.startAnimation();
-      this.setState(getStateFromLocation(location.hash));
+      this.setState(getStateForLocationHash(location.hash));
     });
     const locationHash = history.location.hash;
-    const shouldStart = !pauseRoutes.some(route => locationHash.includes(route));
-    this.setState(getStateFromLocation(locationHash));
+    const shouldStart = !isInPauseRoute(locationHash);
+    this.setState(getStateForLocationHash(locationHash));
     if (shouldStart) {
       setTimeout(() => {
         graphicsManager.startAnimation();
@@ -68,8 +68,15 @@ class Home extends Component {
   };
 
   handleKeyPress = (event) => {
-    if (event.key === 'Escape') {
-      console.log('TODO: close popups');
+    if (event.key !== 'Escape') {
+      return;
+    }
+    if (this.state.aboutIsInDom) {
+      this.hideAbout();
+      return;
+    }
+    if (isInPauseRoute(window.location.hash)) {
+      this.props.history.push('/');
     }
   };
 
@@ -137,4 +144,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default withRouter(Home);
