@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { withRouter, } from 'react-router';
 import { createBrowserHistory } from 'history';
-import ShuffleIcon from 'components/icons/shuffle';
-import CarretVertical from 'components/icons/carretVertical';
-import graphicsManager from 'components/home/modules/graphicsManager';
+import ShuffleIcon from '../icons/shuffle';
+import CarretVertical from '../icons/carretVertical';
+import AboutAnimation from './AboutAnimation';
+import graphicsManager from '../home/modules/graphicsManager';
 import styles from './styles.scss';
 import ThemeButton from '../icons/themeButton';
 
-const pauseRoutes = ['#/projects', '#/about'];
+const pauseRoutes = [ '#/projects', '#/about', ];
 const history = createBrowserHistory();
 const fadeInTime = 1500;
 const isInPauseRoute = locationHash => pauseRoutes.some(route => locationHash.includes(route));
@@ -39,14 +40,13 @@ class Home extends Component {
       this.setState(getStateForLocationHash(location.hash));
     });
     const locationHash = history.location.hash;
-    const shouldStart = !isInPauseRoute(locationHash);
     this.setState(getStateForLocationHash(locationHash));
-    if (shouldStart) {
-      setTimeout(() => {
+    setTimeout(() => {
+      this.setState({ canvasIsVisible: true, });
+      if (!isInPauseRoute(locationHash)) {
         graphicsManager.startAnimation();
-        this.setState({ canvasIsVisible: true, });
-      }, fadeInTime);
-    }
+      }
+    }, fadeInTime);
   }
 
   componentWillUnmount() {
@@ -76,7 +76,7 @@ class Home extends Component {
       return;
     }
     if (isInPauseRoute(window.location.hash)) {
-      this.props.history.push('/');
+      this.props.history.replace('/');
     }
   };
 
@@ -90,24 +90,39 @@ class Home extends Component {
     setTimeout(() => this.setState({ aboutIsInDom: false }), 250);
   };
 
-  handleClick = (event) => {
-    graphicsManager.onClick(event);
+  handleOutsideAboutClick = event => {
+    event.preventDefault();
+    event.stopPropagation();
     this.hideAbout();
+  };
+
+  handleCanvasClick = (event) => {
+    if (isInPauseRoute(window.location.hash) || this.state.aboutIsInDom) {
+      return;
+    }
+    graphicsManager.onClick(event);
   };
 
   onAboutToggle = event => {
     event.preventDefault();
     event.stopPropagation();
-    const aboutIsInDom = !this.state.aboutIsInDom;
-    aboutIsInDom ? this.showAbout() : this.hideAbout();
+    this.state.aboutIsInDom ? this.hideAbout() : this.showAbout();
+  };
+
+  handleShuffleClick = () => {
+    this.hideAbout();
+    graphicsManager.shuffleAnimations();
   };
 
   renderIcons() {
+    if (!this.state.iconsAreVisible) {
+      return null;
+    }
     return (
       <div>
         <ShuffleIcon
           title="Shuffle Animation"
-          handleClick={graphicsManager.shuffleAnimations.bind(graphicsManager)}
+          handleClick={this.handleShuffleClick}
           className={styles.shuffleButton} />
         <ThemeButton
           title="Theme"
@@ -122,23 +137,29 @@ class Home extends Component {
     );
   }
 
+  renderAboutAnimation() {
+    if (!this.state.aboutIsInDom) {
+      return null;
+    }
+    return (
+      <AboutAnimation
+        isVisible={this.state.aboutIsVisible}
+        content={graphicsManager.getAboutAnimationText()}
+        handleOutsideClick={this.handleOutsideAboutClick}
+      />
+    );
+  }
+
   render() {
     return (
-      <div
-        onClick={this.handleClick}
-        className={this.props.className}>
+      <div className={this.props.className}>
         <canvas
           ref={ele => this.canvasElement = ele}
           className={`${styles.canvas} ${this.state.canvasIsVisible ? styles.canvasActive : ''}`}
+          onClick={this.handleCanvasClick}
         />
-        { this.state.iconsAreVisible ? this.renderIcons() : null }
-        { this.state.aboutIsInDom ?
-          <div className={`${styles.about} ${this.state.aboutIsVisible ? styles.aboutActive : ''}`}>
-            <div className={styles.aboutContent}>
-              { graphicsManager.getAboutAnimationText() }
-            </div>
-          </div> : null
-        }
+        {this.renderIcons()}
+        {this.renderAboutAnimation()}
       </div>
     );
   }

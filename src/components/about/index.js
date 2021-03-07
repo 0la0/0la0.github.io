@@ -1,11 +1,16 @@
-import React, { Component } from 'react';
-import pageActivation from 'components/modules/pageActivationHOC';
+import React from 'react';
+import { withRouter } from 'react-router';
+import pageActivation from '../modules/pageActivationHOC';
+import outsideClickHandler from '../modules/outsideClickHandler';
 import styles from './styles.scss';
 
 const About = props => {
-  const styleString = `${styles.container} ${props.isActive ? styles.containerActive : ''}`;
+  const componentRef = outsideClickHandler(event => props.history.replace('/'));
   return (
-    <div className={styleString}>
+    <div
+      ref={componentRef}
+      className={`${styles.container} ${props.isActive ? styles.containerActive : ''}`}
+    >
       <div className={styles.contentContainer}>
         <div className={styles.header}>
           <h1 className={styles.headerTitle}>Luke Anderson</h1>
@@ -28,4 +33,4 @@ const About = props => {
   );
 };
 
-export default pageActivation(About);
+export default withRouter(pageActivation(About));
