@@ -19,12 +19,9 @@ const About = props => {
         <p className={styles.aboutText}>Hello from Kansas City!</p>
         <p className={styles.aboutText}>
           I am a software developer who enjoys creating novel interactive experiences.
-          My interests include: real-time interaction, graphics programming, audio programming, and the application of machine-learning on user interaction.
+          My interests include: real-time interaction, graphics programming, audio programming, and content creation tools.
         </p>
-        <p className={styles.aboutText}>
-          I am from Kansas. I studied visual art at the University of Kansas, and Computer Science at Washburn University.
-        </p>
-        <p className={styles.aboutText}>For more information, there are external links:</p>
+        <p className={styles.aboutText}>For more information:</p>
         <a href="https://github.com/0la0">Github</a>
         <br />
         <a href="https://www.linkedin.com/in/luke-anderson-348400ab">LinkedIn</a>
