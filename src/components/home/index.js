@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { withRouter, } from 'react-router';
 import { createBrowserHistory } from 'history';
-import ShuffleIcon from '../icons/shuffle';
-import CarretVertical from '../icons/carretVertical';
+// import ShuffleIcon from '../icons/shuffle';
+// import CarretVertical from '../icons/carretVertical';
 import AboutAnimation from './AboutAnimation';
 import graphicsManager from '../home/modules/graphicsManager';
 import styles from './styles.scss';
-import ThemeButton from '../icons/themeButton';
+// import ThemeButton from '../icons/themeButton';
+import themeHOC from '../modules/themeHOC';
 
 const pauseRoutes = [ '#/projects', '#/about', ];
 const history = createBrowserHistory();
@@ -16,6 +17,8 @@ const getStateForLocationHash = locationHash => ({
   aboutIsInDom: false,
   aboutIsVisible: false,
   iconsAreVisible: locationHash.length <= 3,
+  menuIsVisible: !isInPauseRoute(location.hash),
+  controlsAreVisible: !isInPauseRoute(location.hash),
 });
 
 class Home extends Component {
@@ -26,6 +29,8 @@ class Home extends Component {
       aboutIsVisible: false,
       iconsAreVisible: true,
       canvasIsVisible: false,
+      menuIsVisible: true,
+      animationIsRunning: true,
     };
     this.resizeIsQueued = false;
   }
@@ -103,6 +108,11 @@ class Home extends Component {
     graphicsManager.onClick(event);
   };
 
+  handleCanvasMouseDown = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
   onAboutToggle = event => {
     event.preventDefault();
     event.stopPropagation();
@@ -112,43 +122,27 @@ class Home extends Component {
   handleShuffleClick = () => {
     this.hideAbout();
     graphicsManager.shuffleAnimations();
+    if (!this.state.animationIsRunning) {
+      graphicsManager.startAnimation();
+      setTimeout(() => graphicsManager.stopAnimation(), 250);
+    }
   };
 
-  renderIcons() {
-    if (!this.state.iconsAreVisible) {
-      return null;
-    }
-    return (
-      <div>
-        <ShuffleIcon
-          title="Shuffle Animation"
-          handleClick={this.handleShuffleClick}
-          className={styles.shuffleButton} />
-        <ThemeButton
-          title="Theme"
-          className={styles.themeButton}
-        />
-        <CarretVertical
-          isActive={this.state.aboutIsVisible}
-          handleClick={this.onAboutToggle}
-          title="About Animation"
-          className={styles.aboutButton} />
-      </div>
-    );
-  }
+  toggleAnimation = () => {
+    this.setState(state => {
+      const animationIsRunning = !state.animationIsRunning;
+      animationIsRunning ?  graphicsManager.startAnimation() : graphicsManager.stopAnimation();
+      return { animationIsRunning, };
+    });
+  };
 
-  renderAboutAnimation() {
-    if (!this.state.aboutIsInDom) {
-      return null;
+  toggleTheme = () => {
+    this.props.toggleTheme();
+    if (!this.state.animationIsRunning) {
+      graphicsManager.startAnimation();
+      setTimeout(() => graphicsManager.stopAnimation(), 33);
     }
-    return (
-      <AboutAnimation
-        isVisible={this.state.aboutIsVisible}
-        content={graphicsManager.getAboutAnimationText()}
-        handleOutsideClick={this.handleOutsideAboutClick}
-      />
-    );
-  }
+  };
 
   render() {
     return (
@@ -157,12 +151,76 @@ class Home extends Component {
           ref={ele => this.canvasElement = ele}
           className={`${styles.canvas} ${this.state.canvasIsVisible ? styles.canvasActive : ''}`}
           onClick={this.handleCanvasClick}
+          onMouseDown={this.handleCanvasMouseDown}
         />
-        {this.renderIcons()}
-        {this.renderAboutAnimation()}
+        {
+          this.state.menuIsVisible ?
+            (
+              <menu className={`${styles.menu} ${this.props.themeIsLight ? styles.menuLightMode : ''}`}>
+                <li>
+                  <h1 className={styles.title}>
+                    <a
+                      className={styles.titleLink}
+                      href="/#/about"
+                    >
+                      Luke Anderson
+                    </a>
+                  </h1>
+                </li>
+                <li>
+                  <a
+                    className={styles.menuLink}
+                    href="/#/projects"
+                  >
+                    Projects
+                  </a>
+                </li>
+                <li>
+                  <button
+                    onClick={this.onAboutToggle}
+                    className={styles.controlButton}
+                  >
+                    About Animation
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={this.handleShuffleClick}
+                    className={styles.controlButton}
+                  >
+                    Shuffle
+                  </button>
+                </li>
+                
+                <li>
+                  <button
+                    onClick={this.toggleTheme}
+                    className={styles.controlButton}
+                  >
+                    { this.props.themeIsLight ? 'Dark Mode' : 'Light Mode' }
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={this.toggleAnimation}
+                    className={styles.controlButton}
+                  >
+                    { this.state.animationIsRunning ? 'Stop Animations' : 'Start Animations'}
+                  </button>
+                </li>
+              </menu>
+            ) : null
+        }
+        { this.state.aboutIsInDom ? (
+          <AboutAnimation
+            isVisible={this.state.aboutIsVisible}
+            content={graphicsManager.getAboutAnimationText()}
+            handleOutsideClick={this.handleOutsideAboutClick}
+          />
+        ) : null}
       </div>
     );
   }
 }
 
-export default withRouter(Home);
+export default withRouter(themeHOC(Home));

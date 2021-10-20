@@ -17,6 +17,7 @@ $rotate: 45deg;
   background-color: $color-grey-010;
   display: block;
   margin: $margin auto;
+  opacity: 0;
   transition: opacity $icon-animation, transform $icon-animation;
 }
 
@@ -26,6 +27,7 @@ $rotate: 45deg;
 
 .lineOneActive {
   transform: translateY($translate) rotate($rotate);
+  opacity: 1;
 }
 
 .lineTwoActive {
@@ -34,4 +36,5 @@ $rotate: 45deg;
 
 .lineThreeActive {
   transform: translateY(-$translate) rotate(-$rotate);
+  opacity: 1;
 }

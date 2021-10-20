@@ -2,7 +2,7 @@
 
 .container {
   position: absolute;
-  right: $pane-left-buffer;
+  left: $pane-left-buffer;
   top: $pane-top-buffer;
   width: calc(100% - #{$pane-left-buffer * 2});
   max-height: calc(100% - #{$pane-top-buffer + $pane-left-buffer});

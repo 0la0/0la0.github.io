@@ -136,9 +136,9 @@ class GraphicsManager {
   }
 
   onClick(event) {
-    if (this.activeScene) {
-      this.activeScene.onClick(event, this.camera);
-    }
+    event.preventDefault();
+    event.stopPropagation();
+    this.activeScene?.onClick(event, this.camera);
   }
 }
 

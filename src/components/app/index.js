@@ -5,7 +5,8 @@ import {
   Switch
 } from 'react-router-dom';
 import Home from '../home';
-import Menu from '../menu';
+// import Menu from '../menu';
+import NavBar from '../navBar/navBar';
 import Projects from '../projects';
 import About from '../about';
 import themeStore from '../modules/ThemeStore';
@@ -17,7 +18,8 @@ const appShellClasses = `${styles.container} ${themeStore.isLight() ? styles.con
 const App = () => (
   <Router className={appShellClasses}>
     <Home className={styles.home} />
-    <Menu className={styles.menu} />
+    {/* <Menu className={styles.menu} /> */}
+    <NavBar />
     <Switch>
       <Route path='/projects' component={Projects}/>
       <Route path='/about' component={About}/>

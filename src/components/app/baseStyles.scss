@@ -27,11 +27,13 @@ p {
 
 button {
   border: unset;
-  outline: unset;
+  // outline: unset;
   background: unset;
   padding: unset;
   margin: unset;
   cursor: pointer;
+  color: unset;
+  font: unset;
 }
 
 a:link{
@@ -50,4 +52,16 @@ a:hover{
 iframe {
   width: 100%;
   margin: 0 auto;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+menu {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }

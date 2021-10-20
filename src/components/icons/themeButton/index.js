@@ -10,7 +10,7 @@ const ThemeButton = props => {
   };
   return (
     <button
-      className={`${props.className} ${styles.themeButton}`}
+      className={`${props.className} ${styles.themeButton} ${props.themeIsLight ? '' : styles.themeButtonDark}`}
       onClick={handleClick}
       title={props.title}
       role="button"
